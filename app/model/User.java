@@ -18,6 +18,9 @@ public class User extends Observable implements Observer {
         this.transactions = new ArrayList<>();
     }
 
+    // public void registerUser(String username, String password) {
+	// }
+
     @Override
     public void update(Observable o, Object arg) {
         // TODO Auto-generated method stub

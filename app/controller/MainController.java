@@ -12,8 +12,10 @@ public class MainController extends AbstractController {
 
     private MainView mv;
     private LoginView lv;
+    private RegisterView rv;
 
     private LoginController lc;
+    private RegisterController rc;
 
     private JFrame mainWindow;
 
@@ -26,8 +28,9 @@ public class MainController extends AbstractController {
         mainWindow.setLocation(100, 100);
 
         // create views
-        mv = new MainView();
-        lv = new LoginView();
+        mv = new MainView(); // Main view
+        lv = new LoginView(); // Login view
+        rv = new RegisterView(); // Register view
 
         this.setView(mv);
 
@@ -36,9 +39,9 @@ public class MainController extends AbstractController {
         lc.setParentController(this);
         lc.setView(lv);
 
-        // rspc = new ReStockProductsController();
-        // rspc.setParentController(this);
-        // rspc.setView(rspv);
+        rc = new RegisterController();
+        rc.setParentController(this);
+        rc.setView(rv);
 
         mainWindow.validate();
         mainWindow.setVisible(true);
@@ -72,9 +75,9 @@ public class MainController extends AbstractController {
                 mainWindow.getContentPane().add(lv);
                 mainWindow.revalidate();
                 mainWindow.repaint();
-            } else if (e.getActionCommand().equals("Abastecer")) {
+            } else if (e.getActionCommand().equals("Register")) {
                 mainWindow.getContentPane().removeAll();
-                // mainWindow.getContentPane().add(rspv);
+                mainWindow.getContentPane().add(rv);
                 mainWindow.revalidate();
                 mainWindow.repaint();
             }

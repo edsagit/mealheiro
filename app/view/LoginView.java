@@ -14,7 +14,7 @@ import javax.swing.border.*;
 public class LoginView extends JPanel implements Observer {
 
     private JPanel pLogin;
-    private JLabel lUsername, lPassword;
+    private JLabel lLoginTitle, lUsername, lPassword;
     private JTextField tfUsername;
     private JPasswordField pfPassword;
     private JButton bLogin, bBack;
@@ -37,6 +37,7 @@ public class LoginView extends JPanel implements Observer {
         // Labels login
         lUsername = new JLabel("Username:");
         lPassword = new JLabel("Password:");
+        lLoginTitle = new JLabel("Login");
 
         // Textfield username
         tfUsername = new JTextField(10);
@@ -45,7 +46,7 @@ public class LoginView extends JPanel implements Observer {
 
         // Buttons login
         bLogin = new JButton("Login");
-        bBack = new JButton("Go back");
+        bBack = new JButton("Back");
 
         // Add components to main panel
         this.add(pLogin);
