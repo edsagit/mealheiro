@@ -81,26 +81,25 @@ public class MainController extends AbstractController {
                 mainWindow.revalidate();
                 mainWindow.repaint();
             }
+        } else if (this.lv.isAncestorOf(source)) {
+            System.out.println("Action made on LoginView");
+            System.out.println(e.getActionCommand());
+            if (e.getActionCommand().equals("Back")) {
+                mainWindow.getContentPane().removeAll();
+                mainWindow.getContentPane().add(mv);
+                mainWindow.revalidate();
+                mainWindow.repaint();
+            }
+        } else if (this.rv.isAncestorOf(source)) {
+            System.out.println("Action made on RegisterView");
+            System.out.println(e.getActionCommand());
+            if (e.getActionCommand().equals("Back")) {
+                mainWindow.getContentPane().removeAll();
+                mainWindow.getContentPane().add(mv);
+                mainWindow.revalidate();
+                mainWindow.repaint();
+            }
         }
-        // else if (this.psv.isAncestorOf(source)) {
-        // System.out.println("Acção feita sobre ProductSelectionView");
-        // System.out.println(e.getActionCommand());
-        // if (e.getActionCommand().equals("Fechar")) {
-        // mainWindow.getContentPane().removeAll();
-        // mainWindow.getContentPane().add(mv);
-        // mainWindow.revalidate();
-        // mainWindow.repaint();
-        // }
-        // } else if (this.rspv.isAncestorOf(source)) {
-        // System.out.println("Acção feita sobre ReStockProductsView");
-        // System.out.println(e.getActionCommand());
-        // if (e.getActionCommand().equals("Fechar")) {
-        // mainWindow.getContentPane().removeAll();
-        // mainWindow.getContentPane().add(mv);
-        // mainWindow.revalidate();
-        // mainWindow.repaint();
-        // }
-        // }
 
         super.actionPerformed(e);
     }
