@@ -6,7 +6,7 @@ public class Account extends Observable implements Observer {
 
     private String id;
     private String userId;
-    private String accountTypeId;
+    private AccountType accountType;
     private String name;
     private Boolean active;
     private String balance;
