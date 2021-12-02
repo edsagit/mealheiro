@@ -12,7 +12,7 @@ import java.util.*;
  * @author ed
  */
 public class Account {
-    
+
     private String name;
 //    private String currency;
     private String iban;

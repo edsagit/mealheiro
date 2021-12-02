@@ -9,7 +9,10 @@ import model.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.*;
 
 /**
  *
@@ -18,12 +21,14 @@ import javax.swing.*;
 public class RegisterView extends JPanel implements Observer {
 
     private Database db;
+    private EventListener eventListener;
 
     /**
      * Creates new form RegisterView
      */
     public RegisterView() {
         initComponents();
+        tfRegisterUsername.setDocument(new JTextFieldLimit(3));
     }
 
     public void setModel(Database db) {
@@ -34,10 +39,53 @@ public class RegisterView extends JPanel implements Observer {
     }
 
     public void setController(EventListener el) {
+        tfRegisterUsername.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                onChange(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                onChange(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                onChange(e);
+            }
+
+            private void onChange(DocumentEvent e) {
+                System.out.println(tfRegisterUsername.getText());
+//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         bRegister.addActionListener((ActionListener) el);
     }
 
     public void update(Observable o, Object arg) {
+//        // desligar o controller dos spinners
+//        for (JSpinner js : this.hashtable.values()) {
+//            js.removeChangeListener((ChangeListener) this.eventListener);
+//        }
+//
+//        this.productsPanel.removeAll();
+//        this.hashtable.clear();
+//
+//        for (Product p : this.vm.getProducts()) {
+//            JPanel panel = new JPanel();
+//            panel.add(new JLabel(p.getName()));
+//            JSpinner js = new JSpinner();
+//            js.setValue(p.getAvailableQuantity());
+//            //js.setActionCommand(p.getName());
+//            js.addChangeListener((ChangeListener) this.eventListener);
+//            panel.add(js);
+//            productsPanel.add(panel);
+//            this.hashtable.put(p, js);
+//        }
+
+        this.validate();
+        this.repaint();
     }
 
     public String getRegisterUsername() {
@@ -48,7 +96,7 @@ public class RegisterView extends JPanel implements Observer {
             return null;
         }
     }
-    
+
     public String getRegisterEmail() {
         String email = this.tfRegisterEmail.getText();
         if (!email.isEmpty()) {
@@ -57,7 +105,7 @@ public class RegisterView extends JPanel implements Observer {
             return null;
         }
     }
-    
+
     public String getRegisterPassword() {
         String password = this.pfRegisterPassword.getText();
         if (!password.isEmpty()) {
@@ -90,36 +138,39 @@ public class RegisterView extends JPanel implements Observer {
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setName("Register"); // NOI18N
 
         lblRegisterUsername.setText("Username");
 
-        tfRegisterUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfRegisterUsernameActionPerformed(evt);
-            }
-        });
+        tfRegisterUsername.setColumns(5);
 
         lblRegisterEmail.setText("Email");
 
         lblRegisterPassword.setText("Password");
 
         bRegister.setText("Register");
+        bRegister.setEnabled(false);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jLabel1.setText("Bank name");
 
-        jLabel2.setText("Balance (Euro)");
+        jLabel2.setText("Balance");
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("€#,##0.00"))));
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         jFormattedTextField1.setToolTipText("€1234.56");
 
         jLabel3.setText("Savings balance");
 
-        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("€#,##0.00"))));
-        jFormattedTextField2.setText("0");
+        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        jFormattedTextField2.setToolTipText("€1234.56");
+
+        jLabel4.setText("€");
+
+        jLabel5.setText("€");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -137,34 +188,42 @@ public class RegisterView extends JPanel implements Observer {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jFormattedTextField1)
-                    .addComponent(jLabel3)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(bRegister, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(bRegister, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel3))
                 .addContainerGap(156, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSeparator1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblRegisterUsername)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfRegisterUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblRegisterEmail)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfRegisterEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblRegisterPassword)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pfRegisterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jSeparator1)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblRegisterUsername)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(tfRegisterUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(lblRegisterEmail)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(tfRegisterEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(lblRegisterPassword)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(pfRegisterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -172,20 +231,20 @@ public class RegisterView extends JPanel implements Observer {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(37, 37, 37)
                 .addComponent(bRegister)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tfRegisterUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfRegisterUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfRegisterUsernameActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -195,6 +254,8 @@ public class RegisterView extends JPanel implements Observer {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblRegisterEmail;
@@ -204,4 +265,24 @@ public class RegisterView extends JPanel implements Observer {
     private javax.swing.JTextField tfRegisterEmail;
     private javax.swing.JTextField tfRegisterUsername;
     // End of variables declaration//GEN-END:variables
+}
+
+
+class JTextFieldLimit extends PlainDocument {
+   private int limit;
+   JTextFieldLimit(int limit) {
+      super();
+      this.limit = limit;
+   }
+   JTextFieldLimit(int limit, boolean upper) {
+      super();
+      this.limit = limit;
+   }
+   public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+      if (str == null)
+         return;
+      if ((getLength() + str.length()) <= limit) {
+         super.insertString(offset, str, attr);
+      }
+   }
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+import javax.swing.event.ChangeEvent;
 import model.*;
 import view.*;
 
@@ -27,7 +28,21 @@ public class RegisterController extends AbstractController {
     }
 
     @Override
+    public void stateChanged(ChangeEvent ce) {
+        System.out.println("StateChanged " + ce);
+//
+//        for (Product p : this.vm.getProducts()) {
+//            // System.out.println
+//            p.setAvailableQuantity(this.rspv.getProductQuantity(p));
+//        }
+        super.stateChanged(ce);
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
+            
+        System.out.println(e.getActionCommand());
+        
         if (e.getActionCommand().equals("Register")) {
             System.out.println("REGISTER BUTTON PRESSED");
             if (rv.getRegisterUsername() != null && rv.getRegisterEmail() != null && rv.getRegisterPassword() != null) {
