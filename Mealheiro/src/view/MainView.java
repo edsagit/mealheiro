@@ -43,14 +43,14 @@ public class MainView extends JPanel implements Observer {
 
         // Logout button
         logoutButton = new JButton("Logout");
-        logoutButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        logoutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 //        // Botao para fechar
 //        abastecerButton = new JButton("Abastecer");
 //        abastecerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // adicionar tudo ao painel principal
-//        this.add(logoutButton);
+//        this.tp.add(logoutButton);
 //        this.add(comprarButton);
 //
 //        this.add(abastecerButton);
@@ -59,14 +59,20 @@ public class MainView extends JPanel implements Observer {
     public void setModel(Database db) {
         this.db = db;
         db.addObserver(this);
+        this.update(db, null);
     }
 
     public void setController(EventListener el) {
-//        abastecerButton.addActionListener((ActionListener) el);
-//        comprarButton.addActionListener((ActionListener) el);
+        if (this.db != null) {
+            this.update(this.db, null);
+        }
     }
 
+    @Override
     public void update(Observable o, Object arg) {
+//        this.tp.removeAll();
+//        this.validate();
+//        this.repaint();
     }
 
 }

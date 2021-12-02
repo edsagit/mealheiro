@@ -28,6 +28,8 @@ public class DashboardView extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
 
+        setName("Dashboard"); // NOI18N
+
         jLabel1.setText("Balance");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

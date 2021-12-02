@@ -13,6 +13,7 @@ public class RegisterController extends AbstractController {
 
     private Database db;
     private RegisterView rv;
+    private String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     public RegisterController() {
 
@@ -40,14 +41,14 @@ public class RegisterController extends AbstractController {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-            
-        System.out.println(e.getActionCommand());
-        
+
         if (e.getActionCommand().equals("Register")) {
             System.out.println("REGISTER BUTTON PRESSED");
+            // not null validation
             if (rv.getRegisterUsername() != null && rv.getRegisterEmail() != null && rv.getRegisterPassword() != null) {
+                // register new user
                 db.registerUser(new User(rv.getRegisterUsername(), rv.getRegisterEmail(), rv.getRegisterPassword()));
-                System.out.println(db.usernameExists(rv.getRegisterUsername()));
+//                    System.out.println(db.usernameExists(rv.getRegisterUsername()));
             }
         }
         super.actionPerformed(e);

@@ -13,6 +13,9 @@ import java.util.*;
  */
 public class Account {
 
+    private static long idCounter = 0;
+
+    private String id;
     private String name;
 //    private String currency;
     private String iban;
@@ -23,6 +26,7 @@ public class Account {
     private AccountType accountType;
 
     public Account(String name) {
+        this.id = createID();
         this.name = name;
         this.iban = "";
         this.bic = "";
@@ -33,6 +37,7 @@ public class Account {
     }
 
     public Account(String name, Date openingDate) {
+        this.id = createID();
         this.name = name;
         this.iban = "";
         this.bic = "";
@@ -40,6 +45,10 @@ public class Account {
         this.balance = "";
         this.openingDate = openingDate;
         this.accountType = AccountType.ASSET;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -97,6 +106,9 @@ public class Account {
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
-    
-    
+
+    public static synchronized String createID() {
+        return String.valueOf(idCounter++);
+    }
+
 }

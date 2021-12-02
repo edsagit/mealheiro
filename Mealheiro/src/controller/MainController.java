@@ -17,6 +17,8 @@ public class MainController extends AbstractController {
 
     private LoginView lv;
     private RegisterView rv;
+    private DashboardView dv;
+    private AccountsView av;
 
 //    private ProductSelectionView psv;
 //    private ReStockProductsView rspv;
@@ -37,7 +39,6 @@ public class MainController extends AbstractController {
 
         // create views
         mv = new MainView();
-
         lv = new LoginView();
         rv = new RegisterView();
 
@@ -47,6 +48,7 @@ public class MainController extends AbstractController {
 
         // create controllers
         lc = new LoginController();
+        lc.setParentController(this);
         lc.setView(lv);
 
         rc = new RegisterController();
@@ -84,24 +86,26 @@ public class MainController extends AbstractController {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        Component source = (Component) e.getSource();
-//        if (this.mv.isAncestorOf(source)) {
-//            System.out.println("Acção feita sobre MainView");
-//            System.out.println(e.getActionCommand());
-//            if (e.getActionCommand().equals("Comprar")) {
-//                mainWindow.getContentPane().removeAll();
-//                mainWindow.getContentPane().add(psv);
-//                mainWindow.revalidate();
-//                mainWindow.repaint();
-//            } else if (e.getActionCommand().equals("Abastecer")) {
-//                mainWindow.getContentPane().removeAll();
-//                mainWindow.getContentPane().add(rspv);
-//                mainWindow.revalidate();
-//                mainWindow.repaint();
-//            }
-//        }
+        Component source = (Component) e.getSource();
+        
+        if (this.mv.isAncestorOf(source)) {
+            System.out.println("Acção feita sobre MainView");
+            System.out.println(e.getActionCommand());
+            if (e.getActionCommand().equals("Login")) {
+                mv.tp.removeAll(); // Remove LoginView and RegisterView panels
+                mainWindow.getContentPane().removeAll();
+                dv = new DashboardView(); // Instantiate DashboardView
+                av = new AccountsView(); // Instantiate AccountsView
+                mv.tp.setTabPlacement(javax.swing.JTabbedPane.LEFT); // Set tab placement to left
+                mv.tp.add(dv); // Add DashboardView panel
+                mv.tp.add(av); // Add AccountsView panel
+                mainWindow.getContentPane().add(mv);
+                mainWindow.revalidate();
+                mainWindow.repaint();
+            }
+        }
 
-//        super.actionPerformed(e);
+        super.actionPerformed(e);
     }
 
 }

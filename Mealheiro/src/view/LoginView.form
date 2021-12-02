@@ -21,14 +21,16 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="lblLoginPassword" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblLoginUsername" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfLoginUsername" pref="100" max="32767" attributes="0"/>
-                  <Component id="pfLoginPassword" alignment="0" max="32767" attributes="0"/>
-                  <Component id="bLogin" alignment="1" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="lblLoginPassword" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblLoginUsername" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="pfLoginPassword" pref="160" max="32767" attributes="0"/>
+                      <Component id="tfLoginUsername" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="bLogin" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="114" max="32767" attributes="0"/>
+              <EmptySpace pref="54" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

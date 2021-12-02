@@ -29,6 +29,7 @@ public class LoginView extends JPanel implements Observer {
     public void setModel(Database db) {
         this.db = db;
         db.addObserver(this);
+        this.update(db, null);
     }
 
     public void setController(EventListener el) {
@@ -81,13 +82,14 @@ public class LoginView extends JPanel implements Observer {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblLoginPassword)
-                    .addComponent(lblLoginUsername)
-                    .addComponent(tfLoginUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(pfLoginPassword)
-                    .addComponent(bLogin, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lblLoginPassword)
+                        .addComponent(lblLoginUsername)
+                        .addComponent(pfLoginPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                        .addComponent(tfLoginUsername))
+                    .addComponent(bLogin))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
