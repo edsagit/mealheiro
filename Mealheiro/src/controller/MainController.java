@@ -24,6 +24,7 @@ public class MainController extends AbstractController {
 //    private ReStockProductsView rspv;
     private LoginController lc;
     private RegisterController rc;
+    private DashboardController dc;
 
 //    private ProductSelectionController psc;
 //    private ReStockProductsController rspc;
@@ -92,13 +93,26 @@ public class MainController extends AbstractController {
             System.out.println("Acção feita sobre MainView");
             System.out.println(e.getActionCommand());
             if (e.getActionCommand().equals("Login")) {
-                mv.tp.removeAll(); // Remove LoginView and RegisterView panels
+                mv.tp.removeAll(); // Remove all tabbed pane tabs
                 mainWindow.getContentPane().removeAll();
                 dv = new DashboardView(); // Instantiate DashboardView
+                dc = new DashboardController();
+                dc.setParentController(this);
+                dc.setView(dv);
                 av = new AccountsView(); // Instantiate AccountsView
                 mv.tp.setTabPlacement(javax.swing.JTabbedPane.LEFT); // Set tab placement to left
                 mv.tp.add(dv); // Add DashboardView panel
                 mv.tp.add(av); // Add AccountsView panel
+                mainWindow.getContentPane().add(mv);
+                mainWindow.revalidate();
+                mainWindow.repaint();
+            }
+            if (e.getActionCommand().equals("Logout")) {
+                mv.tp.removeAll(); // Remove all tabbed pane tabs
+                mainWindow.getContentPane().removeAll();  
+                mv.tp.setTabPlacement(javax.swing.JTabbedPane.TOP); // Set tab placement to top
+                mv.tp.add(lv); // Add LoginView panel
+                mv.tp.add(rv); // Add RegisterView panel
                 mainWindow.getContentPane().add(mv);
                 mainWindow.revalidate();
                 mainWindow.repaint();

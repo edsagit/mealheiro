@@ -17,7 +17,6 @@ public class AccountsView extends javax.swing.JPanel {
      */
     public AccountsView() {
         initComponents();
-        jPanel1.setPreferredSize(new Dimension(800, 30));
     }
 
     /**

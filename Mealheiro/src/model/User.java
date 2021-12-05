@@ -39,6 +39,14 @@ public class User extends Observable {
         return password;
     }
     
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
+
+    public ArrayList<Account> getAccounts() {
+        return accounts;
+    }
+    
     
 
 }

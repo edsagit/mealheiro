@@ -36,7 +36,7 @@ public class Account {
         this.accountType = AccountType.ASSET;
     }
 
-    public Account(String name, Date openingDate) {
+    public Account(String name, String balance) {
         this.id = createID();
         this.name = name;
         this.iban = "";

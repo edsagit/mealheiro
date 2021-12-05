@@ -14,8 +14,6 @@ public class MainView extends JPanel implements Observer {
 
     public JTabbedPane tp;
 
-    private JButton logoutButton;
-
     private Database db;
 
     public MainView() {
@@ -41,16 +39,12 @@ public class MainView extends JPanel implements Observer {
                 .addContainerGap())
         );
 
-        // Logout button
-        logoutButton = new JButton("Logout");
-        logoutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 //        // Botao para fechar
 //        abastecerButton = new JButton("Abastecer");
 //        abastecerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // adicionar tudo ao painel principal
-//        this.tp.add(logoutButton);
 //        this.add(comprarButton);
 //
 //        this.add(abastecerButton);

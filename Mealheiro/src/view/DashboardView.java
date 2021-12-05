@@ -4,17 +4,39 @@
  */
 package view;
 
+import java.awt.event.ActionListener;
+import java.util.EventListener;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.JPanel;
+import model.Database;
+
 /**
  *
  * @author ed
  */
-public class DashboardView extends javax.swing.JPanel {
+public class DashboardView extends JPanel implements Observer {
+    
+    private Database db;
 
     /**
      * Creates new form DashboardView
      */
     public DashboardView() {
         initComponents();
+    }
+    
+    public void setModel(Database db) {
+        this.db = db;
+        db.addObserver(this);
+        this.update(db, null);
+    }
+
+    public void setController(EventListener el) {
+        bLogout.addActionListener((ActionListener) el);
+    }
+
+    public void update(Observable o, Object arg) {
     }
 
     /**
@@ -28,6 +50,7 @@ public class DashboardView extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        bLogout = new javax.swing.JButton();
 
         setName("Dashboard"); // NOI18N
 
@@ -55,6 +78,8 @@ public class DashboardView extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        bLogout.setText("Logout");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -63,18 +88,25 @@ public class DashboardView extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(639, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bLogout)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(497, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 463, Short.MAX_VALUE)
+                .addComponent(bLogout)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bLogout;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

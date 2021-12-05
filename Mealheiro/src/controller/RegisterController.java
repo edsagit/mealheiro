@@ -13,7 +13,6 @@ public class RegisterController extends AbstractController {
 
     private Database db;
     private RegisterView rv;
-    private String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     public RegisterController() {
 
@@ -44,13 +43,30 @@ public class RegisterController extends AbstractController {
 
         if (e.getActionCommand().equals("Register")) {
             System.out.println("REGISTER BUTTON PRESSED");
-            // not null validation
-            if (rv.getRegisterUsername() != null && rv.getRegisterEmail() != null && rv.getRegisterPassword() != null) {
-                // register new user
-                db.registerUser(new User(rv.getRegisterUsername(), rv.getRegisterEmail(), rv.getRegisterPassword()));
+            User tmpUser = new User(rv.getRegisterUsername(), rv.getRegisterEmail(), rv.getRegisterPassword());
+
+            // register new user
+            db.registerUser(tmpUser);
+            tmpUser.addAccount(new Account(rv.getTfRegisterBankName(), rv.getFtfRegisterBalance()));
+            tmpUser.addAccount(new Account(rv.getTfRegisterBankName() + "savings account", rv.getFtfRegisterSavingsBalance()));
+            tmpUser.addAccount(new Account("Cash wallet", "0"));
+            // set label text
+            rv.setInformationLabelText("<html>" + "User <b>" + rv.getRegisterUsername() + "</b> registered successfully!" + "</html>");
 //                    System.out.println(db.usernameExists(rv.getRegisterUsername()));
-            }
+
+            // clear text fields
+            rv.setTfRegisterUsername("");
+            rv.setTfRegisterEmail("");
+            rv.setPfRegisterPassword("");
+            rv.setTfRegisterBankName("");
+            rv.setFtfRegisterBalance("");
+            rv.setFtfRegisterSavingsBalance("");
+            
+            tmpUser.getAccounts().forEach(a -> {
+                System.out.println(a.getId() + a.getName());
+            });
         }
+
         super.actionPerformed(e);
     }
 }
