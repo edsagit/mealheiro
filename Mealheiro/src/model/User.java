@@ -11,6 +11,7 @@ public class User extends Observable {
     private String username;
     private String email;
     private String password;
+    private String netWorth;
     private ArrayList<Account> accounts;
     private ArrayList<Transaction> transactions;
 
@@ -23,8 +24,8 @@ public class User extends Observable {
     }
 
     public void update(Observable o, Object arg) {
-//        setChanged();
-//        notifyObservers();
+        setChanged();
+        notifyObservers();
     }
 
     public String getUsername() {
@@ -37,6 +38,11 @@ public class User extends Observable {
 
     public String getPassword() {
         return password;
+    }
+    
+            
+    public void addTransaction(Transaction transaction) {
+        transactions.add(transaction);
     }
     
     public void addAccount(Account account) {

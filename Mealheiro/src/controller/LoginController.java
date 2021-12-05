@@ -27,14 +27,14 @@ public class LoginController extends AbstractController {
         this.lv = lv;
         lv.setController(this);
     }
+    
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Login")) {
             System.out.println("LOGIN BUTTON PRESSED");
-            System.out.println(lv.getLoginUsername());
-            System.out.println(db.usernameExists(lv.getLoginUsername()));
-            
+
         }
         super.actionPerformed(e);
     }

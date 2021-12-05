@@ -29,6 +29,7 @@
                       <Component id="tfLoginUsername" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <Component id="bLogin" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblLoginInformation" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="54" max="32767" attributes="0"/>
           </Group>
@@ -46,8 +47,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pfLoginPassword" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="lblLoginInformation" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               <Component id="bLogin" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="91" max="32767" attributes="0"/>
+              <EmptySpace pref="69" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,6 +75,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Login"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLoginInformation">
     </Component>
   </SubComponents>
 </Form>

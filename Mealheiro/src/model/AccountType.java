@@ -15,5 +15,5 @@ package model;
 // Liabilities are your debts and loans such as old credit card debts or student loans.
 
 public enum AccountType {
-    ASSET, EXPENSE, REVENUE, LIABILITY
+    ASSET, EXPENSE, REVENUE, LIABILITY, OPENING
 }

@@ -12,6 +12,7 @@ public class MainController extends AbstractController {
 
 //    private VendingMachine vm;
     private Database db;
+    private User user;
 
     private MainView mv;
 
@@ -42,6 +43,7 @@ public class MainController extends AbstractController {
         mv = new MainView();
         lv = new LoginView();
         rv = new RegisterView();
+        dv = new DashboardView(); // Instantiate DashboardView
 
 //        psv = new ProductSelectionView();
 //        rspv = new ReStockProductsView();
@@ -54,6 +56,10 @@ public class MainController extends AbstractController {
 
         rc = new RegisterController();
         rc.setView(rv);
+
+        dc = new DashboardController();
+        dc.setParentController(this);
+        dc.setView(dv);
 
 //        psc = new ProductSelectionController();
 //        psc.setParentController(this);
@@ -76,6 +82,9 @@ public class MainController extends AbstractController {
         this.lc.setModel(db); // set LoginController model
         this.rv.setModel(db); // set RegisterView model
         this.rc.setModel(db); // set RegisterController model
+        this.dv.setModel(db); // set DashboardView model
+        this.dc.setModel(db); // set DashboardController model
+
     }
 
     public void setView(MainView mv) {
@@ -88,28 +97,32 @@ public class MainController extends AbstractController {
     @Override
     public void actionPerformed(ActionEvent e) {
         Component source = (Component) e.getSource();
-        
+
         if (this.mv.isAncestorOf(source)) {
             System.out.println("Acção feita sobre MainView");
             System.out.println(e.getActionCommand());
             if (e.getActionCommand().equals("Login")) {
-                mv.tp.removeAll(); // Remove all tabbed pane tabs
-                mainWindow.getContentPane().removeAll();
-                dv = new DashboardView(); // Instantiate DashboardView
-                dc = new DashboardController();
-                dc.setParentController(this);
-                dc.setView(dv);
-                av = new AccountsView(); // Instantiate AccountsView
-                mv.tp.setTabPlacement(javax.swing.JTabbedPane.LEFT); // Set tab placement to left
-                mv.tp.add(dv); // Add DashboardView panel
-                mv.tp.add(av); // Add AccountsView panel
-                mainWindow.getContentPane().add(mv);
-                mainWindow.revalidate();
-                mainWindow.repaint();
+                if (db.loginUser(lv.getLoginUsername(), lv.getPfLoginPassword())) {
+                    System.out.println(db);
+                    db.setLoggedInUser(db.getUserByUsername(lv.getLoginUsername()));
+                    dv.update(db, null);
+                    mv.tp.removeAll(); // Remove all tabbed pane tabs
+                    mainWindow.getContentPane().removeAll();
+                    av = new AccountsView(); // Instantiate AccountsView
+                    mv.tp.setTabPlacement(javax.swing.JTabbedPane.LEFT); // Set tab placement to left
+                    mv.tp.add(dv); // Add DashboardView panel
+                    mv.tp.add(av); // Add AccountsView panel
+                    mainWindow.getContentPane().add(mv);
+                    mainWindow.revalidate();
+                    mainWindow.repaint();
+                } else {
+                    lv.setLoginInformation("Username or password are incorrect!");
+                }
             }
             if (e.getActionCommand().equals("Logout")) {
+                db.setLoggedInUser(null);
                 mv.tp.removeAll(); // Remove all tabbed pane tabs
-                mainWindow.getContentPane().removeAll();  
+                mainWindow.getContentPane().removeAll();
                 mv.tp.setTabPlacement(javax.swing.JTabbedPane.TOP); // Set tab placement to top
                 mv.tp.add(lv); // Add LoginView panel
                 mv.tp.add(rv); // Add RegisterView panel

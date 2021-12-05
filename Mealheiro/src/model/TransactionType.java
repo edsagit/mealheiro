@@ -9,5 +9,5 @@ package model;
  * @author ed
  */
 public enum TransactionType {
-    WITHDRAWAL, DEPOSIT, TRANSFER
+    WITHDRAWAL, DEPOSIT, TRANSFER, OPENING_BALANCE
 }

@@ -18,6 +18,7 @@ public class DashboardController extends AbstractController {
     private DashboardView dv;
 
     public DashboardController() {
+//        dv.setLblWelcomeUser("<html> Welcome, " + db.getLoggedInUser() + "</html>");
     }
     
     public void setModel(Database db) {

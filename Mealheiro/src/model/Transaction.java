@@ -12,7 +12,9 @@ import java.util.*;
  * @author ed
  */
 public class Transaction {
-    
+
+    private static long idCounter = 0;
+
     private String id;
     private String amount;
     private TransactionType type;
@@ -22,15 +24,17 @@ public class Transaction {
     private Date date;
 
     public Transaction(String amount, TransactionType type, Account sourceAccount, Account destinationAccount) {
-        this.id = UUID.randomUUID().toString();
+        this.id = createID();
         this.amount = amount;
         this.type = type;
         this.sourceAccount = sourceAccount;
         this.destinationAccount = destinationAccount;
         this.description = "";
-        this.date = Date.from(Instant.MIN);
+        this.date = new Date();  
     }
-    
-    
-    
+
+    public static synchronized String createID() {
+        return String.valueOf(idCounter++);
+    }
+
 }

@@ -24,8 +24,9 @@ public class Account {
     private String balance;
     private Date openingDate;
     private AccountType accountType;
+    private ArrayList<Transaction> transactions;
 
-    public Account(String name) {
+    public Account(String name, AccountType type) {
         this.id = createID();
         this.name = name;
         this.iban = "";
@@ -33,10 +34,11 @@ public class Account {
         this.accountNumber = "";
         this.balance = "";
         this.openingDate = Date.from(Instant.MIN);
-        this.accountType = AccountType.ASSET;
+        this.accountType = type;
+        this.transactions = new ArrayList<>();
     }
 
-    public Account(String name, String balance) {
+    public Account(String name, String balance, AccountType type) {
         this.id = createID();
         this.name = name;
         this.iban = "";
@@ -44,7 +46,8 @@ public class Account {
         this.accountNumber = "";
         this.balance = "";
         this.openingDate = openingDate;
-        this.accountType = AccountType.ASSET;
+        this.accountType = type;
+        this.transactions = new ArrayList<>();
     }
 
     public String getId() {
@@ -105,6 +108,10 @@ public class Account {
 
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
+    }
+    
+    public void addTransaction(Transaction transaction) {
+        this.transactions.add(transaction);
     }
 
     public static synchronized String createID() {

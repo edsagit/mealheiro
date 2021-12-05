@@ -40,7 +40,12 @@ public class LoginView extends JPanel implements Observer {
     }
 
     public String getPfLoginPassword() {
-        return pfLoginPassword.getText();
+        String password = this.pfLoginPassword.getText();
+        if (!password.isEmpty()) {
+            return password;
+        } else {
+            return null;
+        }
     }
 
     public String getLoginUsername() {
@@ -50,6 +55,10 @@ public class LoginView extends JPanel implements Observer {
         } else {
             return null;
         }
+    }
+    
+    public void setLoginInformation(String text) {
+        lblLoginInformation.setText(text);
     }
     
     /**
@@ -66,6 +75,7 @@ public class LoginView extends JPanel implements Observer {
         lblLoginPassword = new javax.swing.JLabel();
         pfLoginPassword = new javax.swing.JPasswordField();
         bLogin = new javax.swing.JButton();
+        lblLoginInformation = new javax.swing.JLabel();
 
         setName("Login"); // NOI18N
 
@@ -88,7 +98,8 @@ public class LoginView extends JPanel implements Observer {
                         .addComponent(lblLoginUsername)
                         .addComponent(pfLoginPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                         .addComponent(tfLoginUsername))
-                    .addComponent(bLogin))
+                    .addComponent(bLogin)
+                    .addComponent(lblLoginInformation))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -103,14 +114,17 @@ public class LoginView extends JPanel implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pfLoginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(lblLoginInformation)
+                .addGap(22, 22, 22)
                 .addComponent(bLogin)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bLogin;
+    private javax.swing.JLabel lblLoginInformation;
     private javax.swing.JLabel lblLoginPassword;
     private javax.swing.JLabel lblLoginUsername;
     private javax.swing.JPasswordField pfLoginPassword;

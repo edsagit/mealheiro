@@ -47,9 +47,17 @@ public class RegisterController extends AbstractController {
 
             // register new user
             db.registerUser(tmpUser);
-            tmpUser.addAccount(new Account(rv.getTfRegisterBankName(), rv.getFtfRegisterBalance()));
-            tmpUser.addAccount(new Account(rv.getTfRegisterBankName() + "savings account", rv.getFtfRegisterSavingsBalance()));
-            tmpUser.addAccount(new Account("Cash wallet", "0"));
+            // instantiate default asset accounts 
+            Account openingInitialBalance = new Account("Initial balance for " + rv.getTfRegisterBankName(), rv.getFtfRegisterBalance(), AccountType.OPENING);
+            Account initialBalance = new Account(rv.getTfRegisterBankName(), "", AccountType.ASSET);
+            tmpUser.addAccount(openingInitialBalance);
+            tmpUser.addAccount(initialBalance);
+            Transaction openingBalance = new Transaction(rv.getFtfRegisterBalance(), TransactionType.OPENING_BALANCE, openingInitialBalance, initialBalance);
+            initialBalance.addTransaction(openingBalance);
+            tmpUser.addTransaction(openingBalance);
+            
+            tmpUser.addAccount(new Account(rv.getTfRegisterBankName() + " savings account", "", AccountType.ASSET));
+            tmpUser.addAccount(new Account("Cash wallet", "", AccountType.ASSET));
             // set label text
             rv.setInformationLabelText("<html>" + "User <b>" + rv.getRegisterUsername() + "</b> registered successfully!" + "</html>");
 //                    System.out.println(db.usernameExists(rv.getRegisterUsername()));
