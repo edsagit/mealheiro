@@ -47,20 +47,30 @@ public class RegisterController extends AbstractController {
 
             // register new user
             db.registerUser(tmpUser);
-            // instantiate default asset accounts 
-            Account openingInitialBalance = new Account("Initial balance for " + rv.getTfRegisterBankName(), rv.getFtfRegisterBalance(), AccountType.OPENING);
-            Account initialBalance = new Account(rv.getTfRegisterBankName(), "", AccountType.ASSET);
-            tmpUser.addAccount(openingInitialBalance);
-            tmpUser.addAccount(initialBalance);
-            Transaction openingBalance = new Transaction(rv.getFtfRegisterBalance(), TransactionType.OPENING_BALANCE, openingInitialBalance, initialBalance);
-            initialBalance.addTransaction(openingBalance);
+            
+            // instantiate default asset account
+            Account sourceOpeningBalance = new Account("Initial balance for " + rv.getTfRegisterBankName() + " account", rv.getFtfRegisterBalance(), AccountType.OPENING); // 
+            Account destinationOpeningBalance = new Account(rv.getTfRegisterBankName(), "0", AccountType.ASSET); // destination account for default asset
+//            tmpUser.addAccount(sourceOpeningBalance);
+            destinationOpeningBalance.setActive(true);
+            tmpUser.addAccount(destinationOpeningBalance); // add destination account to user
+            Transaction openingBalance = new Transaction(rv.getFtfRegisterBalance(), TransactionType.OPENING_BALANCE, sourceOpeningBalance, destinationOpeningBalance, "Initial balance for " + rv.getTfRegisterBankName() + " account");
+            destinationOpeningBalance.addTransaction(openingBalance);
             tmpUser.addTransaction(openingBalance);
             
-            tmpUser.addAccount(new Account(rv.getTfRegisterBankName() + " savings account", "", AccountType.ASSET));
-            tmpUser.addAccount(new Account("Cash wallet", "", AccountType.ASSET));
+            // instantiate default asset savings account
+            Account sourceOpeningSavingBalance = new Account("Initial balance for " + rv.getTfRegisterBankName() + " savings account", rv.getFtfRegisterSavingsBalance(), AccountType.OPENING);
+            Account destinationOpeningSavingsBalance = new Account(rv.getTfRegisterBankName() + " savings account", "0", AccountType.ASSET);
+//            tmpUser.addAccount(sourceOpeningSavingBalance); 
+            destinationOpeningSavingsBalance.setActive(true);
+            tmpUser.addAccount(destinationOpeningSavingsBalance); // add destination account to user
+            Transaction savingsBalance = new Transaction(rv.getFtfRegisterSavingsBalance(), TransactionType.OPENING_BALANCE, sourceOpeningSavingBalance, destinationOpeningBalance, "Initial balance for " + rv.getTfRegisterBankName() + " savings account");
+            destinationOpeningSavingsBalance.addTransaction(savingsBalance);       
+            tmpUser.addTransaction(savingsBalance);
+            
+            
             // set label text
             rv.setInformationLabelText("<html>" + "User <b>" + rv.getRegisterUsername() + "</b> registered successfully!" + "</html>");
-//                    System.out.println(db.usernameExists(rv.getRegisterUsername()));
 
             // clear text fields
             rv.setTfRegisterUsername("");
@@ -70,9 +80,9 @@ public class RegisterController extends AbstractController {
             rv.setFtfRegisterBalance("");
             rv.setFtfRegisterSavingsBalance("");
             
-            tmpUser.getAccounts().forEach(a -> {
-                System.out.println(a.getId() + a.getName());
-            });
+//            tmpUser.getAccounts().forEach(a -> {
+//                System.out.println(a.getId() + a.getName());
+//            });
         }
 
         super.actionPerformed(e);

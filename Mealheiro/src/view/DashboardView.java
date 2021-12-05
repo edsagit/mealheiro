@@ -24,7 +24,7 @@ public class DashboardView extends JPanel implements Observer {
      * Creates new form DashboardView
      */
     public DashboardView() {
-        System.out.println(db);
+//        System.out.println(db);
         initComponents();
 
     }

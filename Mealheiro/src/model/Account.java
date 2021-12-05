@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author ed
  */
-public class Account {
+public class Account extends Observable {
 
     private static long idCounter = 0;
 
@@ -24,6 +24,7 @@ public class Account {
     private String balance;
     private Date openingDate;
     private AccountType accountType;
+    private Boolean active;
     private ArrayList<Transaction> transactions;
 
     public Account(String name, AccountType type) {
@@ -108,6 +109,14 @@ public class Account {
 
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
     
     public void addTransaction(Transaction transaction) {

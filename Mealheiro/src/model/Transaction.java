@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author ed
  */
-public class Transaction {
+public class Transaction extends Observable {
 
     private static long idCounter = 0;
 
@@ -23,13 +23,13 @@ public class Transaction {
     private String description;
     private Date date;
 
-    public Transaction(String amount, TransactionType type, Account sourceAccount, Account destinationAccount) {
+    public Transaction(String amount, TransactionType type, Account sourceAccount, Account destinationAccount, String description) {
         this.id = createID();
         this.amount = amount;
         this.type = type;
         this.sourceAccount = sourceAccount;
         this.destinationAccount = destinationAccount;
-        this.description = "";
+        this.description = description;
         this.date = new Date();  
     }
 

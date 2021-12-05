@@ -26,6 +26,7 @@ public class MainController extends AbstractController {
     private LoginController lc;
     private RegisterController rc;
     private DashboardController dc;
+    private AccountsController ac;
 
 //    private ProductSelectionController psc;
 //    private ReStockProductsController rspc;
@@ -44,6 +45,7 @@ public class MainController extends AbstractController {
         lv = new LoginView();
         rv = new RegisterView();
         dv = new DashboardView(); // Instantiate DashboardView
+        av = new AccountsView(); // Instantiate AccountsView
 
 //        psv = new ProductSelectionView();
 //        rspv = new ReStockProductsView();
@@ -60,6 +62,9 @@ public class MainController extends AbstractController {
         dc = new DashboardController();
         dc.setParentController(this);
         dc.setView(dv);
+        
+        ac = new AccountsController();
+        ac.setView(av);
 
 //        psc = new ProductSelectionController();
 //        psc.setParentController(this);
@@ -84,6 +89,8 @@ public class MainController extends AbstractController {
         this.rc.setModel(db); // set RegisterController model
         this.dv.setModel(db); // set DashboardView model
         this.dc.setModel(db); // set DashboardController model
+        this.av.setModel(db);
+        this.ac.setModel(db);
 
     }
 
@@ -108,10 +115,11 @@ public class MainController extends AbstractController {
                     dv.update(db, null);
                     mv.tp.removeAll(); // Remove all tabbed pane tabs
                     mainWindow.getContentPane().removeAll();
-                    av = new AccountsView(); // Instantiate AccountsView
+
                     mv.tp.setTabPlacement(javax.swing.JTabbedPane.LEFT); // Set tab placement to left
                     mv.tp.add(dv); // Add DashboardView panel
                     mv.tp.add(av); // Add AccountsView panel
+                    av.update(db, null);
                     mainWindow.getContentPane().add(mv);
                     mainWindow.revalidate();
                     mainWindow.repaint();

@@ -39,7 +39,6 @@ public class User extends Observable {
     public String getPassword() {
         return password;
     }
-    
             
     public void addTransaction(Transaction transaction) {
         transactions.add(transaction);

@@ -4,19 +4,55 @@
  */
 package view;
 
-import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.util.EventListener;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import model.*;
 
 /**
  *
  * @author ed
  */
-public class AccountsView extends javax.swing.JPanel {
+public class AccountsView extends JPanel implements Observer {
+
+    private Database db;
+
+    DefaultTableModel assetModel;
 
     /**
      * Creates new form AccountsView
      */
     public AccountsView() {
+        String[] assetTableColumnNames = {"Name", "Account number", "Current balance", "Is active?", "Action"};
+        Object[][] data = {};
+        assetModel = new DefaultTableModel(data, assetTableColumnNames);
         initComponents();
+
+    }
+
+    public void setModel(Database db) {
+        this.db = db;
+        db.addObserver(this);
+        this.update(db, null);
+    }
+
+    public void setController(EventListener el) {
+//        bLogout.addActionListener((ActionListener) el);
+    }
+
+    public void update(Observable o, Object arg) {
+        assetModel.setRowCount(0); // reset the table first
+        if (db.getLoggedInUser() != null) {
+            for (Account acc : db.getLoggedInUser().getAccounts()) {
+                if (acc.getAccountType().equals(AccountType.ASSET)) {
+                    assetModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), acc.getBalance(), acc.getActive(), ""});
+                }
+                
+            }
+        }
     }
 
     /**
@@ -30,36 +66,26 @@ public class AccountsView extends javax.swing.JPanel {
 
         tpAccounts = new javax.swing.JTabbedPane();
         AssetPanel = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPaneAsset = new javax.swing.JScrollPane();
+        tableAsset = new javax.swing.JTable();
         ExpensePanel = new javax.swing.JPanel();
         RevenuePanel = new javax.swing.JPanel();
         Liability = new javax.swing.JPanel();
 
         setName("Accounts"); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        tableAsset.setModel(assetModel);
+        jScrollPaneAsset.setViewportView(tableAsset);
 
         javax.swing.GroupLayout AssetPanelLayout = new javax.swing.GroupLayout(AssetPanel);
         AssetPanel.setLayout(AssetPanelLayout);
         AssetPanelLayout.setHorizontalGroup(
             AssetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
+            .addComponent(jScrollPaneAsset, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
         );
         AssetPanelLayout.setVerticalGroup(
             AssetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+            .addComponent(jScrollPaneAsset, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
         );
 
         tpAccounts.addTab("Asset", AssetPanel);
@@ -127,8 +153,8 @@ public class AccountsView extends javax.swing.JPanel {
     private javax.swing.JPanel ExpensePanel;
     private javax.swing.JPanel Liability;
     private javax.swing.JPanel RevenuePanel;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPaneAsset;
+    private javax.swing.JTable tableAsset;
     private javax.swing.JTabbedPane tpAccounts;
     // End of variables declaration//GEN-END:variables
 }
