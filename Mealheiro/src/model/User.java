@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -8,6 +9,9 @@ import java.util.*;
  */
 public class User extends Observable {
 
+    private static long idCounter = 0;
+
+    private String id;
     private String username;
     private String email;
     private String password;
@@ -16,6 +20,7 @@ public class User extends Observable {
     private ArrayList<Transaction> transactions;
 
     public User(String username, String email, String password) {
+        this.id = createID();
         this.username = username;
         this.email = email;
         this.password = password;
@@ -39,11 +44,11 @@ public class User extends Observable {
     public String getPassword() {
         return password;
     }
-            
+
     public void addTransaction(Transaction transaction) {
         transactions.add(transaction);
     }
-    
+
     public void addAccount(Account account) {
         accounts.add(account);
     }
@@ -52,6 +57,19 @@ public class User extends Observable {
         return accounts;
     }
     
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    @Override
+    public String toString() {
+        return id + "," + username + "," + email + "," + password + "," + netWorth + "," + accounts + "," + transactions;
+    }
     
+    
+    
+    public static synchronized String createID() {
+        return String.valueOf(idCounter++);
+    }
 
 }

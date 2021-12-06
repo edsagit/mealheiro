@@ -54,7 +54,7 @@ public class RegisterController extends AbstractController {
 //            tmpUser.addAccount(sourceOpeningBalance);
             destinationOpeningBalance.setActive(true);
             tmpUser.addAccount(destinationOpeningBalance); // add destination account to user
-            Transaction openingBalance = new Transaction(rv.getFtfRegisterBalance(), TransactionType.OPENING_BALANCE, sourceOpeningBalance, destinationOpeningBalance, "Initial balance for " + rv.getTfRegisterBankName() + " account");
+            Transaction openingBalance = new Transaction(rv.getFtfRegisterBalance(), TransactionType.OPENING_BALANCE, sourceOpeningBalance, destinationOpeningBalance, "Initial balance for " + rv.getTfRegisterBankName() + " account", "Opening balance");
             destinationOpeningBalance.addTransaction(openingBalance);
             tmpUser.addTransaction(openingBalance);
             
@@ -64,7 +64,7 @@ public class RegisterController extends AbstractController {
 //            tmpUser.addAccount(sourceOpeningSavingBalance); 
             destinationOpeningSavingsBalance.setActive(true);
             tmpUser.addAccount(destinationOpeningSavingsBalance); // add destination account to user
-            Transaction savingsBalance = new Transaction(rv.getFtfRegisterSavingsBalance(), TransactionType.OPENING_BALANCE, sourceOpeningSavingBalance, destinationOpeningBalance, "Initial balance for " + rv.getTfRegisterBankName() + " savings account");
+            Transaction savingsBalance = new Transaction(rv.getFtfRegisterSavingsBalance(), TransactionType.OPENING_BALANCE, sourceOpeningSavingBalance, destinationOpeningSavingsBalance, "Initial balance for " + rv.getTfRegisterBankName() + " savings account", "Opening balance");
             destinationOpeningSavingsBalance.addTransaction(savingsBalance);       
             tmpUser.addTransaction(savingsBalance);
             

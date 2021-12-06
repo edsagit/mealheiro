@@ -37,6 +37,8 @@ public class Account extends Observable {
         this.openingDate = Date.from(Instant.MIN);
         this.accountType = type;
         this.transactions = new ArrayList<>();
+        setChanged();
+        notifyObservers();
     }
 
     public Account(String name, String balance, AccountType type) {
@@ -45,10 +47,12 @@ public class Account extends Observable {
         this.iban = "";
         this.bic = "";
         this.accountNumber = "";
-        this.balance = "";
+        this.balance = balance;
         this.openingDate = openingDate;
         this.accountType = type;
         this.transactions = new ArrayList<>();
+        setChanged();
+        notifyObservers();
     }
 
     public String getId() {

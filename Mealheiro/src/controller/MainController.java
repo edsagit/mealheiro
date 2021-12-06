@@ -20,6 +20,7 @@ public class MainController extends AbstractController {
     private RegisterView rv;
     private DashboardView dv;
     private AccountsView av;
+    private TransactionsView tv;
 
 //    private ProductSelectionView psv;
 //    private ReStockProductsView rspv;
@@ -27,6 +28,7 @@ public class MainController extends AbstractController {
     private RegisterController rc;
     private DashboardController dc;
     private AccountsController ac;
+    private TransactionsController tc;
 
 //    private ProductSelectionController psc;
 //    private ReStockProductsController rspc;
@@ -46,6 +48,7 @@ public class MainController extends AbstractController {
         rv = new RegisterView();
         dv = new DashboardView(); // Instantiate DashboardView
         av = new AccountsView(); // Instantiate AccountsView
+        tv = new TransactionsView();
 
 //        psv = new ProductSelectionView();
 //        rspv = new ReStockProductsView();
@@ -65,7 +68,11 @@ public class MainController extends AbstractController {
         
         ac = new AccountsController();
         ac.setView(av);
-
+        
+        tc = new TransactionsController();
+        tc.setView(tv);
+        
+        
 //        psc = new ProductSelectionController();
 //        psc.setParentController(this);
 //        psc.setView(psv);
@@ -91,7 +98,8 @@ public class MainController extends AbstractController {
         this.dc.setModel(db); // set DashboardController model
         this.av.setModel(db);
         this.ac.setModel(db);
-
+        this.tv.setModel(db);
+        this.tc.setModel(db);
     }
 
     public void setView(MainView mv) {
@@ -113,13 +121,16 @@ public class MainController extends AbstractController {
                     System.out.println(db);
                     db.setLoggedInUser(db.getUserByUsername(lv.getLoginUsername()));
                     dv.update(db, null);
+  
                     mv.tp.removeAll(); // Remove all tabbed pane tabs
                     mainWindow.getContentPane().removeAll();
 
                     mv.tp.setTabPlacement(javax.swing.JTabbedPane.LEFT); // Set tab placement to left
                     mv.tp.add(dv); // Add DashboardView panel
                     mv.tp.add(av); // Add AccountsView panel
-                    av.update(db, null);
+                    mv.tp.add(tv); // Add TransactionsView panel
+                    av.update(db, null); // Update AccountsView
+                    tv.update(db, null); // Update TransactionsView
                     mainWindow.getContentPane().add(mv);
                     mainWindow.revalidate();
                     mainWindow.repaint();
