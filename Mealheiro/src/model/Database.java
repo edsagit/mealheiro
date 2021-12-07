@@ -1,30 +1,17 @@
 package model;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 /**
  *
  * @author ed
  */
-public class Database extends Observable implements Observer {
+public class Database extends Observable {
 
     private ArrayList<User> users;
     private User loggedInUser = null;
 
-    public Database() throws IOException {
-//        List<String> result = Files.readAllLines(Paths.get("users.txt"));
-//        System.out.println(result);
-//        for (String s : result) {
-//            String[] parts = s.split(",");
-//            User tmpUser = new User();
-//            System.out.println(parts[0]);
-//        }
+    public Database() {
         this.users = new ArrayList<>();
     }
 
@@ -45,22 +32,32 @@ public class Database extends Observable implements Observer {
         return usernameExists(username) && getUserByUsername(username).getPassword().equals(password);
     }
 
-    public void registerUser(User u) {
-        if (!usernameExists(u.getUsername())) {
-            this.users.add(u);
+    public void registerUser(String username, String email, String password, String bankName, String defaultBalance, String savingsBalance) {
+        if (!usernameExists(username)) {
+            System.out.println("Model: database updated");
+            
+            User tmpUser = new User(username, email, password);
 
-            try {
-                FileWriter fw = new FileWriter("users.txt", true);
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.write(u.toString() + "\n");
-                bw.close();
-                System.out.println("Successfully wrote to the file.");
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-            }
+            // instantiate default asset account
+            Account sourceOpeningBalance = new Account("Initial balance for " + bankName + " account", defaultBalance, AccountType.OPENING); // 
+            Account destinationOpeningBalance = new Account(bankName, "0", AccountType.ASSET); // destination account for default asset
+            destinationOpeningBalance.setActive(true); // set account active
+            tmpUser.addAccount(destinationOpeningBalance); // add destination account to user
+            Transaction transactionOpeningBalance = new Transaction(defaultBalance, TransactionType.OPENING_BALANCE, sourceOpeningBalance, destinationOpeningBalance, "Initial balance for " + bankName + " account", "Opening balance");
+            destinationOpeningBalance.addTransaction(transactionOpeningBalance);
+            tmpUser.addTransaction(transactionOpeningBalance);
 
-            u.addObserver(this);
+            // instantiate default asset savings account
+            Account sourceOpeningSavingBalance = new Account("Initial balance for " + bankName + " savings account", savingsBalance, AccountType.OPENING);
+            Account destinationOpeningSavingsBalance = new Account(bankName + " savings account", "0", AccountType.ASSET);
+            destinationOpeningSavingsBalance.setActive(true); // set account active
+            tmpUser.addAccount(destinationOpeningSavingsBalance); // add destination account to user
+            Transaction transactionSavingsBalance = new Transaction(savingsBalance, TransactionType.OPENING_BALANCE, sourceOpeningSavingBalance, destinationOpeningSavingsBalance, "Initial balance for " + bankName + " savings account", "Opening balance");
+            destinationOpeningSavingsBalance.addTransaction(transactionSavingsBalance);
+            tmpUser.addTransaction(transactionSavingsBalance);
+
+            this.users.add(tmpUser);
+//            user.addObserver(this);
             setChanged();
             notifyObservers();
         }
@@ -80,10 +77,9 @@ public class Database extends Observable implements Observer {
         notifyObservers();
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        // Um produto foi modificado, notificar
-        setChanged();
-        notifyObservers();
-    }
+//    @Override
+//    public void update(Observable o, Object arg) {
+//        setChanged();
+//        notifyObservers();
+//    }
 }

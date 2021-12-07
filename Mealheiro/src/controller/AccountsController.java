@@ -5,6 +5,7 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+
 import model.*;
 import view.*;
 
@@ -18,7 +19,6 @@ public class AccountsController extends AbstractController {
     private AccountsView av;
 
     public AccountsController() {
-//        dv.setLblWelcomeUser("<html> Welcome, " + db.getLoggedInUser() + "</html>");
     }
 
     public void setModel(Database db) {

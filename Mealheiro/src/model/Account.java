@@ -37,8 +37,6 @@ public class Account extends Observable {
         this.openingDate = Date.from(Instant.MIN);
         this.accountType = type;
         this.transactions = new ArrayList<>();
-        setChanged();
-        notifyObservers();
     }
 
     public Account(String name, String balance, AccountType type) {
@@ -51,8 +49,6 @@ public class Account extends Observable {
         this.openingDate = openingDate;
         this.accountType = type;
         this.transactions = new ArrayList<>();
-        setChanged();
-        notifyObservers();
     }
 
     public String getId() {
@@ -65,6 +61,8 @@ public class Account extends Observable {
 
     public void setName(String name) {
         this.name = name;
+        setChanged();
+        notifyObservers();
     }
 
     public String getIban() {
@@ -73,6 +71,8 @@ public class Account extends Observable {
 
     public void setIban(String iban) {
         this.iban = iban;
+        setChanged();
+        notifyObservers();
     }
 
     public String getBic() {
@@ -81,6 +81,8 @@ public class Account extends Observable {
 
     public void setBic(String bic) {
         this.bic = bic;
+        setChanged();
+        notifyObservers();
     }
 
     public String getAccountNumber() {
@@ -89,6 +91,8 @@ public class Account extends Observable {
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
+        setChanged();
+        notifyObservers();
     }
 
     public String getBalance() {
@@ -97,6 +101,8 @@ public class Account extends Observable {
 
     public void setBalance(String balance) {
         this.balance = balance;
+        setChanged();
+        notifyObservers();
     }
 
     public Date getOpeningDate() {
@@ -105,6 +111,8 @@ public class Account extends Observable {
 
     public void setOpeningDate(Date openingDate) {
         this.openingDate = openingDate;
+        setChanged();
+        notifyObservers();
     }
 
     public AccountType getAccountType() {
@@ -113,6 +121,8 @@ public class Account extends Observable {
 
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
+        setChanged();
+        notifyObservers();
     }
 
     public Boolean getActive() {
@@ -121,10 +131,14 @@ public class Account extends Observable {
 
     public void setActive(Boolean active) {
         this.active = active;
+        setChanged();
+        notifyObservers();
     }
-    
+
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
+        setChanged();
+        notifyObservers();
     }
 
     public static synchronized String createID() {

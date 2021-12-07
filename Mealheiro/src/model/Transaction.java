@@ -6,7 +6,6 @@ package model;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.time.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,28 +41,29 @@ public class Transaction extends Observable {
     }
 
     public void operationTransaction(Account sourceAccount, Account destinationAccount, String amount) {
-        Number initialSourceBalance = null;
-        Number initialDestinationBalance = null;
-        Number amt = null;
         try {
+            Number initialSourceBalance = null;
+            Number initialDestinationBalance = null;
+            Number amt = null;
+
             initialSourceBalance = NumberFormat.getNumberInstance().parse(sourceAccount.getBalance());
             initialDestinationBalance = NumberFormat.getNumberInstance().parse(destinationAccount.getBalance());
             amt = NumberFormat.getNumberInstance().parse(amount);
-            System.out.print(initialSourceBalance.doubleValue());
-            System.out.print(initialDestinationBalance.doubleValue());
-            System.out.print(amt.doubleValue());
+//            System.out.print(initialSourceBalance.doubleValue());
+//            System.out.print(initialDestinationBalance.doubleValue());
+//            System.out.print(amt.doubleValue());
+
+            Double resultFinalSourceBalance = initialSourceBalance.doubleValue() - amt.doubleValue();
+            Double resultFinalDestinationBalance = initialDestinationBalance.doubleValue() + amt.doubleValue();
+
+            String FinalSourceBalance = Double.toString(resultFinalSourceBalance);
+            String FinalDestinationBalance = Double.toString(resultFinalDestinationBalance);
+
+            sourceAccount.setBalance(FinalSourceBalance);
+            destinationAccount.setBalance(FinalDestinationBalance);
         } catch (ParseException ex) {
             Logger.getLogger(Transaction.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        Double resultFinalSourceBalance = initialSourceBalance.doubleValue() - amt.doubleValue();
-        Double resultFinalDestinationBalance = initialDestinationBalance.doubleValue() + amt.doubleValue();
-        
-        String FinalSourceBalance = Double.toString(resultFinalSourceBalance);
-        String FinalDestinationBalance = Double.toString(resultFinalDestinationBalance);
-
-        sourceAccount.setBalance(FinalSourceBalance);
-        destinationAccount.setBalance(FinalDestinationBalance);
     }
 
     public String getAmount() {
@@ -72,6 +72,8 @@ public class Transaction extends Observable {
 
     public void setAmount(String amount) {
         this.amount = amount;
+        setChanged();
+        notifyObservers();
     }
 
     public TransactionType getType() {
@@ -80,6 +82,8 @@ public class Transaction extends Observable {
 
     public void setType(TransactionType type) {
         this.type = type;
+        setChanged();
+        notifyObservers();
     }
 
     public Account getSourceAccount() {
@@ -88,6 +92,8 @@ public class Transaction extends Observable {
 
     public void setSourceAccount(Account sourceAccount) {
         this.sourceAccount = sourceAccount;
+        setChanged();
+        notifyObservers();
     }
 
     public Account getDestinationAccount() {
@@ -96,6 +102,8 @@ public class Transaction extends Observable {
 
     public void setDestinationAccount(Account destinationAccount) {
         this.destinationAccount = destinationAccount;
+        setChanged();
+        notifyObservers();
     }
 
     public String getDescription() {
@@ -104,6 +112,8 @@ public class Transaction extends Observable {
 
     public void setDescription(String description) {
         this.description = description;
+        setChanged();
+        notifyObservers();
     }
 
     public Date getDate() {
@@ -112,6 +122,8 @@ public class Transaction extends Observable {
 
     public void setDate(Date date) {
         this.date = date;
+        setChanged();
+        notifyObservers();
     }
 
     public String getCategory() {
@@ -120,9 +132,9 @@ public class Transaction extends Observable {
 
     public void setCategory(String category) {
         this.category = category;
+        setChanged();
+        notifyObservers();
     }
-    
-    
 
     public static synchronized String createID() {
         return String.valueOf(idCounter++);

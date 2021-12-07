@@ -28,10 +28,10 @@ public class User extends Observable {
         this.transactions = new ArrayList<>();
     }
 
-    public void update(Observable o, Object arg) {
-        setChanged();
-        notifyObservers();
-    }
+//    public void update(Observable o, Object arg) {
+//        setChanged();
+//        notifyObservers();
+//    }
 
     public String getUsername() {
         return username;
@@ -47,29 +47,31 @@ public class User extends Observable {
 
     public void addTransaction(Transaction transaction) {
         transactions.add(transaction);
+        setChanged();
+        notifyObservers();
     }
 
     public void addAccount(Account account) {
         accounts.add(account);
+        setChanged();
+        notifyObservers();
     }
 
     public ArrayList<Account> getAccounts() {
         return accounts;
     }
-    
+
     public ArrayList<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public static synchronized String createID() {
+        return String.valueOf(idCounter++);
     }
 
     @Override
     public String toString() {
         return id + "," + username + "," + email + "," + password + "," + netWorth + "," + accounts + "," + transactions;
-    }
-    
-    
-    
-    public static synchronized String createID() {
-        return String.valueOf(idCounter++);
     }
 
 }

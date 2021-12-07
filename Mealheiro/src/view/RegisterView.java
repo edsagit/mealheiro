@@ -62,7 +62,6 @@ public class RegisterView extends JPanel implements Observer {
                 } else {
                     bRegister.setEnabled(false);
                 }
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
         tfRegisterEmail.setDocument(new JTextFieldLimit(30));
@@ -94,7 +93,6 @@ public class RegisterView extends JPanel implements Observer {
                 } else {
                     bRegister.setEnabled(false);
                 }
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
         pfRegisterPassword.setDocument(new JTextFieldLimit(15));
@@ -115,7 +113,6 @@ public class RegisterView extends JPanel implements Observer {
             }
 
             private void onChange(DocumentEvent e) {
-                String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                 if (!pfRegisterPassword.getText().isEmpty() && !pfRegisterPassword.getText().isBlank()) {
                     setPasswordValid(true);
                 } else {
@@ -126,7 +123,6 @@ public class RegisterView extends JPanel implements Observer {
                 } else {
                     bRegister.setEnabled(false);
                 }
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
         tfRegisterBankName.setDocument(new JTextFieldLimit(15));
@@ -147,7 +143,6 @@ public class RegisterView extends JPanel implements Observer {
             }
 
             private void onChange(DocumentEvent e) {
-                String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                 if (!tfRegisterBankName.getText().isEmpty() && !tfRegisterBankName.getText().isBlank()) {
                     setBankNameValid(true);
                 } else {
@@ -158,7 +153,6 @@ public class RegisterView extends JPanel implements Observer {
                 } else {
                     bRegister.setEnabled(false);
                 }
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
         ftfRegisterBalance.getDocument().addDocumentListener(new DocumentListener() {
@@ -178,7 +172,6 @@ public class RegisterView extends JPanel implements Observer {
             }
 
             private void onChange(DocumentEvent e) {
-                String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                 if (!ftfRegisterBalance.getText().isEmpty() && !ftfRegisterBalance.getText().isBlank()) {
                     setBalanceValid(true);
                 } else {
@@ -189,7 +182,6 @@ public class RegisterView extends JPanel implements Observer {
                 } else {
                     bRegister.setEnabled(false);
                 }
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
         ftfRegisterSavingsBalance.getDocument().addDocumentListener(new DocumentListener() {
@@ -209,7 +201,6 @@ public class RegisterView extends JPanel implements Observer {
             }
 
             private void onChange(DocumentEvent e) {
-                String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                 if (!ftfRegisterSavingsBalance.getText().isEmpty() && !ftfRegisterSavingsBalance.getText().isBlank()) {
                     setSavingsValid(true);
                 } else {
@@ -220,19 +211,8 @@ public class RegisterView extends JPanel implements Observer {
                 } else {
                     bRegister.setEnabled(false);
                 }
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-//        if (
-//                !this.tfRegisterUsername.getText().isEmpty() && !this.tfRegisterUsername.getText().isBlank() &&
-//                !this.tfRegisterEmail.getText().isEmpty() && !this.tfRegisterEmail.getText().isBlank() &&
-//                !this.pfRegisterPassword.getText().isEmpty() && !this.pfRegisterPassword.getText().isBlank() &&
-//                !this.tfRegisterBankName.getText().isEmpty() && !this.tfRegisterBankName.getText().isBlank() &&
-//                !this.ftfRegisterBalance.getText().isEmpty() && !this.ftfRegisterBalance.getText().isBlank() &&
-//                !this.ftfRegisterSavingsBalance.getText().isEmpty() && !this.ftfRegisterSavingsBalance.getText().isBlank()) {
-//            bRegister.setEnabled(true);
-//        } else { bRegister.setEnabled(false);}
-
     }
 
     public Boolean getUserValid() {
@@ -286,8 +266,6 @@ public class RegisterView extends JPanel implements Observer {
     public void setModel(Database db) {
         this.db = db;
         db.addObserver(this);
-        // Chamar update manualmente para inicializar a vista
-        this.update(db, null);
     }
 
     public void setInformationLabelText(String text) {
@@ -333,60 +311,38 @@ public class RegisterView extends JPanel implements Observer {
     public String getTfRegisterBankName() {
         return tfRegisterBankName.getText();
     }
-    
-    
-    
 
+    @Override
     public void update(Observable o, Object arg) {
-//        // desligar o controller dos spinners
-//        for (JSpinner js : this.hashtable.values()) {
-//            js.removeChangeListener((ChangeListener) this.eventListener);
-//        }
-//
-//        this.productsPanel.removeAll();
-//        this.hashtable.clear();
-//
-//        for (Product p : this.vm.getProducts()) {
-//            JPanel panel = new JPanel();
-//            panel.add(new JLabel(p.getName()));
-//            JSpinner js = new JSpinner();
-//            js.setValue(p.getAvailableQuantity());
-//            //js.setActionCommand(p.getName());
-//            js.addChangeListener((ChangeListener) this.eventListener);
-//            panel.add(js);
-//            productsPanel.add(panel);
-//            this.hashtable.put(p, js);
-//        }
+        System.out.println("View: register updated");
 
-        this.validate();
-        this.repaint();
+        if (db.usernameExists(tfRegisterUsername.getText())) {
+            lblRegisterInformation.setText("Username already exists!");
+        } else {
+            lblRegisterInformation.setText("User created successfully!");
+        }
+        clearTextFields();
     }
 
     public String getRegisterUsername() {
-        String username = this.tfRegisterUsername.getText();
-        if (!username.isEmpty()) {
-            return username;
-        } else {
-            return null;
-        }
+        return tfRegisterUsername.getText();
     }
 
     public String getRegisterEmail() {
-        String email = this.tfRegisterEmail.getText();
-        if (!email.isEmpty()) {
-            return email;
-        } else {
-            return null;
-        }
+        return tfRegisterEmail.getText();
     }
 
     public String getRegisterPassword() {
-        String password = this.pfRegisterPassword.getText();
-        if (!password.isEmpty()) {
-            return password;
-        } else {
-            return null;
-        }
+        return pfRegisterPassword.getText();
+    }
+
+    public void clearTextFields() {
+        tfRegisterUsername.setText("");
+        tfRegisterEmail.setText("");
+        pfRegisterPassword.setText("");
+        tfRegisterBankName.setText("");
+        ftfRegisterBalance.setValue(null);
+        ftfRegisterSavingsBalance.setValue(null);
     }
 
     /**

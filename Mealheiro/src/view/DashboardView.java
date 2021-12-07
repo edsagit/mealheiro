@@ -1,16 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view;
 
 import java.awt.event.ActionListener;
 import java.util.EventListener;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import model.Database;
+
+import model.*;
 
 /**
  *
@@ -20,11 +16,7 @@ public class DashboardView extends JPanel implements Observer {
 
     private Database db;
 
-    /**
-     * Creates new form DashboardView
-     */
     public DashboardView() {
-//        System.out.println(db);
         initComponents();
 
     }
@@ -32,7 +24,6 @@ public class DashboardView extends JPanel implements Observer {
     public void setModel(Database db) {
         this.db = db;
         db.addObserver(this);
-        this.update(db, null);
     }
 
     public void setController(EventListener el) {
@@ -40,15 +31,11 @@ public class DashboardView extends JPanel implements Observer {
     }
 
     public void update(Observable o, Object arg) {
+        System.out.println("View: dashboard updated");
         if (db.getLoggedInUser() != null) {
             this.lblWelcomeUser.setText("<html> Welcome, <b>" + db.getLoggedInUser().getUsername() + "</b></html>");
         }
-        
 
-    }
-
-    public void setLblWelcomeUser(String lblWelcomeUser) {
-        this.lblWelcomeUser.setText(lblWelcomeUser);
     }
 
     /**

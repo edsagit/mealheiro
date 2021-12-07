@@ -5,6 +5,7 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+
 import view.*;
 import model.*;
 
@@ -13,14 +14,13 @@ import model.*;
  * @author ed
  */
 public class DashboardController extends AbstractController {
-    
+
     private Database db;
     private DashboardView dv;
 
     public DashboardController() {
-//        dv.setLblWelcomeUser("<html> Welcome, " + db.getLoggedInUser() + "</html>");
     }
-    
+
     public void setModel(Database db) {
         this.db = db;
     }
@@ -33,11 +33,10 @@ public class DashboardController extends AbstractController {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Logout")) {
-            System.out.println("LOGOUT BUTTON PRESSED");
+            System.out.println("Controller: logout button clicked");
 
-            
         }
         super.actionPerformed(e);
     }
-    
+
 }

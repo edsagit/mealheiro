@@ -4,12 +4,11 @@
  */
 package view;
 
-import model.*;
-
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
+import model.*;
 
 /**
  *
@@ -29,7 +28,6 @@ public class LoginView extends JPanel implements Observer {
     public void setModel(Database db) {
         this.db = db;
         db.addObserver(this);
-        this.update(db, null);
     }
 
     public void setController(EventListener el) {
@@ -37,6 +35,8 @@ public class LoginView extends JPanel implements Observer {
     }
 
     public void update(Observable o, Object arg) {
+        System.out.println("View: login updated");
+
     }
 
     public String getPfLoginPassword() {
@@ -56,11 +56,11 @@ public class LoginView extends JPanel implements Observer {
             return null;
         }
     }
-    
+
     public void setLoginInformation(String text) {
         lblLoginInformation.setText(text);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

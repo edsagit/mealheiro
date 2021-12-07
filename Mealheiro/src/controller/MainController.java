@@ -1,12 +1,11 @@
 package controller;
 
-import view.*;
-import model.*;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.event.*;
-import java.util.*;
+
+import view.*;
+import model.*;
 
 public class MainController extends AbstractController {
 
@@ -22,16 +21,12 @@ public class MainController extends AbstractController {
     private AccountsView av;
     private TransactionsView tv;
 
-//    private ProductSelectionView psv;
-//    private ReStockProductsView rspv;
     private LoginController lc;
     private RegisterController rc;
     private DashboardController dc;
     private AccountsController ac;
     private TransactionsController tc;
 
-//    private ProductSelectionController psc;
-//    private ReStockProductsController rspc;
     private JFrame mainWindow;
 
     public MainController() {
@@ -50,8 +45,6 @@ public class MainController extends AbstractController {
         av = new AccountsView(); // Instantiate AccountsView
         tv = new TransactionsView();
 
-//        psv = new ProductSelectionView();
-//        rspv = new ReStockProductsView();
         this.setView(mv);
 
         // create controllers
@@ -65,21 +58,13 @@ public class MainController extends AbstractController {
         dc = new DashboardController();
         dc.setParentController(this);
         dc.setView(dv);
-        
+
         ac = new AccountsController();
         ac.setView(av);
-        
+
         tc = new TransactionsController();
         tc.setView(tv);
-        
-        
-//        psc = new ProductSelectionController();
-//        psc.setParentController(this);
-//        psc.setView(psv);
-//
-//        rspc = new ReStockProductsController();
-//        rspc.setParentController(this);
-//        rspc.setView(rspv);
+
         mainWindow.validate();
         mainWindow.setVisible(true);
     }
@@ -118,10 +103,10 @@ public class MainController extends AbstractController {
             System.out.println(e.getActionCommand());
             if (e.getActionCommand().equals("Login")) {
                 if (db.loginUser(lv.getLoginUsername(), lv.getPfLoginPassword())) {
-                    System.out.println(db);
+//                    System.out.println(db);
                     db.setLoggedInUser(db.getUserByUsername(lv.getLoginUsername()));
                     dv.update(db, null);
-  
+
                     mv.tp.removeAll(); // Remove all tabbed pane tabs
                     mainWindow.getContentPane().removeAll();
 

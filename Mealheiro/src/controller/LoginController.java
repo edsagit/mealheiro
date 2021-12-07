@@ -1,8 +1,7 @@
 package controller;
 
 import java.awt.event.ActionEvent;
-import model.Product;
-import model.VendingMachine;
+
 import view.*;
 import model.*;
 
@@ -27,13 +26,11 @@ public class LoginController extends AbstractController {
         this.lv = lv;
         lv.setController(this);
     }
-    
-    
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Login")) {
-            System.out.println("LOGIN BUTTON PRESSED");
+            System.out.println("Controller: login button clicked");
 
         }
         super.actionPerformed(e);
