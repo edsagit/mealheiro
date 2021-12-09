@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.EventListener;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,12 +27,13 @@ public class TransactionsView extends JPanel implements Observer {
      * Creates new form TransactionsView
      */
     public TransactionsView() {
+
         // tables data placeholder  
         Object[][] data = {};
 
         // expense table headers
         String[] tableColumnNames = {"Description", "Amount", "Date", "Source account", "Destination account", "Category"};
-        
+
         // expense table model
         expenseModel = new DefaultTableModel(data, tableColumnNames);
 
@@ -58,22 +61,39 @@ public class TransactionsView extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
         System.out.println("Transaction view: updated");
         // clear the tables
-        expenseModel.setRowCount(0); 
+        expenseModel.setRowCount(0);
         incomeModel.setRowCount(0);
         transferModel.setRowCount(0);
-        
+
         // if loggedIn populate the table with user data
         if (db.getLoggedInUser() != null) {
             db.getLoggedInUser().getTransactions().forEach(tra -> {
+                // populate table
                 switch (tra.getType()) {
-                    case WITHDRAWAL -> expenseModel.addRow(new Object[]{tra.getDescription(), tra.getAmount(), tra.getSourceAccount().getName(), tra.getDestinationAccount().getName(), tra.getDescription(), tra.getCategory()});
+                    case WITHDRAWAL ->
+                        expenseModel.addRow(new Object[]{tra.getDescription(), "-€" + tra.getAmount(), tra.getDate(), tra.getSourceAccount().getName(), tra.getDestinationAccount().getName(), tra.getCategory()});
 
-                    case DEPOSIT -> incomeModel.addRow(new Object[]{tra.getDescription(), tra.getAmount(), tra.getSourceAccount().getName(), tra.getDestinationAccount().getName(), tra.getDescription(), tra.getCategory()});
-                        
-                    case TRANSFER -> transferModel.addRow(new Object[]{tra.getDescription(), tra.getAmount(), tra.getSourceAccount().getName(), tra.getDestinationAccount().getName(), tra.getDescription(), tra.getCategory()});
+                    case DEPOSIT ->
+                        incomeModel.addRow(new Object[]{tra.getDescription(), "+€" + tra.getAmount(), tra.getDate(), tra.getSourceAccount().getName(), tra.getDestinationAccount().getName(), tra.getCategory()});
+
+                    case TRANSFER ->
+                        transferModel.addRow(new Object[]{tra.getDescription(), "€" + tra.getAmount(), tra.getDate(), tra.getSourceAccount().getName(), tra.getDestinationAccount().getName(), tra.getCategory()});
 
                 }
             });
+
+            // populate comboboxes
+            ComboBoxModel<String> modelSource = cbTransactionSourceAccount.getModel();
+            ComboBoxModel<String> modelDestination = cbTransactionDestinationAccount.getModel();
+            
+            if (modelSource instanceof DefaultComboBoxModel dcbmS && modelDestination instanceof DefaultComboBoxModel dcbmD) {
+                dcbmS.removeAllElements();
+                dcbmD.removeAllElements();
+                for (String s : db.getLoggedInUser().getAccountsNames()) {
+                    dcbmS.addElement(s);
+                    dcbmD.addElement(s);
+                }
+            }
         }
     }
 
@@ -120,6 +140,7 @@ public class TransactionsView extends JPanel implements Observer {
         expensePane.setName(""); // NOI18N
 
         expenseTable.setModel(expenseModel);
+        expenseTable.setPreferredSize(new java.awt.Dimension(0, 2500));
         jScrollPane1.setViewportView(expenseTable);
 
         javax.swing.GroupLayout expensePaneLayout = new javax.swing.GroupLayout(expensePane);
@@ -135,7 +156,7 @@ public class TransactionsView extends JPanel implements Observer {
             expensePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(expensePaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -157,7 +178,7 @@ public class TransactionsView extends JPanel implements Observer {
             incomePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(incomePaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -179,7 +200,7 @@ public class TransactionsView extends JPanel implements Observer {
             transferPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(transferPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -192,14 +213,12 @@ public class TransactionsView extends JPanel implements Observer {
         lblTransactionDescription.setText("Description");
 
         cbTransactionSourceAccount.setEditable(true);
-        cbTransactionSourceAccount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblTransactionSourceAccount.setText("Source account");
 
         lblTransactionDestinationAccount.setText("Destination account");
 
         cbTransactionDestinationAccount.setEditable(true);
-        cbTransactionDestinationAccount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         ftfTransactionDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         ftfTransactionDate.setToolTipText("Format: 6 Dec 2021");
@@ -296,7 +315,7 @@ public class TransactionsView extends JPanel implements Observer {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 960, Short.MAX_VALUE)
+                .addComponent(jSplitPane1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(

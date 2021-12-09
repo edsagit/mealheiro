@@ -1,6 +1,11 @@
 package model;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -9,6 +14,8 @@ import java.util.*;
 public class User extends Observable {
 
     private static long idCounter = 0;
+
+    DecimalFormat df = new DecimalFormat("#.##");
 
     private String id;
     private String username;
@@ -55,6 +62,14 @@ public class User extends Observable {
         notifyObservers();
     }
 
+    public String[] getAccountsNames() {
+        String[] accountsNames = new String[accounts.size()];
+        for (int i = 0; i < accounts.size(); i++) {
+            accountsNames[i] = accounts.get(i).getName();
+        }
+        return accountsNames;
+    }
+
     public ArrayList<Account> getAccounts() {
         return accounts;
     }
@@ -79,6 +94,47 @@ public class User extends Observable {
             }
         }
         return null;
+    }
+
+    public String getNetWorth() {
+        Double totalNetWorth = 0.00;
+        for (Account a : accounts) {
+            if (a.getAccountType().equals(AccountType.ASSET)) {
+                try {
+                    Number n = NumberFormat.getNumberInstance().parse(a.getBalance());
+                    totalNetWorth += n.doubleValue();
+                } catch (ParseException ex) {
+                    Logger.getLogger(Transaction.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        }
+        return df.format(totalNetWorth);
+    }
+    
+    public ArrayList getAllCategories(){
+        ArrayList al = new ArrayList<>();
+        for (Transaction t : transactions) {
+            if (!al.contains(t.getCategory())) {
+                al.add(t.getCategory());
+            }
+        }
+        return al;
+    }
+    
+    public String getCategoryTotalByCategory(String category) {
+        Double totalCategory = 0.00;
+        for (Transaction t : transactions) {
+            if(t.getCategory().equals(category)) {
+                try {
+                    Number n = NumberFormat.getNumberInstance().parse(t.getAmount());
+                    totalCategory += n.doubleValue();
+                } catch (ParseException ex) {
+                    Logger.getLogger(Transaction.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return df.format(totalCategory);
     }
 
     public static synchronized String createID() {

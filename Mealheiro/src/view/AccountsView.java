@@ -58,6 +58,7 @@ public class AccountsView extends JPanel implements Observer {
     }
 
     public void update(Observable o, Object arg) {
+        System.out.println("Account view: updated");
         // clear the table first
         assetModel.setRowCount(0); 
         expenseModel.setRowCount(0);
@@ -66,22 +67,17 @@ public class AccountsView extends JPanel implements Observer {
         
         // if user loggedIn populate table
         if (db.getLoggedInUser() != null) {
-            for (Account acc : db.getLoggedInUser().getAccounts()) {
-//                if (acc.getAccountType().equals(AccountType.ASSET)) {
-//                    
-//                }
-                
+            db.getLoggedInUser().getAccounts().forEach(acc -> {
                 switch(acc.getAccountType()) {
-                    case ASSET -> assetModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), acc.getBalance(), acc.getActive(), ""});
+                    case ASSET -> assetModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(),  "€" + acc.getBalance(), acc.getActive(), ""});
                         
-                    case EXPENSE -> expenseModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), acc.getBalance(), acc.getActive(), ""});
+                    case EXPENSE -> expenseModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(),  "€" + acc.getBalance(), acc.getActive(), ""});
                         
-                    case REVENUE -> revenueModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), acc.getBalance(), acc.getActive(), ""});
+                    case REVENUE -> revenueModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), "€" + acc.getBalance(), acc.getActive(), ""});
                         
-                    case LIABILITY -> liabilityModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), acc.getBalance(), acc.getActive(), ""});
+                    case LIABILITY -> liabilityModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), "€" + acc.getBalance(), acc.getActive(), ""});
                 }
-                
-            }
+            });
         }
     }
 

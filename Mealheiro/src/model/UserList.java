@@ -1,5 +1,8 @@
 package model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -52,7 +55,7 @@ public class UserList extends Observable {
             tmpUser.addAccount(destinationOpeningBalance); // add destination account to user
             Transaction transactionOpeningBalance = new Transaction(defaultBalance, TransactionType.OPENING_BALANCE,
                     sourceOpeningBalance, destinationOpeningBalance, "Initial balance for " + bankName + " account",
-                    "Opening balance");
+                    "Opening balance", LocalDate.now());
             destinationOpeningBalance.addTransaction(transactionOpeningBalance);
             tmpUser.addTransaction(transactionOpeningBalance);
 
@@ -65,7 +68,7 @@ public class UserList extends Observable {
             tmpUser.addAccount(destinationOpeningSavingsBalance); // add destination account to user
             Transaction transactionSavingsBalance = new Transaction(savingsBalance, TransactionType.OPENING_BALANCE,
                     sourceOpeningSavingBalance, destinationOpeningSavingsBalance,
-                    "Initial balance for " + bankName + " savings account", "Opening balance");
+                    "Initial balance for " + bankName + " savings account", "Opening balance", LocalDate.now());
             destinationOpeningSavingsBalance.addTransaction(transactionSavingsBalance);
             tmpUser.addTransaction(transactionSavingsBalance);
 
@@ -93,6 +96,14 @@ public class UserList extends Observable {
         setChanged();
         notifyObservers();
     }
+
+//    public static Date parseDate(String date) {
+//        try {
+//            return new SimpleDateFormat("dd/MM/yyyy").parse(date);
+//        } catch (ParseException e) {
+//            return null;
+//        }
+//    }
 
     // @Override
     // public void update(Observable o, Object arg) {

@@ -1,5 +1,6 @@
 package model;
 
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.*;
 
@@ -10,6 +11,8 @@ import java.util.*;
 public class Account extends Observable {
 
     private static long idCounter = 0;
+
+    DecimalFormat df = new DecimalFormat("#.##");
 
     private String id;
     private String name;
@@ -92,11 +95,11 @@ public class Account extends Observable {
     }
 
     public String getBalance() {
-        return balance;
+        return df.format(Double.valueOf(balance));
     }
 
     public void setBalance(String balance) {
-        this.balance = balance;
+        this.balance = df.format(Double.valueOf(balance));
         setChanged();
         notifyObservers();
     }
@@ -136,6 +139,12 @@ public class Account extends Observable {
         setChanged();
         notifyObservers();
     }
+
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
+    }
+    
+    
 
     public static synchronized String createID() {
         return String.valueOf(idCounter++);

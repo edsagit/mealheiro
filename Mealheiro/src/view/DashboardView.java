@@ -13,6 +13,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.data.general.DefaultPieDataset;
 
 import model.*;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 
 
@@ -23,25 +24,43 @@ import model.*;
 public class DashboardView extends JPanel implements Observer {
 
     private UserList db;
-    JFreeChart chart1;
-    DefaultPieDataset dataset;
+    JFreeChart chartAssetAccounts, chartCategories;
+    DefaultPieDataset dataset1;
+    DefaultCategoryDataset assetAccountsDataset, dataset2;
 
     public DashboardView() {
         initComponents();
-        dataset = new DefaultPieDataset();
-        dataset.setValue("asd", 25.0);
-        dataset.setValue("asd2", 50.0);
-        dataset.setValue("asd3", 25.0);
-        chart1 = ChartFactory.createPieChart("Pie chart", dataset, true, true, false);
-        ChartPanel cp = new ChartPanel(chart1);
-        jPanel2.setPreferredSize(new Dimension(400,400));
         
+        assetAccountsDataset = new DefaultCategoryDataset();
+        
+        chartAssetAccounts = ChartFactory.createLineChart("", "Date", "EUR (€)", assetAccountsDataset);
+        ChartPanel cpAssetAccounts = new ChartPanel(chartAssetAccounts);
+        
+        accountsChartPanel.setPreferredSize(new Dimension(500,400));
+        accountsChartPanel.setLayout(new java.awt.BorderLayout());
+        accountsChartPanel.add(cpAssetAccounts, BorderLayout.CENTER);
+        accountsChartPanel.validate();
+        
+        // declare dataset variables
+//        dataset1 = new DefaultPieDataset();
+//        dataset2 = new DefaultCategoryDataset();
+//        
+//        chartAssetAccounts = ChartFactory.createPieChart("", dataset1, true, true, false);
+//        ChartPanel cpAssetAccounts = new ChartPanel(chartAssetAccounts);
+//        
+//        accountsChartPanel.setPreferredSize(new Dimension(500,400));
+//        accountsChartPanel.setLayout(new java.awt.BorderLayout());
+//        accountsChartPanel.add(cpAssetAccounts, BorderLayout.CENTER);
+//        accountsChartPanel.validate();
+//        
+//        chartCategories = ChartFactory.createBarChart("", "", "EUR (€)", dataset2);
+//        ChartPanel cpCategories = new ChartPanel(chartCategories);
+//        
+//        categoriesChartPanel.setPreferredSize(new Dimension(500,400));
+//        categoriesChartPanel.setLayout(new java.awt.BorderLayout());
+//        categoriesChartPanel.add(cpCategories, BorderLayout.CENTER);
+//        categoriesChartPanel.validate();
 
-        
-        jPanel2.setLayout(new java.awt.BorderLayout());
-        
-        jPanel2.add(cp, BorderLayout.CENTER);
-        jPanel2.validate();
     }
 
     public void setModel(UserList db) {
@@ -57,6 +76,27 @@ public class DashboardView extends JPanel implements Observer {
         System.out.println("Dashboard view: updated");
         if (db.getLoggedInUser() != null) {
             this.lblWelcomeUser.setText("<html> Welcome, <b>" + db.getLoggedInUser().getUsername() + "</b></html>");
+            this.lblDashboardNetWorth.setText("€" + db.getLoggedInUser().getNetWorth());
+            
+            for (Account acc : db.getLoggedInUser().getAccounts()) {
+                if (acc.getAccountType().equals(AccountType.ASSET)) {
+                    for (Transaction tra : acc.getTransactions()) {
+                        assetAccountsDataset.setValue(Double.valueOf(tra.getAmount()), acc.getName(), tra.getDate().toString());
+                    }
+                }
+            }
+            
+//            for (Account acc : db.getLoggedInUser().getAccounts()) {
+//                if (acc.getAccountType().equals(AccountType.ASSET)) {
+//                    dataset1.setValue(acc.getName() + " " + "€" + acc.getBalance(), Double.valueOf(acc.getBalance()));
+//                }
+//            }
+//            
+//            for (Object s : db.getLoggedInUser().getAllCategories()) {
+//                if (!s.toString().equals("Opening balance") && !s.toString().equals("Salary")) {
+//                    dataset2.setValue(Double.valueOf(db.getLoggedInUser().getCategoryTotalByCategory(s.toString())), s.toString(), "");
+//                }
+//            }
         }
 
     }
@@ -70,33 +110,41 @@ public class DashboardView extends JPanel implements Observer {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pDashboardBase = new javax.swing.JPanel();
+        networthPanel = new javax.swing.JPanel();
         lblDashboardNetWorth = new javax.swing.JLabel();
         bLogout = new javax.swing.JButton();
         lblWelcomeUser = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        accountsChartPanel = new javax.swing.JPanel();
+        categoriesChartPanel = new javax.swing.JPanel();
+        revenueAccountsChartPanel = new javax.swing.JPanel();
 
         setName("Dashboard"); // NOI18N
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Net Worth", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
-        jPanel1.setName("Net Worth"); // NOI18N
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        pDashboardBase.setPreferredSize(new java.awt.Dimension(935, 2566));
+
+        networthPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Net Worth", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
+        networthPanel.setName("Net Worth"); // NOI18N
 
         lblDashboardNetWorth.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblDashboardNetWorth.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblDashboardNetWorth.setText("1,000.100");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout networthPanelLayout = new javax.swing.GroupLayout(networthPanel);
+        networthPanel.setLayout(networthPanelLayout);
+        networthPanelLayout.setHorizontalGroup(
+            networthPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(networthPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblDashboardNetWorth, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        networthPanelLayout.setVerticalGroup(
+            networthPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(networthPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblDashboardNetWorth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -104,20 +152,85 @@ public class DashboardView extends JPanel implements Observer {
 
         bLogout.setText("Logout");
 
-        lblWelcomeUser.setText("asd");
+        lblWelcomeUser.setText("Welcome, ");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Graphic1"));
+        accountsChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Accounts"));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout accountsChartPanelLayout = new javax.swing.GroupLayout(accountsChartPanel);
+        accountsChartPanel.setLayout(accountsChartPanelLayout);
+        accountsChartPanelLayout.setHorizontalGroup(
+            accountsChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+        accountsChartPanelLayout.setVerticalGroup(
+            accountsChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 214, Short.MAX_VALUE)
         );
+
+        categoriesChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Categories"));
+        categoriesChartPanel.setToolTipText("");
+
+        javax.swing.GroupLayout categoriesChartPanelLayout = new javax.swing.GroupLayout(categoriesChartPanel);
+        categoriesChartPanel.setLayout(categoriesChartPanelLayout);
+        categoriesChartPanelLayout.setHorizontalGroup(
+            categoriesChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        categoriesChartPanelLayout.setVerticalGroup(
+            categoriesChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 236, Short.MAX_VALUE)
+        );
+
+        revenueAccountsChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Revenue accounts")));
+
+        javax.swing.GroupLayout revenueAccountsChartPanelLayout = new javax.swing.GroupLayout(revenueAccountsChartPanel);
+        revenueAccountsChartPanel.setLayout(revenueAccountsChartPanelLayout);
+        revenueAccountsChartPanelLayout.setHorizontalGroup(
+            revenueAccountsChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 728, Short.MAX_VALUE)
+        );
+        revenueAccountsChartPanelLayout.setVerticalGroup(
+            revenueAccountsChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 236, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout pDashboardBaseLayout = new javax.swing.GroupLayout(pDashboardBase);
+        pDashboardBase.setLayout(pDashboardBaseLayout);
+        pDashboardBaseLayout.setHorizontalGroup(
+            pDashboardBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pDashboardBaseLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pDashboardBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pDashboardBaseLayout.createSequentialGroup()
+                        .addComponent(bLogout)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblWelcomeUser))
+                    .addGroup(pDashboardBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(revenueAccountsChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(networthPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(categoriesChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(accountsChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pDashboardBaseLayout.setVerticalGroup(
+            pDashboardBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pDashboardBaseLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pDashboardBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bLogout)
+                    .addComponent(lblWelcomeUser))
+                .addGap(18, 18, 18)
+                .addComponent(networthPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(accountsChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(categoriesChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(revenueAccountsChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(1640, Short.MAX_VALUE))
+        );
+
+        jScrollPane1.setViewportView(pDashboardBase);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -125,39 +238,28 @@ public class DashboardView extends JPanel implements Observer {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 709, Short.MAX_VALUE)
-                        .addComponent(bLogout))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblWelcomeUser)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblWelcomeUser)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(bLogout)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1785, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel accountsChartPanel;
     private javax.swing.JButton bLogout;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel categoriesChartPanel;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDashboardNetWorth;
     private javax.swing.JLabel lblWelcomeUser;
+    private javax.swing.JPanel networthPanel;
+    private javax.swing.JPanel pDashboardBase;
+    private javax.swing.JPanel revenueAccountsChartPanel;
     // End of variables declaration//GEN-END:variables
 }
