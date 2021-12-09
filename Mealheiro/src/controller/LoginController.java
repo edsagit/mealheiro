@@ -11,14 +11,14 @@ import model.*;
  */
 public class LoginController extends AbstractController {
 
-    private Database db;
+    private UserList db;
     private LoginView lv;
 
     public LoginController() {
 
     }
 
-    public void setModel(Database db) {
+    public void setModel(UserList db) {
         this.db = db;
     }
 
@@ -30,8 +30,12 @@ public class LoginController extends AbstractController {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Login")) {
-            System.out.println("Controller: login button clicked");
-
+            System.out.println("Login controller: login button clicked");
+            if (db.loginUser(lv.getLoginUsername(), lv.getPfLoginPassword())) {
+                db.setLoggedInUser(db.getUserByUsername(lv.getLoginUsername()));
+            } else {
+                db.setLoggedInUser(null);
+            }
         }
         super.actionPerformed(e);
     }

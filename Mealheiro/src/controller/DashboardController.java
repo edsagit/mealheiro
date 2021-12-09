@@ -15,13 +15,13 @@ import model.*;
  */
 public class DashboardController extends AbstractController {
 
-    private Database db;
+    private UserList db;
     private DashboardView dv;
 
     public DashboardController() {
     }
 
-    public void setModel(Database db) {
+    public void setModel(UserList db) {
         this.db = db;
     }
 

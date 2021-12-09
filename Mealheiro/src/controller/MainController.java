@@ -9,8 +9,7 @@ import model.*;
 
 public class MainController extends AbstractController {
 
-//    private VendingMachine vm;
-    private Database db;
+    private UserList db;
     private User user;
 
     private MainView mv;
@@ -73,7 +72,7 @@ public class MainController extends AbstractController {
         mainWindow.getContentPane().add(mv);
     }
 
-    public void setModel(Database db) {
+    public void setModel(UserList db) {
         this.db = db;
         this.lv.setModel(db); // set LoginView model
         this.lc.setModel(db); // set LoginController model
@@ -99,13 +98,13 @@ public class MainController extends AbstractController {
         Component source = (Component) e.getSource();
 
         if (this.mv.isAncestorOf(source)) {
-            System.out.println("Acção feita sobre MainView");
-            System.out.println(e.getActionCommand());
+
+//            System.out.println(e.getActionCommand());
             if (e.getActionCommand().equals("Login")) {
+              System.out.println("Main controller: login button clicked");
                 if (db.loginUser(lv.getLoginUsername(), lv.getPfLoginPassword())) {
-//                    System.out.println(db);
+                    
                     db.setLoggedInUser(db.getUserByUsername(lv.getLoginUsername()));
-                    dv.update(db, null);
 
                     mv.tp.removeAll(); // Remove all tabbed pane tabs
                     mainWindow.getContentPane().removeAll();
@@ -114,8 +113,7 @@ public class MainController extends AbstractController {
                     mv.tp.add(dv); // Add DashboardView panel
                     mv.tp.add(av); // Add AccountsView panel
                     mv.tp.add(tv); // Add TransactionsView panel
-                    av.update(db, null); // Update AccountsView
-                    tv.update(db, null); // Update TransactionsView
+                    
                     mainWindow.getContentPane().add(mv);
                     mainWindow.revalidate();
                     mainWindow.repaint();
@@ -124,9 +122,9 @@ public class MainController extends AbstractController {
                 }
             }
             if (e.getActionCommand().equals("Logout")) {
+                System.out.println("Controller: logout button clicked");
                 db.setLoggedInUser(null);
                 mv.tp.removeAll(); // Remove all tabbed pane tabs
-                mainWindow.getContentPane().removeAll();
                 mv.tp.setTabPlacement(javax.swing.JTabbedPane.TOP); // Set tab placement to top
                 mv.tp.add(lv); // Add LoginView panel
                 mv.tp.add(rv); // Add RegisterView panel

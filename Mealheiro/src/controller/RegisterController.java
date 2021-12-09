@@ -11,14 +11,14 @@ import view.*;
  */
 public class RegisterController extends AbstractController {
 
-    private Database db;
+    private UserList db;
     private RegisterView rv;
 
     public RegisterController() {
 
     }
 
-    public void setModel(Database db) {
+    public void setModel(UserList db) {
         this.db = db;
     }
 
@@ -34,8 +34,14 @@ public class RegisterController extends AbstractController {
             System.out.println("Controller: register button clicked");
 
             // register new user
-            db.registerUser(rv.getRegisterUsername(), rv.getRegisterEmail(), rv.getRegisterPassword(), rv.getTfRegisterBankName(), rv.getFtfRegisterBalance(), rv.getFtfRegisterSavingsBalance());
-            rv.update(db, null);
+            if (db.usernameExists(rv.getRegisterUsername())) {
+                rv.setInformationLabelText("Username already exists.");
+            } else {
+                db.registerUser(rv.getRegisterUsername(), rv.getRegisterEmail(), rv.getRegisterPassword(),
+                        rv.getTfRegisterBankName(), rv.getFtfRegisterBalance(), rv.getFtfRegisterSavingsBalance());
+                rv.setInformationLabelText("User created successfully.");
+                rv.update(db, null);
+            }
         }
 
         super.actionPerformed(e);

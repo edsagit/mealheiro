@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view;
 
 import java.awt.event.*;
@@ -16,7 +12,7 @@ import model.*;
  */
 public class LoginView extends JPanel implements Observer {
 
-    private Database db;
+    private UserList db;
 
     /**
      * Creates new form LoginView
@@ -25,7 +21,7 @@ public class LoginView extends JPanel implements Observer {
         initComponents();
     }
 
-    public void setModel(Database db) {
+    public void setModel(UserList db) {
         this.db = db;
         db.addObserver(this);
     }
@@ -34,9 +30,12 @@ public class LoginView extends JPanel implements Observer {
         bLogin.addActionListener((ActionListener) el);
     }
 
+    @Override
     public void update(Observable o, Object arg) {
-        System.out.println("View: login updated");
-
+        System.out.println("Login view: updated");
+        if (db.getLoggedInUser() != null) {
+            this.remove(this);
+        }
     }
 
     public String getPfLoginPassword() {

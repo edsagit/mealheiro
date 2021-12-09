@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package view;
 
 import java.awt.event.ActionListener;
@@ -18,22 +14,40 @@ import model.*;
  */
 public class AccountsView extends JPanel implements Observer {
 
-    private Database db;
+    private UserList db;
 
     DefaultTableModel assetModel;
+    DefaultTableModel expenseModel;
+    DefaultTableModel revenueModel;
+    DefaultTableModel liabilityModel;
 
     /**
      * Creates new form AccountsView
      */
     public AccountsView() {
-        String[] assetTableColumnNames = {"Name", "Account number", "Current balance", "Is active?", "Action"};
+        // tables data placeholder
         Object[][] data = {};
-        assetModel = new DefaultTableModel(data, assetTableColumnNames);
+        
+        // asset table headers
+        String[] tableColumnNames = {"Name", "Account number", "Current balance", "Is active?", "Action"};
+        
+        // asset table model
+        assetModel = new DefaultTableModel(data, tableColumnNames);
+       
+        // expense table model
+        expenseModel = new DefaultTableModel(data, tableColumnNames);
+        
+        // revenue table model
+        revenueModel = new DefaultTableModel(data, tableColumnNames);
+        
+        // liability table model
+        liabilityModel = new DefaultTableModel(data, tableColumnNames);
+        
         initComponents();
 
     }
 
-    public void setModel(Database db) {
+    public void setModel(UserList db) {
         this.db = db;
         db.addObserver(this);
         this.update(db, null);
@@ -44,11 +58,27 @@ public class AccountsView extends JPanel implements Observer {
     }
 
     public void update(Observable o, Object arg) {
-        assetModel.setRowCount(0); // reset the table first
+        // clear the table first
+        assetModel.setRowCount(0); 
+        expenseModel.setRowCount(0);
+        revenueModel.setRowCount(0);
+        liabilityModel.setRowCount(0);
+        
+        // if user loggedIn populate table
         if (db.getLoggedInUser() != null) {
             for (Account acc : db.getLoggedInUser().getAccounts()) {
-                if (acc.getAccountType().equals(AccountType.ASSET)) {
-                    assetModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), acc.getBalance(), acc.getActive(), ""});
+//                if (acc.getAccountType().equals(AccountType.ASSET)) {
+//                    
+//                }
+                
+                switch(acc.getAccountType()) {
+                    case ASSET -> assetModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), acc.getBalance(), acc.getActive(), ""});
+                        
+                    case EXPENSE -> expenseModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), acc.getBalance(), acc.getActive(), ""});
+                        
+                    case REVENUE -> revenueModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), acc.getBalance(), acc.getActive(), ""});
+                        
+                    case LIABILITY -> liabilityModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), acc.getBalance(), acc.getActive(), ""});
                 }
                 
             }
@@ -64,13 +94,24 @@ public class AccountsView extends JPanel implements Observer {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSplitPane1 = new javax.swing.JSplitPane();
         tpAccounts = new javax.swing.JTabbedPane();
         AssetPanel = new javax.swing.JPanel();
         jScrollPaneAsset = new javax.swing.JScrollPane();
         tableAsset = new javax.swing.JTable();
         ExpensePanel = new javax.swing.JPanel();
+        jScrollPaneExpense = new javax.swing.JScrollPane();
+        tableExpense = new javax.swing.JTable();
         RevenuePanel = new javax.swing.JPanel();
+        jScrollPaneRevenue = new javax.swing.JScrollPane();
+        tableRevenue = new javax.swing.JTable();
         Liability = new javax.swing.JPanel();
+        jScrollPaneLiability = new javax.swing.JScrollPane();
+        tableLiability = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setName("Accounts"); // NOI18N
 
@@ -81,7 +122,7 @@ public class AccountsView extends JPanel implements Observer {
         AssetPanel.setLayout(AssetPanelLayout);
         AssetPanelLayout.setHorizontalGroup(
             AssetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPaneAsset, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
+            .addComponent(jScrollPaneAsset, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
         );
         AssetPanelLayout.setVerticalGroup(
             AssetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,44 +131,88 @@ public class AccountsView extends JPanel implements Observer {
 
         tpAccounts.addTab("Asset", AssetPanel);
 
+        tableExpense.setModel(expenseModel);
+        jScrollPaneExpense.setViewportView(tableExpense);
+
         javax.swing.GroupLayout ExpensePanelLayout = new javax.swing.GroupLayout(ExpensePanel);
         ExpensePanel.setLayout(ExpensePanelLayout);
         ExpensePanelLayout.setHorizontalGroup(
             ExpensePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 675, Short.MAX_VALUE)
+            .addComponent(jScrollPaneExpense, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
         );
         ExpensePanelLayout.setVerticalGroup(
             ExpensePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
+            .addComponent(jScrollPaneExpense, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
         );
 
         tpAccounts.addTab("Expense", ExpensePanel);
+
+        tableRevenue.setModel(revenueModel);
+        jScrollPaneRevenue.setViewportView(tableRevenue);
 
         javax.swing.GroupLayout RevenuePanelLayout = new javax.swing.GroupLayout(RevenuePanel);
         RevenuePanel.setLayout(RevenuePanelLayout);
         RevenuePanelLayout.setHorizontalGroup(
             RevenuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 675, Short.MAX_VALUE)
+            .addComponent(jScrollPaneRevenue, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
         );
         RevenuePanelLayout.setVerticalGroup(
             RevenuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
+            .addComponent(jScrollPaneRevenue, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
         );
 
         tpAccounts.addTab("Revenue", RevenuePanel);
+
+        tableLiability.setModel(liabilityModel);
+        tableLiability.setToolTipText("");
+        jScrollPaneLiability.setViewportView(tableLiability);
 
         javax.swing.GroupLayout LiabilityLayout = new javax.swing.GroupLayout(Liability);
         Liability.setLayout(LiabilityLayout);
         LiabilityLayout.setHorizontalGroup(
             LiabilityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 675, Short.MAX_VALUE)
+            .addComponent(jScrollPaneLiability, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
         );
         LiabilityLayout.setVerticalGroup(
             LiabilityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
+            .addComponent(jScrollPaneLiability, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
         );
 
         tpAccounts.addTab("Liability", Liability);
+
+        jSplitPane1.setRightComponent(tpAccounts);
+
+        jLabel1.setText("Name");
+
+        jTextField1.setText("jTextField1");
+
+        jLabel2.setText("jLabel2");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addContainerGap(416, Short.MAX_VALUE))
+        );
+
+        jSplitPane1.setLeftComponent(jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -135,14 +220,14 @@ public class AccountsView extends JPanel implements Observer {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tpAccounts)
+                .addComponent(jSplitPane1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tpAccounts)
+                .addComponent(jSplitPane1)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -153,8 +238,19 @@ public class AccountsView extends JPanel implements Observer {
     private javax.swing.JPanel ExpensePanel;
     private javax.swing.JPanel Liability;
     private javax.swing.JPanel RevenuePanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPaneAsset;
+    private javax.swing.JScrollPane jScrollPaneExpense;
+    private javax.swing.JScrollPane jScrollPaneLiability;
+    private javax.swing.JScrollPane jScrollPaneRevenue;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tableAsset;
+    private javax.swing.JTable tableExpense;
+    private javax.swing.JTable tableLiability;
+    private javax.swing.JTable tableRevenue;
     private javax.swing.JTabbedPane tpAccounts;
     // End of variables declaration//GEN-END:variables
 }

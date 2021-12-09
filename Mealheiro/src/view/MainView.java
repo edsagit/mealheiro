@@ -2,14 +2,13 @@ package view;
 
 import java.util.*;
 import javax.swing.*;
-import model.*;
 
+import model.*;
 
 public class MainView extends JPanel implements Observer {
 
     public JTabbedPane tp;
-
-    private Database db;
+    private UserList db;
 
     public MainView() {
 
@@ -32,7 +31,7 @@ public class MainView extends JPanel implements Observer {
         );
     }
 
-    public void setModel(Database db) {
+    public void setModel(UserList db) {
         this.db = db;
         db.addObserver(this);
     }
@@ -45,9 +44,9 @@ public class MainView extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-//        this.tp.removeAll();
-//        this.validate();
-//        this.repaint();
+        System.out.println("Main view: updated");
+        if (db.getLoggedInUser() != null) {
+        }
     }
 
 }

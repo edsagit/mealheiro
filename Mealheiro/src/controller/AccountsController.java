@@ -15,13 +15,13 @@ import view.*;
  */
 public class AccountsController extends AbstractController {
 
-    private Database db;
+    private UserList db;
     private AccountsView av;
 
     public AccountsController() {
     }
 
-    public void setModel(Database db) {
+    public void setModel(UserList db) {
         this.db = db;
     }
 

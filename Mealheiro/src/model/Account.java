@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import java.time.Instant;
@@ -17,7 +13,7 @@ public class Account extends Observable {
 
     private String id;
     private String name;
-//    private String currency;
+    // private String currency;
     private String iban;
     private String bic;
     private String accountNumber;
@@ -34,7 +30,7 @@ public class Account extends Observable {
         this.bic = "";
         this.accountNumber = "";
         this.balance = "";
-        this.openingDate = Date.from(Instant.MIN);
+        this.openingDate = new Date();
         this.accountType = type;
         this.transactions = new ArrayList<>();
     }

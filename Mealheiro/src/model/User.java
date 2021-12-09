@@ -1,6 +1,5 @@
 package model;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -32,7 +31,6 @@ public class User extends Observable {
 //        setChanged();
 //        notifyObservers();
 //    }
-
     public String getUsername() {
         return username;
     }
@@ -63,6 +61,24 @@ public class User extends Observable {
 
     public ArrayList<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public Account getAccountById(String id) {
+        for (Account acc : accounts) {
+            if (acc.getId().equals(id)) {
+                return acc;
+            }
+        }
+        return null;
+    }
+
+    public Account getAccountByName(String accountName) {
+        for (Account acc : accounts) {
+            if (acc.getName().equals(accountName)) {
+                return acc;
+            }
+        }
+        return null;
     }
 
     public static synchronized String createID() {

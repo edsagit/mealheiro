@@ -11,13 +11,13 @@ import view.*;
  */
 public class TransactionsController extends AbstractController {
     
-    private Database db;
+    private UserList db;
     private TransactionsView tv;
 
     public TransactionsController() {
     }
     
-    public void setModel(Database db) {
+    public void setModel(UserList db) {
         this.db = db;
     }
 

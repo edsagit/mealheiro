@@ -1,0 +1,33 @@
+@startuml
+abstract class controller.AbstractController
+annotation java.lang.Override
+class controller.AccountsController
+class controller.DashboardController
+class controller.LoginController
+class controller.MainController
+class controller.RegisterController
+class controller.TransactionsController
+class java.awt.event.ActionEvent
+interface controller.ActionListener
+interface controller.ChangeListener
+controller.AbstractController ..> java.lang.Override
+controller.AbstractController --|> controller.ActionListener
+controller.AbstractController --|> controller.ChangeListener
+controller.AccountsController --|> controller.AbstractController
+controller.AccountsController ..> java.lang.Override
+controller.AccountsController ..> java.awt.event.ActionEvent
+controller.DashboardController --|> controller.AbstractController
+controller.DashboardController ..> java.lang.Override
+controller.DashboardController ..> java.awt.event.ActionEvent
+controller.LoginController --|> controller.AbstractController
+controller.LoginController ..> java.lang.Override
+controller.LoginController ..> java.awt.event.ActionEvent
+controller.MainController --|> controller.AbstractController
+controller.MainController ..> java.lang.Override
+controller.RegisterController --|> controller.AbstractController
+controller.RegisterController ..> java.lang.Override
+controller.RegisterController ..> java.awt.event.ActionEvent
+controller.TransactionsController --|> controller.AbstractController
+controller.TransactionsController ..> java.lang.Override
+controller.TransactionsController ..> java.awt.event.ActionEvent
+@enduml

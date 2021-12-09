@@ -1,12 +1,20 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.EventListener;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.data.general.DefaultPieDataset;
 
 import model.*;
+
+
 
 /**
  *
@@ -14,14 +22,29 @@ import model.*;
  */
 public class DashboardView extends JPanel implements Observer {
 
-    private Database db;
+    private UserList db;
+    JFreeChart chart1;
+    DefaultPieDataset dataset;
 
     public DashboardView() {
         initComponents();
+        dataset = new DefaultPieDataset();
+        dataset.setValue("asd", 25.0);
+        dataset.setValue("asd2", 50.0);
+        dataset.setValue("asd3", 25.0);
+        chart1 = ChartFactory.createPieChart("Pie chart", dataset, true, true, false);
+        ChartPanel cp = new ChartPanel(chart1);
+        jPanel2.setPreferredSize(new Dimension(400,400));
+        
 
+        
+        jPanel2.setLayout(new java.awt.BorderLayout());
+        
+        jPanel2.add(cp, BorderLayout.CENTER);
+        jPanel2.validate();
     }
 
-    public void setModel(Database db) {
+    public void setModel(UserList db) {
         this.db = db;
         db.addObserver(this);
     }
@@ -31,7 +54,7 @@ public class DashboardView extends JPanel implements Observer {
     }
 
     public void update(Observable o, Object arg) {
-        System.out.println("View: dashboard updated");
+        System.out.println("Dashboard view: updated");
         if (db.getLoggedInUser() != null) {
             this.lblWelcomeUser.setText("<html> Welcome, <b>" + db.getLoggedInUser().getUsername() + "</b></html>");
         }
@@ -51,6 +74,7 @@ public class DashboardView extends JPanel implements Observer {
         lblDashboardNetWorth = new javax.swing.JLabel();
         bLogout = new javax.swing.JButton();
         lblWelcomeUser = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
 
         setName("Dashboard"); // NOI18N
 
@@ -82,6 +106,19 @@ public class DashboardView extends JPanel implements Observer {
 
         lblWelcomeUser.setText("asd");
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Graphic1"));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 380, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,6 +126,7 @@ public class DashboardView extends JPanel implements Observer {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 709, Short.MAX_VALUE)
                         .addComponent(bLogout))
@@ -106,18 +144,19 @@ public class DashboardView extends JPanel implements Observer {
                 .addComponent(lblWelcomeUser)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 431, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(bLogout)
                 .addContainerGap())
         );
-
-        jPanel1.getAccessibleContext().setAccessibleName("Net Worth");
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bLogout;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblDashboardNetWorth;
     private javax.swing.JLabel lblWelcomeUser;
     // End of variables declaration//GEN-END:variables

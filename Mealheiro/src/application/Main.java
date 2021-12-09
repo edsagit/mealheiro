@@ -1,8 +1,6 @@
 package application;
 
 import controller.*;
-import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
 import model.*;
 
 /**
@@ -11,12 +9,35 @@ import model.*;
  */
 public class Main {
 
-    private Database db;
+    private UserList db;
 
     public Main() {
-        // simulate data, could be loaded from database
+        db = new UserList();
 
-        db = new Database();
+        db.registerUser("ed", "person@mail.com", "asd", "CGD", "1000", "230");
+
+        // Asset account
+        Account wallet = new Account("Wallet", "0", AccountType.ASSET);
+        wallet.setActive(false);
+        db.getUserByUsername("ed").addAccount(wallet);
+
+        // Revenue account
+        Account revenueAcc = new Account("Google", "10000", AccountType.REVENUE);
+        db.getUserByUsername("ed").addAccount(revenueAcc);
+        
+        
+        System.out.println(db.getUserByUsername("ed").getAccountById("1"));
+        Transaction revenueTra = new Transaction("1000.00", TransactionType.DEPOSIT, revenueAcc, db.getUserByUsername("ed").getAccountById("1"), "Salary", "Income");
+        db.getUserByUsername("ed").getAccountById("1").addTransaction(revenueTra);
+        revenueAcc.addTransaction(revenueTra);
+        db.getUserByUsername("ed").addTransaction(revenueTra);
+
+        // Expense account
+        db.getUserByUsername("ed").addAccount(new Account("McDonalds", "0", AccountType.EXPENSE));
+
+        // Liability account
+        db.getUserByUsername("ed").addAccount(new Account("Casa", "0", AccountType.LIABILITY));
+
         MainController mc = new MainController();
         mc.setModel(db);
         mc.displayView();
@@ -26,23 +47,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        try {
-            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            // If Nimbus is not available, fall back to cross-platform
-            try {
-                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-            } catch (Exception ex) {
-                // Not worth my time
-            }
-        }
-        new Main();
+        Main main = new Main();
     }
 
 }
