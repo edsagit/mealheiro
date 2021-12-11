@@ -29,14 +29,14 @@ public class LoginController extends AbstractController {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Login")) {
-            System.out.println("Login controller: login button clicked");
-            if (db.loginUser(lv.getLoginUsername(), lv.getPfLoginPassword())) {
-                db.setLoggedInUser(db.getUserByUsername(lv.getLoginUsername()));
-            } else {
-                db.setLoggedInUser(null);
-            }
-        }
+//        if (e.getActionCommand().equals("Login")) {
+//            System.out.println("Login controller: login button clicked");
+//            if (db.loginUser(lv.getLoginUsername(), lv.getPfLoginPassword())) {
+//                db.setLoggedInUser(db.getUserByUsername(lv.getLoginUsername()));
+//            } else {
+//                db.setLoggedInUser(null);
+//            }
+//        }
         super.actionPerformed(e);
     }
 }

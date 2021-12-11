@@ -30,23 +30,31 @@ public class MainView extends JPanel implements Observer {
                                 .addContainerGap())
         );
     }
-
+    
+    /**
+     * 
+     * @param db UserList
+     */
     public void setModel(UserList db) {
         this.db = db;
         db.addObserver(this);
     }
-
+    
+    /**
+     * 
+     * @param el EventListener
+     */
     public void setController(EventListener el) {
-//        if (this.db != null) {
-//            this.update(this.db, null);
-//        }
     }
 
+    /**
+     * 
+     * @param o Observable
+     * @param arg Object
+     */
     @Override
     public void update(Observable o, Object arg) {
         System.out.println("Main view: updated");
-        if (db.getLoggedInUser() != null) {
-        }
     }
 
 }

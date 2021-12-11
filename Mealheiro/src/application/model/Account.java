@@ -11,13 +11,10 @@ import java.util.*;
  */
 public class Account extends Observable {
 
-    private static long idCounter = 0;
-
     DecimalFormat df = new DecimalFormat("#.##");
 
-    private String id;
+    private UUID id;
     private String name;
-    // private String currency;
     private String iban;
     private String bic;
     private String accountNumber;
@@ -29,7 +26,7 @@ public class Account extends Observable {
     private Map balanceHistory;
 
     public Account(String name, AccountType type) {
-        this.id = createID();
+        this.id = UUID.randomUUID();
         this.name = name;
         this.iban = "";
         this.bic = "";
@@ -42,7 +39,7 @@ public class Account extends Observable {
     }
 
     public Account(String name, String balance, AccountType type) {
-        this.id = createID();
+        this.id = UUID.randomUUID();
         this.name = name;
         this.iban = "";
         this.bic = "";
@@ -55,7 +52,7 @@ public class Account extends Observable {
     }
     
     public Account(String name, String balance, AccountType type, String iban, String bic, String number) {
-        this.id = createID();
+        this.id = UUID.randomUUID();
         this.name = name;
         this.iban = iban;
         this.bic = bic;
@@ -68,7 +65,7 @@ public class Account extends Observable {
     }
 
     public String getId() {
-        return id;
+        return id.toString();
     }
 
     public String getName() {
@@ -167,12 +164,6 @@ public class Account extends Observable {
 
     public void addBalanceHistory(LocalDate date, String balance) {
         balanceHistory.put(date, balance);
-    }
-    
-    
-
-    public static synchronized String createID() {
-        return String.valueOf(idCounter++);
     }
 
 }

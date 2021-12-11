@@ -127,6 +127,7 @@ public class MainController extends AbstractController {
                     lv.setLoginInformation("Username or password are incorrect!");
                 }
             }
+            
             if (e.getActionCommand().equals("Logout")) {
                 System.out.println("Controller: logout button clicked");
                 db.setLoggedInUser(null);

@@ -6,10 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.EventListener;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,10 +17,10 @@ public class AccountsView extends JPanel implements Observer {
 
     private UserList db;
 
-    DefaultTableModel assetModel;
-    DefaultTableModel expenseModel;
-    DefaultTableModel revenueModel;
-    DefaultTableModel liabilityModel;
+    private DefaultTableModel assetModel;
+    private DefaultTableModel expenseModel;
+    private DefaultTableModel revenueModel;
+    private DefaultTableModel liabilityModel;
 
     /**
      * Creates new form AccountsView
@@ -31,60 +28,85 @@ public class AccountsView extends JPanel implements Observer {
     public AccountsView() {
         // tables data placeholder
         Object[][] data = {};
-        
+
         // asset table headers
         String[] tableColumnNames = {"Name", "Account number", "Current balance", "Is active?", "Action"};
-        
+
         // asset table model
         assetModel = new DefaultTableModel(data, tableColumnNames);
-       
+
         // expense table model
         expenseModel = new DefaultTableModel(data, tableColumnNames);
-        
+
         // revenue table model
         revenueModel = new DefaultTableModel(data, tableColumnNames);
-        
+
         // liability table model
         liabilityModel = new DefaultTableModel(data, tableColumnNames);
-        
+
         initComponents();
 
     }
 
+    /**
+     *
+     * @param db UserList
+     */
     public void setModel(UserList db) {
         this.db = db;
         db.addObserver(this);
         this.update(db, null);
     }
 
+    /**
+     *
+     * @param el EventListener
+     */
     public void setController(EventListener el) {
         bTransactionSubmit.addActionListener((ActionListener) el);
     }
 
+    /**
+     *
+     * @param o Observable
+     * @param arg Object
+     */
     public void update(Observable o, Object arg) {
-        System.out.println("Account view: updated");
-        // clear the table first
-        assetModel.setRowCount(0); 
-        expenseModel.setRowCount(0);
-        revenueModel.setRowCount(0);
-        liabilityModel.setRowCount(0);
-        
-        // if user loggedIn populate table
+        // if user is logged in, populate table
         if (db.getLoggedInUser() != null) {
+
+            System.out.println("Account view: updated");
+            // clear the table first
+            assetModel.setRowCount(0);
+            expenseModel.setRowCount(0);
+            revenueModel.setRowCount(0);
+            liabilityModel.setRowCount(0);
+
+            // foreach account in users
             db.getLoggedInUser().getAccounts().forEach(acc -> {
-                switch(acc.getAccountType()) {
-                    case ASSET -> assetModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(),  "€" + acc.getBalance(), acc.getActive(), ""});
-                        
-                    case EXPENSE -> expenseModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(),  "€" + acc.getBalance(), acc.getActive(), ""});
-                        
-                    case REVENUE -> revenueModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), "€" + acc.getBalance(), acc.getActive(), ""});
-                        
-                    case LIABILITY -> liabilityModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), "€" + acc.getBalance(), acc.getActive(), ""});
+                // switch account AccountType
+                switch (acc.getAccountType()) {
+                    case ASSET ->
+                        assetModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), "€" + acc.getBalance(), acc.getActive(), ""});
+
+                    case EXPENSE ->
+                        expenseModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), "€" + acc.getBalance(), acc.getActive(), ""});
+
+                    case REVENUE ->
+                        revenueModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), "€" + acc.getBalance(), acc.getActive(), ""});
+
+                    case LIABILITY ->
+                        liabilityModel.addRow(new Object[]{acc.getName(), acc.getAccountNumber(), "€" + acc.getBalance(), acc.getActive(), ""});
                 }
             });
         }
     }
 
+    /**
+     *
+     * @return AccountType at - Return account type if exists, if not return
+     * null
+     */
     public AccountType getCbAccountsType() {
         AccountType at = null;
         switch (cbAccountsType.getSelectedItem().toString()) {
@@ -100,15 +122,15 @@ public class AccountsView extends JPanel implements Observer {
             case "Liability" -> {
                 return at = AccountType.LIABILITY;
             }
-             
-                
         }
-//        if (cbAccountsType.getSelectedItem().toString();
         return at;
     }
-    
-    
 
+    /**
+     *
+     * @return String balance - Return text field input or return "0" if no
+     * input is provided
+     */
     public String getFtfAccountsBalance() {
         if (!ftfAccountsBalance.getText().isEmpty() || !ftfAccountsBalance.getText().isBlank()) {
             return ftfAccountsBalance.getText();
@@ -116,25 +138,38 @@ public class AccountsView extends JPanel implements Observer {
         return "0";
     }
 
+    /**
+     *
+     * @return String bic - Return text field input
+     */
     public String getTfAccountsBic() {
         return tfAccountsBic.getText();
     }
 
+    /**
+     *
+     * @return String account iban - Return text field input
+     */
     public String getTfAccountsIban() {
         return tfAccountsIban.getText();
     }
 
+    /**
+     *
+     * @return account name - Return text field input
+     */
     public String getTfAccountsName() {
         return tfAccountsName.getText();
     }
 
+    /**
+     *
+     * @return String account number - Return text field input
+     */
     public String getTfAccountsNumber() {
         return tfAccountsNumber.getText();
     }
 
-    
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -261,7 +296,7 @@ public class AccountsView extends JPanel implements Observer {
 
         bTransactionSubmit.setText("Submit");
 
-        ftfAccountsBalance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        ftfAccountsBalance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.00"))));
         ftfAccountsBalance.setToolTipText("Please enter a number.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

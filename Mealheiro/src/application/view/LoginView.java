@@ -20,44 +20,73 @@ public class LoginView extends JPanel implements Observer {
     public LoginView() {
         initComponents();
     }
-
+    
+    /**
+     * 
+     * @param db UserList
+     */
     public void setModel(UserList db) {
         this.db = db;
         db.addObserver(this);
     }
-
+    
+    /**
+     * 
+     * @param el EventListener
+     */
     public void setController(EventListener el) {
         bLogin.addActionListener((ActionListener) el);
     }
 
+    /**
+     * 
+     * @param o Observable
+     * @param arg Object
+     */
     @Override
     public void update(Observable o, Object arg) {
         System.out.println("Login view: updated");
-        if (db.getLoggedInUser() != null) {
-            this.remove(this);
+        if (db.getLoggedInUser() == null) {
+            clearFields();
         }
     }
-
+    
+    /**
+     *  
+     * @return String pfLoginPassword.getText() or null if no string
+     */
     public String getPfLoginPassword() {
-        String password = this.pfLoginPassword.getText();
-        if (!password.isEmpty()) {
-            return password;
-        } else {
-            return null;
+        if (!this.pfLoginPassword.getText().isEmpty() || !this.pfLoginPassword.getText().isBlank()) {
+            return this.pfLoginPassword.getText();
         }
+        return null;
     }
-
+    
+    /**
+     * 
+     * @return String tfLoginUsername.getText() or null if no string
+     */
     public String getLoginUsername() {
-        String username = this.tfLoginUsername.getText();
-        if (!username.isEmpty()) {
-            return username;
-        } else {
-            return null;
+        if (!this.tfLoginUsername.getText().isEmpty() || !this.tfLoginUsername.getText().isBlank()) {
+            return this.tfLoginUsername.getText();
         }
+        return null;
     }
-
+    
+    /**
+     * 
+     * @param text String - Set label login information to String text
+     */
     public void setLoginInformation(String text) {
         lblLoginInformation.setText(text);
+    }
+        
+    /**
+     * Clear text fields
+     */
+    public void clearFields() {
+        tfLoginUsername.setText("");
+        pfLoginPassword.setText("");
     }
 
     /**

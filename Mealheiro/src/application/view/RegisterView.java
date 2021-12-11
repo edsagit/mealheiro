@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package application.view;
 
 import application.model.UserList;
@@ -11,7 +7,6 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
-
 
 /**
  *
@@ -32,8 +27,263 @@ public class RegisterView extends JPanel implements Observer {
      */
     public RegisterView() {
         initComponents();
+        registerValidation();
+    }
+
+    /**
+     *
+     * @return Boolean userValid
+     */
+    public Boolean getUserValid() {
+        return userValid;
+    }
+
+    /**
+     *
+     * @param userValid Boolean - Set username text field validity
+     */
+    public void setUserValid(Boolean userValid) {
+        this.userValid = userValid;
+    }
+
+    /**
+     *
+     * @return Boolean emailValid
+     */
+    public Boolean getEmailValid() {
+        return emailValid;
+    }
+
+    /**
+     *
+     * @param emailValid Boolean - Set email text field validity
+     */
+    public void setEmailValid(Boolean emailValid) {
+        this.emailValid = emailValid;
+    }
+
+    /**
+     *
+     * @return Boolean passwordValid
+     */
+    public Boolean getPasswordValid() {
+        return passwordValid;
+    }
+
+    /**
+     *
+     * @param passwordValid Boolean - Set password text field validity
+     */
+    public void setPasswordValid(Boolean passwordValid) {
+        this.passwordValid = passwordValid;
+    }
+
+    /**
+     *
+     * @return Boolean bankNameValid
+     */
+    public Boolean getBankNameValid() {
+        return bankNameValid;
+    }
+
+    /**
+     *
+     * @param bankNameValid Boolean - Set bank name text field validity
+     */
+    public void setBankNameValid(Boolean bankNameValid) {
+        this.bankNameValid = bankNameValid;
+    }
+
+    /**
+     *
+     * @return Boolean balanceValid
+     */
+    public Boolean getBalanceValid() {
+        return balanceValid;
+    }
+
+    /**
+     *
+     * @param balanceValid Boolean - Set balance text field validity
+     */
+    public void setBalanceValid(Boolean balanceValid) {
+        this.balanceValid = balanceValid;
+    }
+
+    /**
+     *
+     * @return Boolean savingsValid
+     */
+    public Boolean getSavingsValid() {
+        return savingsValid;
+    }
+
+    /**
+     *
+     * @param savingsValid Boolean - Set savings text field validity
+     */
+    public void setSavingsValid(Boolean savingsValid) {
+        this.savingsValid = savingsValid;
+    }
+
+    /**
+     *
+     * @param db UserList
+     */
+    public void setModel(UserList db) {
+        this.db = db;
+        db.addObserver(this);
+    }
+
+    /**
+     *
+     * @param text String - Set information label text to String text
+     */
+    public void setInformationLabelText(String text) {
+        lblRegisterInformation.setText(text);
+    }
+
+    /**
+     *
+     * @param el EventListener
+     */
+    public void setController(EventListener el) {
+        bRegister.addActionListener((ActionListener) el);
+    }
+
+    /**
+     *
+     * @param ftfRegisterBalance String - Set balance to String
+     * ftfRegisterBalance
+     */
+    public void setFtfRegisterBalance(String ftfRegisterBalance) {
+        this.ftfRegisterBalance.setText(ftfRegisterBalance);
+    }
+
+    /**
+     *
+     * @param ftfRegisterSavingsBalance String - Set savings balance to String
+     * ftfRegisterSavingsBalance
+     */
+    public void setFtfRegisterSavingsBalance(String ftfRegisterSavingsBalance) {
+        this.ftfRegisterSavingsBalance.setText(ftfRegisterSavingsBalance);
+    }
+
+    /**
+     *
+     * @param pfRegisterPassword String - Set password to String
+     * pfRegisterPassword
+     */
+    public void setPfRegisterPassword(String pfRegisterPassword) {
+        this.pfRegisterPassword.setText(pfRegisterPassword);
+    }
+
+    /**
+     *
+     * @param tfRegisterBankName String - Set bank name to String
+     * tfRegisterBankName
+     */
+    public void setTfRegisterBankName(String tfRegisterBankName) {
+        this.tfRegisterBankName.setText(tfRegisterBankName);
+    }
+
+    /**
+     *
+     * @param tfRegisterEmail String - Set email to String tfRegisterEmail
+     */
+    public void setTfRegisterEmail(String tfRegisterEmail) {
+        this.tfRegisterEmail.setText(tfRegisterEmail);
+    }
+
+    /**
+     *
+     * @param tfRegisterUsername String - Set username to String
+     * tfRegisterUsername
+     */
+    public void setTfRegisterUsername(String tfRegisterUsername) {
+        this.tfRegisterUsername.setText(tfRegisterUsername);
+    }
+
+    /**
+     *
+     * @return String balance from text field
+     */
+    public String getFtfRegisterBalance() {
+        return ftfRegisterBalance.getText();
+    }
+
+    /**
+     *
+     * @return String savings balance from text field
+     */
+    public String getFtfRegisterSavingsBalance() {
+        return ftfRegisterSavingsBalance.getText();
+    }
+
+    /**
+     *
+     * @return String bankName from text field
+     */
+    public String getTfRegisterBankName() {
+        return tfRegisterBankName.getText();
+    }
+
+    /**
+     *
+     * @param o Observable
+     * @param arg Object
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("Register view: updated");
+        clearTextFields();
+    }
+
+    /**
+     *
+     * @return String username from text field
+     */
+    public String getRegisterUsername() {
+        return tfRegisterUsername.getText();
+    }
+
+    /**
+     *
+     * @return String email from text field
+     */
+    public String getRegisterEmail() {
+        return tfRegisterEmail.getText();
+    }
+
+    /**
+     *
+     * @return String password from text field
+     */
+    public String getRegisterPassword() {
+        return pfRegisterPassword.getText();
+    }
+
+    /**
+     * Clear text fields
+     */
+    public void clearTextFields() {
+        tfRegisterUsername.setText("");
+        tfRegisterEmail.setText("");
+        pfRegisterPassword.setText("");
+        tfRegisterBankName.setText("");
+        ftfRegisterBalance.setValue(null);
+        ftfRegisterSavingsBalance.setValue(null);
+        validate();
+    }
+    
+    /**
+     * Validate register form
+     */
+    public void registerValidation() {
         bRegister.setEnabled(false);
-        tfRegisterUsername.setDocument(new JTextFieldLimit(10)); // Limit character textfield input
+        // Limit character textfield input
+        tfRegisterUsername.setDocument(new JTextFieldLimit(10));
+        // OnChange validation
         tfRegisterUsername.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -64,7 +314,9 @@ public class RegisterView extends JPanel implements Observer {
                 }
             }
         });
+        // Limit character textfield input
         tfRegisterEmail.setDocument(new JTextFieldLimit(30));
+        // OnChange validation
         tfRegisterEmail.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -97,7 +349,9 @@ public class RegisterView extends JPanel implements Observer {
                 }
             }
         });
+        // Limit character textfield input
         pfRegisterPassword.setDocument(new JTextFieldLimit(15));
+        // OnChange validation
         pfRegisterPassword.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -128,7 +382,9 @@ public class RegisterView extends JPanel implements Observer {
                 }
             }
         });
+        // Limit character textfield input
         tfRegisterBankName.setDocument(new JTextFieldLimit(15));
+        // OnChange validation
         tfRegisterBankName.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -224,130 +480,6 @@ public class RegisterView extends JPanel implements Observer {
         });
     }
 
-    public Boolean getUserValid() {
-        return userValid;
-    }
-
-    public void setUserValid(Boolean userValid) {
-        this.userValid = userValid;
-    }
-
-    public Boolean getEmailValid() {
-        return emailValid;
-    }
-
-    public void setEmailValid(Boolean emailValid) {
-        this.emailValid = emailValid;
-    }
-
-    public Boolean getPasswordValid() {
-        return passwordValid;
-    }
-
-    public void setPasswordValid(Boolean passwordValid) {
-        this.passwordValid = passwordValid;
-    }
-
-    public Boolean getBankNameValid() {
-        return bankNameValid;
-    }
-
-    public void setBankNameValid(Boolean bankNameValid) {
-        this.bankNameValid = bankNameValid;
-    }
-
-    public Boolean getBalanceValid() {
-        return balanceValid;
-    }
-
-    public void setBalanceValid(Boolean balanceValid) {
-        this.balanceValid = balanceValid;
-    }
-
-    public Boolean getSavingsValid() {
-        return savingsValid;
-    }
-
-    public void setSavingsValid(Boolean savingsValid) {
-        this.savingsValid = savingsValid;
-    }
-
-    public void setModel(UserList db) {
-        this.db = db;
-        db.addObserver(this);
-    }
-
-    public void setInformationLabelText(String text) {
-        lblRegisterInformation.setText(text);
-    }
-
-    public void setController(EventListener el) {
-        bRegister.addActionListener((ActionListener) el);
-    }
-
-    public void setFtfRegisterBalance(String ftfRegisterBalance) {
-        this.ftfRegisterBalance.setText(ftfRegisterBalance);
-    }
-
-    public void setFtfRegisterSavingsBalance(String ftfRegisterSavingsBalance) {
-        this.ftfRegisterSavingsBalance.setText(ftfRegisterSavingsBalance);
-    }
-
-    public void setPfRegisterPassword(String pfRegisterPassword) {
-        this.pfRegisterPassword.setText(pfRegisterPassword);
-    }
-
-    public void setTfRegisterBankName(String tfRegisterBankName) {
-        this.tfRegisterBankName.setText(tfRegisterBankName);
-    }
-
-    public void setTfRegisterEmail(String tfRegisterEmail) {
-        this.tfRegisterEmail.setText(tfRegisterEmail);
-    }
-
-    public void setTfRegisterUsername(String tfRegisterUsername) {
-        this.tfRegisterUsername.setText(tfRegisterUsername);
-    }
-
-    public String getFtfRegisterBalance() {
-        return ftfRegisterBalance.getText();
-    }
-
-    public String getFtfRegisterSavingsBalance() {
-        return ftfRegisterSavingsBalance.getText();
-    }
-
-    public String getTfRegisterBankName() {
-        return tfRegisterBankName.getText();
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        System.out.println("Register view: updated");
-        clearTextFields();
-    }
-
-    public String getRegisterUsername() {
-        return tfRegisterUsername.getText();
-    }
-
-    public String getRegisterEmail() {
-        return tfRegisterEmail.getText();
-    }
-
-    public String getRegisterPassword() {
-        return pfRegisterPassword.getText();
-    }
-
-    public void clearTextFields() {
-        tfRegisterUsername.setText("");
-        tfRegisterEmail.setText("");
-        pfRegisterPassword.setText("");
-        tfRegisterBankName.setText("");
-        ftfRegisterBalance.setValue(null);
-        ftfRegisterSavingsBalance.setValue(null);
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -404,13 +536,13 @@ public class RegisterView extends JPanel implements Observer {
 
         lblBalance.setText("Balance");
 
-        ftfRegisterBalance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(""))));
+        ftfRegisterBalance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.00"))));
         ftfRegisterBalance.setToolTipText("Please enter a number.");
         ftfRegisterBalance.setNextFocusableComponent(ftfRegisterSavingsBalance);
 
         lblSavingsBalance.setText("Savings balance");
 
-        ftfRegisterSavingsBalance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        ftfRegisterSavingsBalance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.00"))));
         ftfRegisterSavingsBalance.setToolTipText("Please enter a number.");
         ftfRegisterSavingsBalance.setNextFocusableComponent(bRegister);
 
@@ -527,17 +659,33 @@ public class RegisterView extends JPanel implements Observer {
 class JTextFieldLimit extends PlainDocument {
 
     private int limit;
-
+    
+    /**
+     * 
+     * @param limit Integer
+     */
     JTextFieldLimit(int limit) {
         super();
         this.limit = limit;
     }
-
+    
+    /**
+     * 
+     * @param limit Integer
+     * @param upper Boolean
+     */
     JTextFieldLimit(int limit, boolean upper) {
         super();
         this.limit = limit;
     }
-
+    
+    /**
+     * 
+     * @param offset Integer
+     * @param str String
+     * @param attr AttributeSet
+     * @throws BadLocationException 
+     */
     public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
         if (str == null) {
             return;

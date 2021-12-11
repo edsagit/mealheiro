@@ -1,8 +1,8 @@
 package application.view;
 
-import application.model.UserList;
-import application.model.TransactionType;
 import application.model.Account;
+import application.model.TransactionType;
+import application.model.UserList;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -14,17 +14,12 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
 
 /**
  *
@@ -33,16 +28,16 @@ import javax.swing.table.TableRowSorter;
 public class TransactionsView extends JPanel implements Observer {
 
     private UserList db;
-    DefaultTableModel expenseModel;
-    DefaultTableModel incomeModel;
-    DefaultTableModel transferModel;
+    private DefaultTableModel expenseModel;
+    private DefaultTableModel incomeModel;
+    private DefaultTableModel transferModel;
 
     /**
      * Creates new form TransactionsView
      */
     public TransactionsView() {
 
-        // tables data placeholder  
+        // tables data placeholder
         Object[][] data = {};
 
         // expense table headers
@@ -64,42 +59,61 @@ public class TransactionsView extends JPanel implements Observer {
 
         // set expense table sorterExpense
         TableRowSorter<TableModel> sorterExpense = new TableRowSorter<TableModel>(expenseTable.getModel());
+        // set expense table sorter
         expenseTable.setRowSorter(sorterExpense);
 
         List<RowSorter.SortKey> sortKeysExpense = new ArrayList<>(25);
         sortKeysExpense.add(new RowSorter.SortKey(4, SortOrder.ASCENDING));
         sortKeysExpense.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        // set sortKeys
         sorterExpense.setSortKeys(sortKeysExpense);
 
         // set income table sorterIncome
         TableRowSorter<TableModel> sorterIncome = new TableRowSorter<TableModel>(incomeTable.getModel());
+        // set income table sorter
         incomeTable.setRowSorter(sorterIncome);
 
         List<RowSorter.SortKey> sortKeysIncome = new ArrayList<>(25);
         sortKeysIncome.add(new RowSorter.SortKey(4, SortOrder.ASCENDING));
         sortKeysIncome.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        // set sortKeys
         sorterIncome.setSortKeys(sortKeysIncome);
 
         // set transfer table sorterTransfer
         TableRowSorter<TableModel> sorterTransfer = new TableRowSorter<TableModel>(transferTable.getModel());
+        // set table transfer sorter
         transferTable.setRowSorter(sorterTransfer);
 
         List<RowSorter.SortKey> sortKeysTransfer = new ArrayList<>(25);
         sortKeysTransfer.add(new RowSorter.SortKey(4, SortOrder.ASCENDING));
         sortKeysTransfer.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        // set sortKeys
         sorterIncome.setSortKeys(sortKeysTransfer);
 
     }
 
+    /**
+     *
+     * @param db UserList
+     */
     public void setModel(UserList db) {
         this.db = db;
         db.addObserver(this);
     }
 
+    /**
+     *
+     * @param el EventListener
+     */
     public void setController(EventListener el) {
         bTransactionSubmit.addActionListener((ActionListener) el);
     }
 
+    /**
+     *
+     * @param o Observable
+     * @param arg Object
+     */
     public void update(Observable o, Object arg) {
         System.out.println("Transaction view: updated");
         // clear the tables
@@ -143,6 +157,11 @@ public class TransactionsView extends JPanel implements Observer {
         clearFields();
     }
 
+    /**
+     *
+     * @return Account acc - Return Object Account destination account from
+     * comboBox, or return null if none corresponds
+     */
     public Account getCbTransactionDestinationAccount() {
         Account acc = null;
         String s = cbTransactionDestinationAccount.getSelectedItem().toString();
@@ -154,6 +173,11 @@ public class TransactionsView extends JPanel implements Observer {
         return acc;
     }
 
+    /**
+     *
+     * @return Account acc - Return object Account source account from comboBox,
+     * or return null if none corresponds
+     */
     public Account getCbTransactionSourceAccount() {
         Account acc = null;
         String s = cbTransactionSourceAccount.getSelectedItem().toString();
@@ -165,6 +189,11 @@ public class TransactionsView extends JPanel implements Observer {
         return acc;
     }
 
+    /**
+     *
+     * @return TransactionType tt - Return object TransactionType from comboBox,
+     * or return null if none corresponds
+     */
     public TransactionType getCbTransactionType() {
         TransactionType tt = null;
         switch (cbTransactionType.getSelectedItem().toString()) {
@@ -181,14 +210,26 @@ public class TransactionsView extends JPanel implements Observer {
         return tt;
     }
 
+    /**
+     *
+     * @return String amount
+     */
     public String getFtfTransactionAmount() {
         return ftfTransactionAmount.getText();
     }
 
+    /**
+     *
+     * @return LocalDate date
+     */
     public LocalDate getFtfTransactionDate() {
         return LocalDate.parse(ftfTransactionDate.getText());
     }
 
+    /**
+     *
+     * @return String category
+     */
     public String getTfTransactionCategory() {
         if (!tfTransactionCategory.getText().isEmpty() || !tfTransactionCategory.getText().isBlank()) {
             return tfTransactionCategory.getText();
@@ -196,6 +237,10 @@ public class TransactionsView extends JPanel implements Observer {
         return "(no category)";
     }
 
+    /**
+     *
+     * @return String description
+     */
     public String getTfTransactionDescription() {
         if (!tfTransactionDescription.getText().isEmpty() || !tfTransactionDescription.getText().isBlank()) {
             return tfTransactionDescription.getText();
@@ -203,18 +248,24 @@ public class TransactionsView extends JPanel implements Observer {
         return "(no description)";
     }
 
+    /**
+     *
+     * @param s String - Set label transactionInformation text with String s
+     */
     public void setLblTransactionInformation(String s) {
         this.lblTransactionInformation.setText(s);
     }
 
+    /**
+     * Clear all input fields from the form
+     */
     public void clearFields() {
         this.ftfTransactionAmount.setValue(null);
-        this.cbTransactionSourceAccount.setSelectedIndex(0);
-        this.cbTransactionDestinationAccount.setSelectedIndex(1);
         this.ftfTransactionDate.setValue(new Date());
         this.tfTransactionCategory.setText("");
         this.tfTransactionDescription.setText("");
         this.cbTransactionType.setSelectedIndex(0);
+        validate();
     }
 
     /**
@@ -277,7 +328,7 @@ public class TransactionsView extends JPanel implements Observer {
             expensePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(expensePaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -299,7 +350,7 @@ public class TransactionsView extends JPanel implements Observer {
             incomePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(incomePaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -321,7 +372,7 @@ public class TransactionsView extends JPanel implements Observer {
             transferPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(transferPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -344,7 +395,7 @@ public class TransactionsView extends JPanel implements Observer {
 
         lblTransactionAmount.setText("Amount");
 
-        ftfTransactionAmount.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        ftfTransactionAmount.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.00"))));
 
         lblTransactionCategory.setText("Category");
 
@@ -353,8 +404,6 @@ public class TransactionsView extends JPanel implements Observer {
         cbTransactionType.setModel(new javax.swing.DefaultComboBoxModel<>(TransactionType.getTransactionTypes()));
 
         lblEuroSymbol.setText("€");
-
-        lblTransactionInformation.setText("jLabel1");
 
         javax.swing.GroupLayout newTransactionPaneLayout = new javax.swing.GroupLayout(newTransactionPane);
         newTransactionPane.setLayout(newTransactionPaneLayout);
@@ -424,7 +473,7 @@ public class TransactionsView extends JPanel implements Observer {
                 .addComponent(lblTransactionInformation)
                 .addGap(18, 18, 18)
                 .addComponent(bTransactionSubmit)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(215, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(newTransactionPane);
@@ -440,9 +489,7 @@ public class TransactionsView extends JPanel implements Observer {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jSplitPane1)
         );
     }// </editor-fold>//GEN-END:initComponents
 

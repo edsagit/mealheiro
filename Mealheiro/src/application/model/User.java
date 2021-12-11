@@ -13,11 +13,9 @@ import java.util.logging.Logger;
  */
 public class User extends Observable {
 
-    private static long idCounter = 0;
-
     DecimalFormat df = new DecimalFormat("#.##");
 
-    private String id;
+    private UUID id;
     private String username;
     private String email;
     private String password;
@@ -26,7 +24,7 @@ public class User extends Observable {
     private ArrayList<Transaction> transactions;
 
     public User(String username, String email, String password) {
-        this.id = createID();
+        this.id = UUID.randomUUID();
         this.username = username;
         this.email = email;
         this.password = password;
@@ -39,30 +37,62 @@ public class User extends Observable {
 //        notifyObservers();
 //    }
     
+    /**
+     * 
+     * @return String id
+     */
+    public String getId() {
+        return id.toString();
+    }
+    
+    /**
+     * 
+     * @return String username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * 
+     * @return String email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * 
+     * @return String password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * 
+     * @param transaction Transaction - Transaction to add to user transactions
+     */
     public void addTransaction(Transaction transaction) {
         transactions.add(transaction);
         setChanged();
         notifyObservers();
     }
 
+    /**
+     * 
+     * @param account Account - Account to add to user accounts
+     */
     public void addAccount(Account account) {
         accounts.add(account);
         setChanged();
         notifyObservers();
     }
-
+    
+    /**
+     * 
+     * @return String[] accountsNames - Array of String holding all user account names
+     */
     public String[] getAccountsNames() {
         String[] accountsNames = new String[accounts.size()];
         for (int i = 0; i < accounts.size(); i++) {
@@ -70,15 +100,28 @@ public class User extends Observable {
         }
         return accountsNames;
     }
-
+    
+    /**
+     * 
+     * @return ArrayList accounts - ArrayList with all user accounts
+     */
     public ArrayList<Account> getAccounts() {
         return accounts;
     }
-
+    
+    /**
+     * 
+     * @return ArrayList transactions - ArrayList with all user transactions
+     */
     public ArrayList<Transaction> getTransactions() {
         return transactions;
     }
-
+    
+    /**
+     * 
+     * @param id String
+     * @return Account acc - Return Account acc if Account found with id equals to String id
+     */
     public Account getAccountById(String id) {
         for (Account acc : accounts) {
             if (acc.getId().equals(id)) {
@@ -88,6 +131,11 @@ public class User extends Observable {
         return null;
     }
 
+    /**
+     * 
+     * @param accountName String
+     * @return Account acc - Return Account acc if Account found with account name equals to String accountName
+     */
     public Account getAccountByName(String accountName) {
         for (Account acc : accounts) {
             if (acc.getName().equals(accountName)) {
@@ -96,7 +144,11 @@ public class User extends Observable {
         }
         return null;
     }
-
+    
+    /**
+     * 
+     * @return String totalNetWorth - String with the sum of the balances from all user asset accounts
+     */
     public String getNetWorth() {
         Double totalNetWorth = 0.00;
         for (Account a : accounts) {
@@ -113,16 +165,23 @@ public class User extends Observable {
         return df.format(totalNetWorth);
     }
     
+    /**
+     * 
+     * @return ArrayList - Returns ArrayList of Strings with only one instance from each category found in user transactions
+     */
     public ArrayList getAllCategories(){
         ArrayList al = new ArrayList<>();
-        for (Transaction t : transactions) {
-            if (!al.contains(t.getCategory())) {
-                al.add(t.getCategory());
-            }
-        }
+        transactions.stream().filter(t -> (!al.contains(t.getCategory()))).forEachOrdered(t -> {
+            al.add(t.getCategory());
+        });
         return al;
     }
     
+    /**
+     * 
+     * @param category String
+     * @return String totalCategory - String with the sum from all the transactions found with category equals to String category
+     */
     public String getCategoryTotalByCategory(String category) {
         Double totalCategory = 0.00;
         for (Transaction t : transactions) {
@@ -138,10 +197,10 @@ public class User extends Observable {
         return df.format(totalCategory);
     }
 
-    public static synchronized String createID() {
-        return String.valueOf(idCounter++);
-    }
-
+    /**
+     * 
+     * @return String 
+     */
     @Override
     public String toString() {
         return id + "," + username + "," + email + "," + password + "," + netWorth + "," + accounts + "," + transactions;

@@ -16,9 +16,7 @@ public class Transaction extends Observable {
 
     DecimalFormat df = new DecimalFormat("#.##");
 
-    private static long idCounter = 0;
-
-    private String id;
+    private UUID id;
     private String amount;
     private TransactionType type;
     private Account sourceAccount;
@@ -28,7 +26,7 @@ public class Transaction extends Observable {
     private LocalDate date;
 
     public Transaction(String amount, TransactionType type, Account sourceAccount, Account destinationAccount, String description, String category, LocalDate date) {
-        this.id = createID();
+        this.id = UUID.randomUUID();
         this.amount = amount;
         this.type = type;
         this.sourceAccount = sourceAccount;
@@ -140,10 +138,6 @@ public class Transaction extends Observable {
         this.category = category;
         setChanged();
         notifyObservers();
-    }
-
-    public static synchronized String createID() {
-        return String.valueOf(idCounter++);
     }
 
 }
