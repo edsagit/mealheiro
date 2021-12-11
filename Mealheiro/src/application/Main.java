@@ -1,10 +1,15 @@
 package application;
 
-import controller.*;
+import application.model.TransactionType;
+import application.model.User;
+import application.model.Transaction;
+import application.model.AccountType;
+import application.model.Account;
+import application.model.UserList;
+import application.controller.MainController;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
-import model.*;
 
 /**
  *
