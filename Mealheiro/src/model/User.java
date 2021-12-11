@@ -38,6 +38,7 @@ public class User extends Observable {
 //        setChanged();
 //        notifyObservers();
 //    }
+    
     public String getUsername() {
         return username;
     }

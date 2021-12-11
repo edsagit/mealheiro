@@ -2,6 +2,7 @@ package model;
 
 import java.text.DecimalFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -25,6 +26,7 @@ public class Account extends Observable {
     private AccountType accountType;
     private Boolean active;
     private ArrayList<Transaction> transactions;
+    private Map balanceHistory;
 
     public Account(String name, AccountType type) {
         this.id = createID();
@@ -36,6 +38,7 @@ public class Account extends Observable {
         this.openingDate = new Date();
         this.accountType = type;
         this.transactions = new ArrayList<>();
+        this.balanceHistory = new TreeMap<LocalDate, String>();
     }
 
     public Account(String name, String balance, AccountType type) {
@@ -45,9 +48,23 @@ public class Account extends Observable {
         this.bic = "";
         this.accountNumber = "";
         this.balance = balance;
-        this.openingDate = openingDate;
+        this.openingDate = new Date();
         this.accountType = type;
         this.transactions = new ArrayList<>();
+        this.balanceHistory = new TreeMap<LocalDate, String>();
+    }
+    
+    public Account(String name, String balance, AccountType type, String iban, String bic, String number) {
+        this.id = createID();
+        this.name = name;
+        this.iban = iban;
+        this.bic = bic;
+        this.accountNumber = number;
+        this.balance = balance;
+        this.openingDate = new Date();
+        this.accountType = type;
+        this.transactions = new ArrayList<>();
+        this.balanceHistory = new TreeMap<LocalDate, String>();
     }
 
     public String getId() {
@@ -95,7 +112,7 @@ public class Account extends Observable {
     }
 
     public String getBalance() {
-        return df.format(Double.valueOf(balance));
+        return df.format(Double.valueOf(this.balance));
     }
 
     public void setBalance(String balance) {
@@ -142,6 +159,14 @@ public class Account extends Observable {
 
     public ArrayList<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public Map getBalanceHistory() {
+        return balanceHistory;
+    }
+
+    public void addBalanceHistory(LocalDate date, String balance) {
+        balanceHistory.put(date, balance);
     }
     
     

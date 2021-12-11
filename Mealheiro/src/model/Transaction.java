@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  * @author ed
  */
 public class Transaction extends Observable {
-    
+
     DecimalFormat df = new DecimalFormat("#.##");
 
     private static long idCounter = 0;
@@ -42,22 +42,27 @@ public class Transaction extends Observable {
 
     public void operationTransaction(Account sourceAccount, Account destinationAccount, String amount) {
         try {
+            // declare variables to hold account balances and amount
             Number initialSourceBalance = null;
             Number initialDestinationBalance = null;
             Number amt = null;
-            
+
             // get balances from both accounts and the amount needed for the transaction
             initialSourceBalance = NumberFormat.getNumberInstance().parse(sourceAccount.getBalance());
             initialDestinationBalance = NumberFormat.getNumberInstance().parse(destinationAccount.getBalance());
             amt = NumberFormat.getNumberInstance().parse(amount);
-            
+
             // remove amount from sourceAccount and add amout to destinationAccount
             Double resultFinalSourceBalance = initialSourceBalance.doubleValue() - amt.doubleValue();
             Double resultFinalDestinationBalance = initialDestinationBalance.doubleValue() + amt.doubleValue();
-            
+
             // properly format the result, rounding to 2 decimal places
             df.format(resultFinalSourceBalance);
             df.format(resultFinalDestinationBalance);
+
+//            System.out.println("ASD" + sourceAccount.getName() + " - " + this.date.toString() + " - " + sourceAccount.getBalance());
+            sourceAccount.addBalanceHistory(this.date, Double.toString(resultFinalSourceBalance));
+            destinationAccount.addBalanceHistory(this.date, Double.toString(resultFinalDestinationBalance));
 
             // convert double to string and set balances
             sourceAccount.setBalance(Double.toString(resultFinalSourceBalance));

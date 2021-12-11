@@ -20,7 +20,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="jSplitPane1" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -75,7 +75,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="614" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="618" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -126,7 +126,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" pref="614" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" pref="618" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -174,7 +174,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" pref="614" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" pref="618" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -219,30 +219,33 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="bTransactionSubmit" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lblTransactionDescription" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tfTransactionDescription" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="cbTransactionSourceAccount" alignment="0" pref="160" max="32767" attributes="0"/>
-                                  <Component id="lblTransactionSourceAccount" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblTransactionDestinationAccount" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cbTransactionDestinationAccount" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblTransactionDate" min="-2" max="-2" attributes="0"/>
-                                  <Component id="ftfTransactionDate" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblTransactionAmount" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblTransactionCategory" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cbTransactionCategory" alignment="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <Component id="bTransactionSubmit" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="lblTransactionDescription" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tfTransactionDescription" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="cbTransactionSourceAccount" alignment="0" pref="160" max="32767" attributes="0"/>
+                                      <Component id="lblTransactionSourceAccount" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblTransactionDestinationAccount" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cbTransactionDestinationAccount" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lblTransactionDate" min="-2" max="-2" attributes="0"/>
+                                      <Component id="ftfTransactionDate" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lblTransactionAmount" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblTransactionCategory" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
+                              <Component id="lblTransactionType" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbTransactionType" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="ftfTransactionAmount" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblEuroSymbol" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="tfTransactionCategory" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="lblTransactionType" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbTransactionType" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jFormattedTextField2" min="-2" pref="150" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel1" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="lblTransactionInformation" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -255,14 +258,14 @@
                       <Component id="lblTransactionAmount" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jFormattedTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="ftfTransactionAmount" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEuroSymbol" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lblTransactionSourceAccount" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbTransactionSourceAccount" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lblTransactionDestinationAccount" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbTransactionDestinationAccount" min="-2" max="-2" attributes="0"/>
@@ -277,14 +280,16 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lblTransactionCategory" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cbTransactionCategory" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="tfTransactionCategory" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="lblTransactionDescription" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="tfTransactionDescription" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lblTransactionInformation" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="bTransactionSubmit" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="190" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -303,9 +308,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbTransactionSourceAccount">
-              <Properties>
-                <Property name="editable" type="boolean" value="true"/>
-              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -321,9 +323,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbTransactionDestinationAccount">
-              <Properties>
-                <Property name="editable" type="boolean" value="true"/>
-              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -331,7 +330,7 @@
             <Component class="javax.swing.JFormattedTextField" name="ftfTransactionDate">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                  <Format subtype="1" type="1"/>
+                  <Format format="yyyy-MM-dd" subtype="-1" type="1"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Format: 6 Dec 2021"/>
               </Properties>
@@ -346,7 +345,7 @@
                 <Property name="text" type="java.lang.String" value="Amount"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField2">
+            <Component class="javax.swing.JFormattedTextField" name="ftfTransactionAmount">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                   <Format format="#,##0.00" subtype="-1" type="4"/>
@@ -357,22 +356,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Category"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="cbTransactionCategory">
-              <Properties>
-                <Property name="editable" type="boolean" value="true"/>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="lblTransactionType">
               <Properties>
@@ -389,9 +372,16 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel1">
+            <Component class="javax.swing.JLabel" name="lblEuroSymbol">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#x20ac;"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="tfTransactionCategory">
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblTransactionInformation">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="jLabel1"/>
               </Properties>
             </Component>
           </SubComponents>

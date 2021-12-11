@@ -1,7 +1,5 @@
 package model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -9,7 +7,7 @@ import java.util.*;
  *
  * @author ed
  */
-public class UserList extends Observable {
+public class UserList extends Observable implements Observer {
 
     private ArrayList<User> users;
     private User loggedInUser = null;
@@ -19,10 +17,6 @@ public class UserList extends Observable {
     }
 
     public Boolean usernameExists(String username) {
-        // for (User u : users) {
-        // System.out.println(u.getUsername());
-        // }
-        // System.out.println(username);
         return users.stream().anyMatch(u -> (u.getUsername().equals(username)));
     }
 
@@ -55,7 +49,7 @@ public class UserList extends Observable {
             tmpUser.addAccount(destinationOpeningBalance); // add destination account to user
             Transaction transactionOpeningBalance = new Transaction(defaultBalance, TransactionType.OPENING_BALANCE,
                     sourceOpeningBalance, destinationOpeningBalance, "Initial balance for " + bankName + " account",
-                    "Opening balance", LocalDate.now());
+                    "Opening balance", LocalDate.parse("2020-01-23"));
             destinationOpeningBalance.addTransaction(transactionOpeningBalance);
             tmpUser.addTransaction(transactionOpeningBalance);
 
@@ -68,12 +62,12 @@ public class UserList extends Observable {
             tmpUser.addAccount(destinationOpeningSavingsBalance); // add destination account to user
             Transaction transactionSavingsBalance = new Transaction(savingsBalance, TransactionType.OPENING_BALANCE,
                     sourceOpeningSavingBalance, destinationOpeningSavingsBalance,
-                    "Initial balance for " + bankName + " savings account", "Opening balance", LocalDate.now());
+                    "Initial balance for " + bankName + " savings account", "Opening balance", LocalDate.parse("2020-01-23"));
             destinationOpeningSavingsBalance.addTransaction(transactionSavingsBalance);
             tmpUser.addTransaction(transactionSavingsBalance);
-
+            tmpUser.addObserver(this);
             this.users.add(tmpUser);
-            // user.addObserver(this);
+            
             setChanged();
             notifyObservers();
         }
@@ -105,9 +99,10 @@ public class UserList extends Observable {
 //        }
 //    }
 
-    // @Override
-    // public void update(Observable o, Object arg) {
-    // setChanged();
-    // notifyObservers();
-    // }
+     @Override
+     public void update(Observable o, Object arg) {
+        setChanged();
+        notifyObservers();
+     }
+
 }

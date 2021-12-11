@@ -37,11 +37,11 @@ public class MainController extends AbstractController {
         mainWindow.setLocationRelativeTo(null);
 
         // create views
-        mv = new MainView();
-        lv = new LoginView();
-        rv = new RegisterView();
-        dv = new DashboardView(); // Instantiate DashboardView
-        av = new AccountsView(); // Instantiate AccountsView
+        mv = new MainView(); // MainView
+        lv = new LoginView(); // LoginView
+        rv = new RegisterView(); // RegisterView
+        dv = new DashboardView(); // DashboardView
+        av = new AccountsView(); // AccountsView
         tv = new TransactionsView();
 
         this.setView(mv);
@@ -50,20 +50,20 @@ public class MainController extends AbstractController {
         lc = new LoginController();
         lc.setParentController(this);
         lc.setView(lv);
-
+        // register controller
         rc = new RegisterController();
         rc.setView(rv);
-
+        // dashboard controller
         dc = new DashboardController();
         dc.setParentController(this);
         dc.setView(dv);
-
+        // accounts controller
         ac = new AccountsController();
         ac.setView(av);
-
+        // transactions controller
         tc = new TransactionsController();
         tc.setView(tv);
-
+        
         mainWindow.validate();
         mainWindow.setVisible(true);
     }

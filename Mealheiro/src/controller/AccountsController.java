@@ -32,9 +32,14 @@ public class AccountsController extends AbstractController {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("")) {
-//            System.out.println("LOGOUT BUTTON PRESSED");
-
+        if (e.getActionCommand().equals("Submit")) {
+            System.out.println("Accounts controller: submit button clicked");
+            if (db.getLoggedInUser() != null) {
+                Account acc = new Account(av.getTfAccountsName(), av.getFtfAccountsBalance(), av.getCbAccountsType(), av.getTfAccountsIban(), av.getTfAccountsBic(), av.getTfAccountsNumber());
+                db.getLoggedInUser().addAccount(acc);
+                System.out.println("asd");
+                av.update(db, null);
+            }
         }
         super.actionPerformed(e);
     }
