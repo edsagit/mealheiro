@@ -371,7 +371,7 @@ public class TransactionsView extends JPanel implements Observer {
             expensePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(expensePaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 758, Short.MAX_VALUE)
                 .addContainerGap())
         );
         expensePaneLayout.setVerticalGroup(
@@ -393,7 +393,7 @@ public class TransactionsView extends JPanel implements Observer {
             incomePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(incomePaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 758, Short.MAX_VALUE)
                 .addContainerGap())
         );
         incomePaneLayout.setVerticalGroup(
@@ -415,7 +415,7 @@ public class TransactionsView extends JPanel implements Observer {
             transferPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(transferPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 758, Short.MAX_VALUE)
                 .addContainerGap())
         );
         transferPaneLayout.setVerticalGroup(
@@ -497,7 +497,7 @@ public class TransactionsView extends JPanel implements Observer {
                         .addComponent(tfTransactionCategory, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(bTransactionSubmit))
                     .addComponent(lblTransactionInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         newTransactionPaneLayout.setVerticalGroup(
             newTransactionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -549,10 +549,7 @@ public class TransactionsView extends JPanel implements Observer {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jSplitPane1)
-                .addContainerGap())
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -603,7 +600,6 @@ public class TransactionsView extends JPanel implements Observer {
         }
 
     }//GEN-LAST:event_cbTransactionTypeActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bTransactionRedo;

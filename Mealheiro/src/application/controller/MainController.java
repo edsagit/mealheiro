@@ -13,9 +13,8 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
-
 public class MainController extends AbstractController {
-    
+
     private CommandHistory ch;
 
     private UserList db;
@@ -38,7 +37,7 @@ public class MainController extends AbstractController {
     private JFrame mainWindow;
 
     public MainController() {
-        
+
         ch = new CommandHistory();
 
         // create Window
@@ -75,7 +74,7 @@ public class MainController extends AbstractController {
         tc = new TransactionsController();
         tc.setView(tv);
         tc.setCommandHistory(ch);
-        
+
         mainWindow.validate();
         mainWindow.setVisible(true);
     }
@@ -113,9 +112,9 @@ public class MainController extends AbstractController {
 
 //            System.out.println(e.getActionCommand());
             if (e.getActionCommand().equals("Login")) {
-              System.out.println("Main controller: login button clicked");
+                System.out.println("Main controller: login button clicked");
                 if (db.loginUser(lv.getLoginUsername(), lv.getPfLoginPassword())) {
-                    
+
                     db.setLoggedInUser(db.getUserByUsername(lv.getLoginUsername()));
 
                     mv.tp.removeAll(); // Remove all tabbed pane tabs
@@ -125,7 +124,7 @@ public class MainController extends AbstractController {
                     mv.tp.add(dv); // Add DashboardView panel
                     mv.tp.add(av); // Add AccountsView panel
                     mv.tp.add(tv); // Add TransactionsView panel
-                    
+
                     mainWindow.getContentPane().add(mv);
                     mainWindow.revalidate();
                     mainWindow.repaint();
@@ -133,7 +132,7 @@ public class MainController extends AbstractController {
                     lv.setLoginInformation("Username or password are incorrect!");
                 }
             }
-            
+
             if (e.getActionCommand().equals("Logout")) {
                 System.out.println("Controller: logout button clicked");
                 db.setLoggedInUser(null);

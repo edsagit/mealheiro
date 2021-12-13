@@ -5,7 +5,6 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
-
 /**
  *
  * @author ed
@@ -20,18 +19,18 @@ public class LoginView extends JPanel implements Observer {
     public LoginView() {
         initComponents();
     }
-    
+
     /**
-     * 
+     *
      * @param db UserList
      */
     public void setModel(UserList db) {
         this.db = db;
         db.addObserver(this);
     }
-    
+
     /**
-     * 
+     *
      * @param el EventListener
      */
     public void setController(EventListener el) {
@@ -39,7 +38,7 @@ public class LoginView extends JPanel implements Observer {
     }
 
     /**
-     * 
+     *
      * @param o Observable
      * @param arg Object
      */
@@ -49,11 +48,11 @@ public class LoginView extends JPanel implements Observer {
             System.out.println("Login view: updated");
             clearFields();
         }
-        
+
     }
-    
+
     /**
-     *  
+     *
      * @return String pfLoginPassword.getText() or null if no string
      */
     public String getPfLoginPassword() {
@@ -62,9 +61,9 @@ public class LoginView extends JPanel implements Observer {
         }
         return null;
     }
-    
+
     /**
-     * 
+     *
      * @return String tfLoginUsername.getText() or null if no string
      */
     public String getLoginUsername() {
@@ -73,15 +72,15 @@ public class LoginView extends JPanel implements Observer {
         }
         return null;
     }
-    
+
     /**
-     * 
+     *
      * @param text String - Set label login information to String text
      */
     public void setLoginInformation(String text) {
         lblLoginInformation.setText(text);
     }
-        
+
     /**
      * Clear text fields
      */
@@ -150,7 +149,6 @@ public class LoginView extends JPanel implements Observer {
                 .addContainerGap(69, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bLogin;

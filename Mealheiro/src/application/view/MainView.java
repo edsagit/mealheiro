@@ -4,7 +4,6 @@ import application.model.UserList;
 import java.util.*;
 import javax.swing.*;
 
-
 public class MainView extends JPanel implements Observer {
 
     public JTabbedPane tp;
@@ -30,25 +29,25 @@ public class MainView extends JPanel implements Observer {
                                 .addContainerGap())
         );
     }
-    
+
     /**
-     * 
+     *
      * @param db UserList
      */
     public void setModel(UserList db) {
         this.db = db;
         db.addObserver(this);
     }
-    
+
     /**
-     * 
+     *
      * @param el EventListener
      */
     public void setController(EventListener el) {
     }
 
     /**
-     * 
+     *
      * @param o Observable
      * @param arg Object
      */

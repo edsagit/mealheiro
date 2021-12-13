@@ -1,14 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package application.controller;
 
 import application.view.AccountsView;
 import application.model.UserList;
 import application.model.Account;
 import java.awt.event.ActionEvent;
-
 
 /**
  *
@@ -38,7 +33,6 @@ public class AccountsController extends AbstractController {
             if (db.getLoggedInUser() != null) {
                 Account acc = new Account(av.getTfAccountsName(), av.getFtfAccountsBalance(), av.getCbAccountsType(), av.getTfAccountsIban(), av.getTfAccountsBic(), av.getTfAccountsNumber());
                 db.getLoggedInUser().addAccount(acc);
-                System.out.println("asd");
                 av.update(db, null);
             }
         }

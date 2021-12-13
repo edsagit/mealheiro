@@ -190,7 +190,7 @@ public class AccountsView extends JPanel implements Observer {
         RevenuePanel = new javax.swing.JPanel();
         jScrollPaneRevenue = new javax.swing.JScrollPane();
         tableRevenue = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
+        newAccountPanel = new javax.swing.JPanel();
         lblAccountsName = new javax.swing.JLabel();
         tfAccountsName = new javax.swing.JTextField();
         lblAccountsNumber = new javax.swing.JLabel();
@@ -205,6 +205,8 @@ public class AccountsView extends JPanel implements Observer {
         jLabel7 = new javax.swing.JLabel();
         bTransactionSubmit = new javax.swing.JButton();
         ftfAccountsBalance = new javax.swing.JFormattedTextField();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(25, 0), new java.awt.Dimension(25, 0), new java.awt.Dimension(25, 32767));
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(25, 0), new java.awt.Dimension(25, 0), new java.awt.Dimension(25, 32767));
 
         setName("Accounts"); // NOI18N
 
@@ -258,6 +260,8 @@ public class AccountsView extends JPanel implements Observer {
 
         jSplitPane1.setRightComponent(tpAccounts);
 
+        newAccountPanel.setPreferredSize(new java.awt.Dimension(180, 499));
+
         lblAccountsName.setText("Name");
 
         lblAccountsNumber.setText("Account number");
@@ -279,20 +283,20 @@ public class AccountsView extends JPanel implements Observer {
         ftfAccountsBalance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.00"))));
         ftfAccountsBalance.setToolTipText("Please enter a number.");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout newAccountPanelLayout = new javax.swing.GroupLayout(newAccountPanel);
+        newAccountPanel.setLayout(newAccountPanelLayout);
+        newAccountPanelLayout.setHorizontalGroup(
+            newAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newAccountPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(newAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(newAccountPanelLayout.createSequentialGroup()
                         .addComponent(ftfAccountsBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(newAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(bTransactionSubmit)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(newAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblAccountsName)
                             .addComponent(tfAccountsName, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                             .addComponent(lblAccountsNumber)
@@ -304,10 +308,18 @@ public class AccountsView extends JPanel implements Observer {
                             .addComponent(lblAccountsBalance)
                             .addComponent(lblAccountsType)
                             .addComponent(cbAccountsType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+            .addGroup(newAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newAccountPanelLayout.createSequentialGroup()
+                    .addGap(0, 170, Short.MAX_VALUE)
+                    .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(newAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newAccountPanelLayout.createSequentialGroup()
+                    .addGap(0, 150, Short.MAX_VALUE)
+                    .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        newAccountPanelLayout.setVerticalGroup(
+            newAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newAccountPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblAccountsName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -315,10 +327,10 @@ public class AccountsView extends JPanel implements Observer {
                 .addGap(18, 18, 18)
                 .addComponent(lblAccountsBalance)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(newAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(ftfAccountsBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addComponent(lblAccountsType)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbAccountsType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -336,10 +348,20 @@ public class AccountsView extends JPanel implements Observer {
                 .addComponent(tfAccountsNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(bTransactionSubmit)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
+            .addGroup(newAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newAccountPanelLayout.createSequentialGroup()
+                    .addContainerGap(249, Short.MAX_VALUE)
+                    .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(250, Short.MAX_VALUE)))
+            .addGroup(newAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newAccountPanelLayout.createSequentialGroup()
+                    .addContainerGap(249, Short.MAX_VALUE)
+                    .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(250, Short.MAX_VALUE)))
         );
 
-        jSplitPane1.setLeftComponent(jPanel1);
+        jSplitPane1.setLeftComponent(newAccountPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -347,7 +369,7 @@ public class AccountsView extends JPanel implements Observer {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jSplitPane1)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
@@ -359,16 +381,16 @@ public class AccountsView extends JPanel implements Observer {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AssetPanel;
     private javax.swing.JPanel ExpensePanel;
     private javax.swing.JPanel RevenuePanel;
     private javax.swing.JButton bTransactionSubmit;
     private javax.swing.JComboBox<String> cbAccountsType;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
     private javax.swing.JFormattedTextField ftfAccountsBalance;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPaneAsset;
     private javax.swing.JScrollPane jScrollPaneExpense;
     private javax.swing.JScrollPane jScrollPaneRevenue;
@@ -379,6 +401,7 @@ public class AccountsView extends JPanel implements Observer {
     private javax.swing.JLabel lblAccountsName;
     private javax.swing.JLabel lblAccountsNumber;
     private javax.swing.JLabel lblAccountsType;
+    private javax.swing.JPanel newAccountPanel;
     private javax.swing.JTable tableAsset;
     private javax.swing.JTable tableExpense;
     private javax.swing.JTable tableRevenue;

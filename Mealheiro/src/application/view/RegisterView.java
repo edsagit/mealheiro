@@ -278,7 +278,7 @@ public class RegisterView extends JPanel implements Observer {
         lblRegisterInformation.setText("");
         validate();
     }
-    
+
     /**
      * Validate register form
      */
@@ -662,18 +662,18 @@ public class RegisterView extends JPanel implements Observer {
 class JTextFieldLimit extends PlainDocument {
 
     private int limit;
-    
+
     /**
-     * 
+     *
      * @param limit Integer
      */
     JTextFieldLimit(int limit) {
         super();
         this.limit = limit;
     }
-    
+
     /**
-     * 
+     *
      * @param limit Integer
      * @param upper Boolean
      */
@@ -681,13 +681,13 @@ class JTextFieldLimit extends PlainDocument {
         super();
         this.limit = limit;
     }
-    
+
     /**
-     * 
+     *
      * @param offset Integer
      * @param str String
      * @param attr AttributeSet
-     * @throws BadLocationException 
+     * @throws BadLocationException
      */
     public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
         if (str == null) {

@@ -17,7 +17,10 @@ public class Main {
     }
 
     private UserList db;
-
+    
+    /**
+     * Main constructor
+     */
     public Main() {
 
         db = new UserList();

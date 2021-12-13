@@ -4,7 +4,6 @@ import application.view.LoginView;
 import application.model.UserList;
 import java.awt.event.ActionEvent;
 
-
 /**
  *
  * @author ed

@@ -161,7 +161,6 @@ public class Account extends Observable {
 //        setChanged();
 //        notifyObservers();
 //    }
-
     public ArrayList<Transaction> getTransactions() {
         return transactions;
     }

@@ -42,18 +42,18 @@ public class DashboardView extends JPanel implements Observer {
         initComponents();
         instantiateDashboard();
     }
-    
+
     /**
-     * 
+     *
      * @param db UserList
      */
     public void setModel(UserList db) {
         this.db = db;
         db.addObserver(this);
     }
-    
+
     /**
-     * 
+     *
      * @param el EventListener
      */
     public void setController(EventListener el) {
@@ -116,7 +116,7 @@ public class DashboardView extends JPanel implements Observer {
         }
 
     }
-    
+
     /**
      * Instantiate Dashboard content
      */
@@ -307,7 +307,6 @@ public class DashboardView extends JPanel implements Observer {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 957, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accountsChartPanel;

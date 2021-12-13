@@ -62,41 +62,41 @@ public class UserList extends Observable implements Observer {
      * @param defaultBalance String - Value for default account balance
      * @param savingsBalance String - Value for savings account balance
      */
-    public void registerUser(String username, String email, String password, String bankName, String defaultBalance,
-            String savingsBalance) {
+    public void registerUser(String username, String email, String password, String bankName, String defaultBalance, String savingsBalance) {
         if (!usernameExists(username)) {
             System.out.println("UserList Model: updated");
 
+            // temporary User variable to hold the new user
             User tmpUser = new User(username, email, password);
 
             // instantiate default asset account
-            Account sourceOpeningBalance = new Account("Initial balance for " + bankName + " account", defaultBalance,
-                    AccountType.OPENING); //
+            Account sourceOpeningBalance = new Account("Initial balance for " + bankName + " account", defaultBalance, AccountType.OPENING);
             Account destinationOpeningBalance = new Account(bankName, "0", AccountType.ASSET); // destination account
-            // for default asset
-            destinationOpeningBalance.setActive(true); // set account active
-            tmpUser.addAccount(destinationOpeningBalance); // add destination account to user
-            Transaction transactionOpeningBalance = new Transaction(defaultBalance, TransactionType.OPENING_BALANCE,
-                    sourceOpeningBalance, destinationOpeningBalance, "Initial balance for " + bankName + " account",
-                    "Opening balance", LocalDate.parse("2020-01-23"));
-//            destinationOpeningBalance.addTransaction(transactionOpeningBalance);
+            // set account active
+            destinationOpeningBalance.setActive(true);
+            // add destination account to user
+            tmpUser.addAccount(destinationOpeningBalance);
+            // instantiate transaction
+            Transaction transactionOpeningBalance = new Transaction(defaultBalance, TransactionType.OPENING_BALANCE, sourceOpeningBalance, destinationOpeningBalance, "Initial balance for " + bankName + " account", "Opening balance", LocalDate.parse("2020-01-23"));
+            // add transaction, also executes the transaction
             tmpUser.addTransaction(transactionOpeningBalance);
 
             // instantiate default asset savings account
-            Account sourceOpeningSavingBalance = new Account("Initial balance for " + bankName + " savings account",
-                    savingsBalance, AccountType.OPENING);
-            Account destinationOpeningSavingsBalance = new Account(bankName + " savings account", "0",
-                    AccountType.ASSET);
-            destinationOpeningSavingsBalance.setActive(true); // set account active
-            tmpUser.addAccount(destinationOpeningSavingsBalance); // add destination account to user
-            Transaction transactionSavingsBalance = new Transaction(savingsBalance, TransactionType.OPENING_BALANCE,
-                    sourceOpeningSavingBalance, destinationOpeningSavingsBalance,
-                    "Initial balance for " + bankName + " savings account", "Opening balance", LocalDate.parse("2020-01-23"));
-//            destinationOpeningSavingsBalance.addTransaction(transactionSavingsBalance);
+            Account sourceOpeningSavingBalance = new Account("Initial balance for " + bankName + " savings account", savingsBalance, AccountType.OPENING);
+            Account destinationOpeningSavingsBalance = new Account(bankName + " savings account", "0", AccountType.ASSET);
+            // set account active
+            destinationOpeningSavingsBalance.setActive(true);
+            // add destination account to user
+            tmpUser.addAccount(destinationOpeningSavingsBalance);
+            // instantiate transaction
+            Transaction transactionSavingsBalance = new Transaction(savingsBalance, TransactionType.OPENING_BALANCE, sourceOpeningSavingBalance, destinationOpeningSavingsBalance, "Initial balance for " + bankName + " savings account", "Opening balance", LocalDate.parse("2020-01-23"));
+            // add transaction, also executes the transaction
             tmpUser.addTransaction(transactionSavingsBalance);
-            tmpUser.addObserver(this);
-            this.users.add(tmpUser);
 
+            // add observer to user
+            tmpUser.addObserver(this);
+            // add user to ArrayList users
+            this.users.add(tmpUser);
             setChanged();
             notifyObservers();
         }
@@ -189,7 +189,6 @@ public class UserList extends Observable implements Observer {
         for (int i = 1; i < 10; i++) {
             // revenue from Microsoft
             Transaction revenueMicrosoft = new Transaction("1000.00", TransactionType.DEPOSIT, accountMicrosoft, accountAssetMain, "Microsoft revenue", "Salary", LocalDate.parse("2020-0" + i + "-01"));
-           
 
             // add transaction to accounts            
             user.addTransaction(revenueMicrosoft);
@@ -206,7 +205,7 @@ public class UserList extends Observable implements Observer {
 
             // add transaction rent to accounts
             user.addTransaction(expenseRent);
-            
+
             // add transaction edp to accounts
             user.addTransaction(expenseEDP);
 

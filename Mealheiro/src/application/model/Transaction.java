@@ -40,10 +40,10 @@ public class Transaction extends Observable {
 
     public void execute() {
 
-        System.out.println("EXECUTED TRANSACTION");
-        System.out.println("------- AMOUNT: " + amount);
-        System.out.println("------- FROM " + sourceAccount.getName());
-        System.out.println("------- TO " + destinationAccount.getName());
+//        System.out.println("EXECUTED TRANSACTION");
+//        System.out.println("------- AMOUNT: " + amount);
+//        System.out.println("------- FROM " + sourceAccount.getName());
+//        System.out.println("------- TO " + destinationAccount.getName());
         try {
             // declare variables to hold account balances and amount
             Number initialSourceBalance = null;
@@ -63,7 +63,6 @@ public class Transaction extends Observable {
             df.format(resultFinalSourceBalance);
             df.format(resultFinalDestinationBalance);
 
-            // System.out.println("ASD" + sourceAccount.getName() + " - " +
             // this.date.toString() + " - " + sourceAccount.getBalance());
             sourceAccount.addBalanceHistory(this.date, Double.toString(resultFinalSourceBalance));
             destinationAccount.addBalanceHistory(this.date, Double.toString(resultFinalDestinationBalance));
