@@ -235,8 +235,10 @@ public class RegisterView extends JPanel implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("Register view: updated");
-        clearTextFields();
+        if (userValid && emailValid && passwordValid && bankNameValid && balanceValid && savingsValid) {
+            System.out.println("Register view: updated");
+            clearTextFields();
+        }
     }
 
     /**
@@ -273,6 +275,7 @@ public class RegisterView extends JPanel implements Observer {
         tfRegisterBankName.setText("");
         ftfRegisterBalance.setValue(null);
         ftfRegisterSavingsBalance.setValue(null);
+        lblRegisterInformation.setText("");
         validate();
     }
     

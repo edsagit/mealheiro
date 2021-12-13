@@ -45,10 +45,11 @@ public class LoginView extends JPanel implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("Login view: updated");
-        if (db.getLoggedInUser() == null) {
+        if (getLoginUsername() != null && getPfLoginPassword() != null) {
+            System.out.println("Login view: updated");
             clearFields();
         }
+        
     }
     
     /**
@@ -87,6 +88,7 @@ public class LoginView extends JPanel implements Observer {
     public void clearFields() {
         tfLoginUsername.setText("");
         pfLoginPassword.setText("");
+        lblLoginInformation.setText("");
     }
 
     /**

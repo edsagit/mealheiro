@@ -217,22 +217,22 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="bTransactionSubmit" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="lblTransactionDescription" min="-2" max="-2" attributes="0"/>
-                                      <Component id="tfTransactionDescription" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="cbTransactionSourceAccount" alignment="0" pref="160" max="32767" attributes="0"/>
-                                      <Component id="lblTransactionSourceAccount" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblTransactionDestinationAccount" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="cbTransactionDestinationAccount" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lblTransactionDate" min="-2" max="-2" attributes="0"/>
-                                      <Component id="ftfTransactionDate" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lblTransactionAmount" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblTransactionCategory" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="bTransactionUndo" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="bTransactionRedo" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="lblTransactionDescription" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="tfTransactionDescription" alignment="0" max="32767" attributes="0"/>
+                              <Component id="cbTransactionSourceAccount" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblTransactionSourceAccount" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblTransactionDestinationAccount" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbTransactionDestinationAccount" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblTransactionDate" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="ftfTransactionDate" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblTransactionAmount" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblTransactionCategory" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="lblTransactionType" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="cbTransactionType" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
@@ -240,9 +240,10 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="lblEuroSymbol" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="tfTransactionCategory" max="32767" attributes="0"/>
+                              <Component id="tfTransactionCategory" alignment="0" max="32767" attributes="0"/>
+                              <Component id="bTransactionSubmit" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lblTransactionInformation" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTransactionInformation" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -283,10 +284,15 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="tfTransactionDescription" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="lblTransactionInformation" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="bTransactionSubmit" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="215" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="bTransactionUndo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="bTransactionRedo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblTransactionInformation" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace pref="136" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -365,6 +371,9 @@
                   <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(TransactionType.getTransactionTypes())" type="code"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbTransactionTypeActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -377,6 +386,18 @@
             <Component class="javax.swing.JTextField" name="tfTransactionCategory">
             </Component>
             <Component class="javax.swing.JLabel" name="lblTransactionInformation">
+            </Component>
+            <Component class="javax.swing.JButton" name="bTransactionUndo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Undo"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="bTransactionRedo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Redo"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

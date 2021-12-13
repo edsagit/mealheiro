@@ -190,9 +190,6 @@ public class AccountsView extends JPanel implements Observer {
         RevenuePanel = new javax.swing.JPanel();
         jScrollPaneRevenue = new javax.swing.JScrollPane();
         tableRevenue = new javax.swing.JTable();
-        Liability = new javax.swing.JPanel();
-        jScrollPaneLiability = new javax.swing.JScrollPane();
-        tableLiability = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         lblAccountsName = new javax.swing.JLabel();
         tfAccountsName = new javax.swing.JTextField();
@@ -258,23 +255,6 @@ public class AccountsView extends JPanel implements Observer {
         );
 
         tpAccounts.addTab("Revenue", RevenuePanel);
-
-        tableLiability.setModel(liabilityModel);
-        tableLiability.setToolTipText("");
-        jScrollPaneLiability.setViewportView(tableLiability);
-
-        javax.swing.GroupLayout LiabilityLayout = new javax.swing.GroupLayout(Liability);
-        Liability.setLayout(LiabilityLayout);
-        LiabilityLayout.setHorizontalGroup(
-            LiabilityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPaneLiability, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
-        );
-        LiabilityLayout.setVerticalGroup(
-            LiabilityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPaneLiability, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
-        );
-
-        tpAccounts.addTab("Liability", Liability);
 
         jSplitPane1.setRightComponent(tpAccounts);
 
@@ -383,7 +363,6 @@ public class AccountsView extends JPanel implements Observer {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AssetPanel;
     private javax.swing.JPanel ExpensePanel;
-    private javax.swing.JPanel Liability;
     private javax.swing.JPanel RevenuePanel;
     private javax.swing.JButton bTransactionSubmit;
     private javax.swing.JComboBox<String> cbAccountsType;
@@ -392,7 +371,6 @@ public class AccountsView extends JPanel implements Observer {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPaneAsset;
     private javax.swing.JScrollPane jScrollPaneExpense;
-    private javax.swing.JScrollPane jScrollPaneLiability;
     private javax.swing.JScrollPane jScrollPaneRevenue;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JLabel lblAccountsBalance;
@@ -403,7 +381,6 @@ public class AccountsView extends JPanel implements Observer {
     private javax.swing.JLabel lblAccountsType;
     private javax.swing.JTable tableAsset;
     private javax.swing.JTable tableExpense;
-    private javax.swing.JTable tableLiability;
     private javax.swing.JTable tableRevenue;
     private javax.swing.JTextField tfAccountsBic;
     private javax.swing.JTextField tfAccountsIban;

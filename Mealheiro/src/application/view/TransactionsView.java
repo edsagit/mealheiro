@@ -89,7 +89,6 @@ public class TransactionsView extends JPanel implements Observer {
         sortKeysTransfer.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         // set sortKeys
         sorterIncome.setSortKeys(sortKeysTransfer);
-
     }
 
     /**
@@ -107,6 +106,8 @@ public class TransactionsView extends JPanel implements Observer {
      */
     public void setController(EventListener el) {
         bTransactionSubmit.addActionListener((ActionListener) el);
+        bTransactionUndo.addActionListener((ActionListener) el);
+        bTransactionRedo.addActionListener((ActionListener) el);
     }
 
     /**
@@ -116,6 +117,10 @@ public class TransactionsView extends JPanel implements Observer {
      */
     public void update(Observable o, Object arg) {
         System.out.println("Transaction view: updated");
+
+        cbTransactionSourceAccount.removeAllItems();
+        cbTransactionDestinationAccount.removeAllItems();
+
         // clear the tables
         expenseModel.setRowCount(0);
         incomeModel.setRowCount(0);
@@ -127,10 +132,10 @@ public class TransactionsView extends JPanel implements Observer {
                 // populate table
                 switch (tra.getType()) {
                     case WITHDRAWAL ->
-                        expenseModel.addRow(new Object[]{tra.getDescription(), "-€" + tra.getAmount(), tra.getDate(), tra.getSourceAccount().getName(), tra.getDestinationAccount().getName(), tra.getCategory()});
+                        expenseModel.addRow(new Object[]{tra.getDescription(), "€" + tra.getAmount(), tra.getDate(), tra.getSourceAccount().getName(), tra.getDestinationAccount().getName(), tra.getCategory()});
 
                     case DEPOSIT ->
-                        incomeModel.addRow(new Object[]{tra.getDescription(), "+€" + tra.getAmount(), tra.getDate(), tra.getSourceAccount().getName(), tra.getDestinationAccount().getName(), tra.getCategory()});
+                        incomeModel.addRow(new Object[]{tra.getDescription(), "€" + tra.getAmount(), tra.getDate(), tra.getSourceAccount().getName(), tra.getDestinationAccount().getName(), tra.getCategory()});
 
                     case TRANSFER ->
                         transferModel.addRow(new Object[]{tra.getDescription(), "€" + tra.getAmount(), tra.getDate(), tra.getSourceAccount().getName(), tra.getDestinationAccount().getName(), tra.getCategory()});
@@ -148,13 +153,37 @@ public class TransactionsView extends JPanel implements Observer {
                 dcbmS.removeAllElements();
                 dcbmD.removeAllElements();
                 // add accounts names
-                for (String s : db.getLoggedInUser().getAccountsNames()) {
-                    dcbmS.addElement(s);
-                    dcbmD.addElement(s);
+
+                if (getCbTransactionType().equals(TransactionType.WITHDRAWAL)) {
+                    for (String s : db.getLoggedInUser().getAssetAccountsNames()) {
+                        dcbmS.addElement(s);
+                    }
+                    for (String s : db.getLoggedInUser().getExpenseAccountsNames()) {
+                        dcbmD.addElement(s);
+                    }
+                }
+
+                if (getCbTransactionType().equals(TransactionType.DEPOSIT)) {
+                    for (String s : db.getLoggedInUser().getRevenueAccountsNames()) {
+                        dcbmS.addElement(s);
+                    }
+                    for (String s : db.getLoggedInUser().getAssetAccountsNames()) {
+                        dcbmD.addElement(s);
+                    }
+                }
+
+                if (getCbTransactionType().equals(TransactionType.TRANSFER)) {
+                    for (String s : db.getLoggedInUser().getAssetAccountsNames()) {
+                        dcbmS.addElement(s);
+                    }
+                    for (String s : db.getLoggedInUser().getAssetAccountsNames()) {
+                        dcbmD.addElement(s);
+                    }
                 }
             }
         }
         clearFields();
+        validate();
     }
 
     /**
@@ -215,7 +244,10 @@ public class TransactionsView extends JPanel implements Observer {
      * @return String amount
      */
     public String getFtfTransactionAmount() {
-        return ftfTransactionAmount.getText();
+        if (!ftfTransactionAmount.getText().isEmpty() || !ftfTransactionAmount.getText().isBlank()) {
+            return ftfTransactionAmount.getText();
+        }
+        return null;
     }
 
     /**
@@ -253,7 +285,23 @@ public class TransactionsView extends JPanel implements Observer {
      * @param s String - Set label transactionInformation text with String s
      */
     public void setLblTransactionInformation(String s) {
-        this.lblTransactionInformation.setText(s);
+        this.lblTransactionInformation.setText("<html>" + s + "</html>");
+    }
+
+    /**
+     *
+     * @param b boolean - Value to set button with
+     */
+    public void setUndoButtonEnabled(boolean b) {
+        bTransactionUndo.setEnabled(b);
+    }
+
+    /**
+     *
+     * @param b boolean - Value to set button with
+     */
+    public void setRedoButtonEnabled(boolean b) {
+        bTransactionRedo.setEnabled(b);
     }
 
     /**
@@ -306,6 +354,8 @@ public class TransactionsView extends JPanel implements Observer {
         lblEuroSymbol = new javax.swing.JLabel();
         tfTransactionCategory = new javax.swing.JTextField();
         lblTransactionInformation = new javax.swing.JLabel();
+        bTransactionUndo = new javax.swing.JButton();
+        bTransactionRedo = new javax.swing.JButton();
 
         setName("Transactions"); // NOI18N
 
@@ -402,8 +452,19 @@ public class TransactionsView extends JPanel implements Observer {
         lblTransactionType.setText("Type");
 
         cbTransactionType.setModel(new javax.swing.DefaultComboBoxModel<>(TransactionType.getTransactionTypes()));
+        cbTransactionType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTransactionTypeActionPerformed(evt);
+            }
+        });
 
         lblEuroSymbol.setText("€");
+
+        bTransactionUndo.setText("Undo");
+        bTransactionUndo.setEnabled(false);
+
+        bTransactionRedo.setText("Redo");
+        bTransactionRedo.setEnabled(false);
 
         javax.swing.GroupLayout newTransactionPaneLayout = new javax.swing.GroupLayout(newTransactionPane);
         newTransactionPane.setLayout(newTransactionPaneLayout);
@@ -412,28 +473,30 @@ public class TransactionsView extends JPanel implements Observer {
             .addGroup(newTransactionPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(newTransactionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(newTransactionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(newTransactionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(bTransactionSubmit)
-                            .addGroup(newTransactionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblTransactionDescription)
-                                .addComponent(tfTransactionDescription)
-                                .addComponent(cbTransactionSourceAccount, 0, 160, Short.MAX_VALUE)
-                                .addComponent(lblTransactionSourceAccount)
-                                .addComponent(lblTransactionDestinationAccount)
-                                .addComponent(cbTransactionDestinationAccount, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblTransactionDate)
-                                .addComponent(ftfTransactionDate)
-                                .addComponent(lblTransactionAmount)
-                                .addComponent(lblTransactionCategory)))
-                        .addComponent(lblTransactionType)
-                        .addComponent(cbTransactionType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(newTransactionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(newTransactionPaneLayout.createSequentialGroup()
+                            .addComponent(bTransactionUndo)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bTransactionRedo))
+                        .addComponent(lblTransactionDescription, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tfTransactionDescription, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cbTransactionSourceAccount, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblTransactionSourceAccount, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblTransactionDestinationAccount, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cbTransactionDestinationAccount, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblTransactionDate, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(ftfTransactionDate, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblTransactionAmount, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblTransactionCategory, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblTransactionType, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cbTransactionType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, newTransactionPaneLayout.createSequentialGroup()
                             .addComponent(ftfTransactionAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(lblEuroSymbol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(tfTransactionCategory))
-                    .addComponent(lblTransactionInformation))
+                        .addComponent(tfTransactionCategory, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(bTransactionSubmit))
+                    .addComponent(lblTransactionInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         newTransactionPaneLayout.setVerticalGroup(
@@ -470,10 +533,14 @@ public class TransactionsView extends JPanel implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfTransactionDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lblTransactionInformation)
-                .addGap(18, 18, 18)
                 .addComponent(bTransactionSubmit)
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(newTransactionPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bTransactionUndo)
+                    .addComponent(bTransactionRedo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTransactionInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(136, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(newTransactionPane);
@@ -493,9 +560,55 @@ public class TransactionsView extends JPanel implements Observer {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cbTransactionTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTransactionTypeActionPerformed
+        if (db.getLoggedInUser() != null) {
+            // declare comboboxes models
+            ComboBoxModel<String> modelSource = cbTransactionSourceAccount.getModel();
+            ComboBoxModel<String> modelDestination = cbTransactionDestinationAccount.getModel();
+
+            // check if instances of the models
+            if (modelSource instanceof DefaultComboBoxModel dcbmS && modelDestination instanceof DefaultComboBoxModel dcbmD) {
+                // remove elements first
+                dcbmS.removeAllElements();
+                dcbmD.removeAllElements();
+                // add accounts names
+
+                if (getCbTransactionType().equals(TransactionType.WITHDRAWAL)) {
+                    for (String s : db.getLoggedInUser().getAssetAccountsNames()) {
+                        dcbmS.addElement(s);
+                    }
+                    for (String s : db.getLoggedInUser().getExpenseAccountsNames()) {
+                        dcbmD.addElement(s);
+                    }
+                }
+
+                if (getCbTransactionType().equals(TransactionType.DEPOSIT)) {
+                    for (String s : db.getLoggedInUser().getRevenueAccountsNames()) {
+                        dcbmS.addElement(s);
+                    }
+                    for (String s : db.getLoggedInUser().getAssetAccountsNames()) {
+                        dcbmD.addElement(s);
+                    }
+                }
+
+                if (getCbTransactionType().equals(TransactionType.TRANSFER)) {
+                    for (String s : db.getLoggedInUser().getAssetAccountsNames()) {
+                        dcbmS.addElement(s);
+                    }
+                    for (String s : db.getLoggedInUser().getAssetAccountsNames()) {
+                        dcbmD.addElement(s);
+                    }
+                }
+            }
+        }
+
+    }//GEN-LAST:event_cbTransactionTypeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bTransactionRedo;
     private javax.swing.JButton bTransactionSubmit;
+    private javax.swing.JButton bTransactionUndo;
     private javax.swing.JComboBox<String> cbTransactionDestinationAccount;
     private javax.swing.JComboBox<String> cbTransactionSourceAccount;
     private javax.swing.JComboBox<String> cbTransactionType;

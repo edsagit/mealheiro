@@ -50,7 +50,7 @@ public class Account extends Observable {
         this.transactions = new ArrayList<>();
         this.balanceHistory = new TreeMap<LocalDate, String>();
     }
-    
+
     public Account(String name, String balance, AccountType type, String iban, String bic, String number) {
         this.id = UUID.randomUUID();
         this.name = name;
@@ -148,11 +148,19 @@ public class Account extends Observable {
         notifyObservers();
     }
 
-    public void addTransaction(Transaction transaction) {
-        this.transactions.add(transaction);
-        setChanged();
-        notifyObservers();
-    }
+//    public void removeTransaction(Transaction transaction) {
+//        if (transactions.contains(transaction)) {
+//            transactions.remove(transaction);
+//            setChanged();
+//            notifyObservers();
+//        }
+//    }
+//
+//    public void addTransaction(Transaction transaction) {
+//        this.transactions.add(transaction);
+//        setChanged();
+//        notifyObservers();
+//    }
 
     public ArrayList<Transaction> getTransactions() {
         return transactions;

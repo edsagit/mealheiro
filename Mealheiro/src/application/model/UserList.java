@@ -79,7 +79,7 @@ public class UserList extends Observable implements Observer {
             Transaction transactionOpeningBalance = new Transaction(defaultBalance, TransactionType.OPENING_BALANCE,
                     sourceOpeningBalance, destinationOpeningBalance, "Initial balance for " + bankName + " account",
                     "Opening balance", LocalDate.parse("2020-01-23"));
-            destinationOpeningBalance.addTransaction(transactionOpeningBalance);
+//            destinationOpeningBalance.addTransaction(transactionOpeningBalance);
             tmpUser.addTransaction(transactionOpeningBalance);
 
             // instantiate default asset savings account
@@ -92,7 +92,7 @@ public class UserList extends Observable implements Observer {
             Transaction transactionSavingsBalance = new Transaction(savingsBalance, TransactionType.OPENING_BALANCE,
                     sourceOpeningSavingBalance, destinationOpeningSavingsBalance,
                     "Initial balance for " + bankName + " savings account", "Opening balance", LocalDate.parse("2020-01-23"));
-            destinationOpeningSavingsBalance.addTransaction(transactionSavingsBalance);
+//            destinationOpeningSavingsBalance.addTransaction(transactionSavingsBalance);
             tmpUser.addTransaction(transactionSavingsBalance);
             tmpUser.addObserver(this);
             this.users.add(tmpUser);
@@ -143,13 +143,13 @@ public class UserList extends Observable implements Observer {
         setChanged();
         notifyObservers();
     }
-    
+
     /**
      * Instantiate dummy data as content for the application
      */
     public void instantiateDummyData() {
         DecimalFormat df = new DecimalFormat("#.##");
-        
+
         // register new user
         registerUser("ed", "person@mail.com", "asd", "CGD", "1000", "200");
 
@@ -189,91 +189,76 @@ public class UserList extends Observable implements Observer {
         for (int i = 1; i < 10; i++) {
             // revenue from Microsoft
             Transaction revenueMicrosoft = new Transaction("1000.00", TransactionType.DEPOSIT, accountMicrosoft, accountAssetMain, "Microsoft revenue", "Salary", LocalDate.parse("2020-0" + i + "-01"));
-            // add transaction to accounts
-            accountAssetMain.addTransaction(revenueMicrosoft);
-            accountMicrosoft.addTransaction(revenueMicrosoft);
+           
+
+            // add transaction to accounts            
             user.addTransaction(revenueMicrosoft);
 
             // simulate monthly savings transactions
             Transaction savings = new Transaction("200.00", TransactionType.TRANSFER, accountAssetMain, accountAssetSavings, "Save money", "Savings", LocalDate.parse("2020-0" + i + "-23"));
+
             // add transaction to accounts
-            accountAssetMain.addTransaction(savings);
-            accountAssetSavings.addTransaction(savings);
             user.addTransaction(savings);
 
             // instantiate new transactions
             Transaction expenseRent = new Transaction("300.0", TransactionType.WITHDRAWAL, accountAssetMain, accountLandlord, "Rent", "House", LocalDate.parse("2020-0" + i + "-03"));
             Transaction expenseEDP = new Transaction((df.format(Math.random() * 60 + 40)), TransactionType.WITHDRAWAL, accountAssetMain, accountEDP, "Eletricity and piped gas", "House", LocalDate.parse("2020-0" + i + "-03"));
+
             // add transaction rent to accounts
-            accountAssetMain.addTransaction(expenseRent);
-            accountLandlord.addTransaction(expenseRent);
             user.addTransaction(expenseRent);
+            
             // add transaction edp to accounts
-            accountAssetMain.addTransaction(expenseEDP);
-            accountEDP.addTransaction(expenseEDP);
             user.addTransaction(expenseEDP);
 
             for (int j = 10; j < 12; j++) {
 
                 // instantiate new transactions
                 Transaction expenseBar = new Transaction((df.format(Math.random() * 5 + 1)), TransactionType.WITHDRAWAL, accountAssetMain, accountBarFCTUC, "Bar", "Coffee", LocalDate.parse("2020-0" + i + "-" + j));
+
                 // add transaction to accounts
-                accountAssetMain.addTransaction(expenseBar);
-                accountBarFCTUC.addTransaction(expenseBar);
                 user.addTransaction(expenseBar);
 
                 // instantiate new transactions
                 Transaction expenseMcdonalds = new Transaction((df.format(Math.random() * 10 + 1)), TransactionType.WITHDRAWAL, accountAssetMain, accountMcdonalds, "McDonalds", "Food and drink", LocalDate.parse("2020-0" + i + "-" + j));
+
                 // add transaction to accounts
-                accountAssetMain.addTransaction(expenseMcdonalds);
-                accountMcdonalds.addTransaction(expenseMcdonalds);
                 user.addTransaction(expenseMcdonalds);
 
                 // instantiate new transactions
                 Transaction expenseContinente = new Transaction((df.format(Math.random() * 30 + 10)), TransactionType.WITHDRAWAL, accountAssetMain, accountContinente, "Continente", "Groceries", LocalDate.parse("2020-0" + i + "-" + j));
+
                 // add transaction to accounts
-                accountAssetMain.addTransaction(expenseContinente);
-                accountContinente.addTransaction(expenseContinente);
                 user.addTransaction(expenseContinente);
 
             }
         }
 
         Transaction coinbaseRevenue = new Transaction("5000.00", TransactionType.DEPOSIT, accountCoinbase, accountAssetSavings, "Coinbase", "Investments", LocalDate.parse("2020-10-23"));
-        accountAssetSavings.addTransaction(coinbaseRevenue);
-        accountCoinbase.addTransaction(coinbaseRevenue);
+
         user.addTransaction(coinbaseRevenue);
 
         Transaction carExpense = new Transaction("3000.00", TransactionType.WITHDRAWAL, accountAssetMain, accountFeuvert, "Feu Vert", "Car", LocalDate.parse("2020-11-01"));
-        accountAssetMain.addTransaction(carExpense);
-        accountFeuvert.addTransaction(carExpense);
+
         user.addTransaction(carExpense);
 
         for (int i = 1; i < 10; i++) {
             // revenue from Microsoft
             Transaction revenueMicrosoft = new Transaction("1000.00", TransactionType.DEPOSIT, accountMicrosoft, accountAssetMain, "Microsoft revenue", "Salary", LocalDate.parse("2021-0" + i + "-01"));
             // add transaction to accounts
-            accountAssetMain.addTransaction(revenueMicrosoft);
-            accountMicrosoft.addTransaction(revenueMicrosoft);
             user.addTransaction(revenueMicrosoft);
 
             // simulate monthly savings transactions
             Transaction savings = new Transaction("200.00", TransactionType.TRANSFER, accountAssetMain, accountAssetSavings, "Save money", "Savings", LocalDate.parse("2021-0" + i + "-23"));
+
             // add transaction to accounts
-            accountAssetMain.addTransaction(savings);
-            accountAssetSavings.addTransaction(savings);
             user.addTransaction(savings);
 
             // instantiate new transactions
             Transaction expenseRent = new Transaction("300.0", TransactionType.WITHDRAWAL, accountAssetMain, accountLandlord, "Rent", "House", LocalDate.parse("2021-0" + i + "-03"));
             Transaction expenseEDP = new Transaction((df.format(Math.random() * 60 + 40)), TransactionType.WITHDRAWAL, accountAssetMain, accountEDP, "Eletricity and piped gas", "House", LocalDate.parse("2021-0" + i + "-03"));
             // add transaction rent to accounts
-            accountAssetMain.addTransaction(expenseRent);
-            accountLandlord.addTransaction(expenseRent);
             user.addTransaction(expenseRent);
             // add transaction edp to accounts
-            accountAssetMain.addTransaction(expenseEDP);
-            accountEDP.addTransaction(expenseEDP);
             user.addTransaction(expenseEDP);
 
             for (int j = 10; j < 12; j++) {
@@ -281,22 +266,16 @@ public class UserList extends Observable implements Observer {
                 // instantiate new transactions
                 Transaction expenseBar = new Transaction((df.format(Math.random() * 5 + 1)), TransactionType.WITHDRAWAL, accountAssetMain, accountBarFCTUC, "Bar", "Coffee", LocalDate.parse("2021-0" + i + "-" + (j + (int) Math.random() * 10 + 10)));
                 // add transaction to accounts
-                accountAssetMain.addTransaction(expenseBar);
-                accountBarFCTUC.addTransaction(expenseBar);
                 user.addTransaction(expenseBar);
 
                 // instantiate new transactions
                 Transaction expenseMcdonalds = new Transaction((df.format(Math.random() * 10 + 1)), TransactionType.WITHDRAWAL, accountAssetMain, accountMcdonalds, "McDonalds", "Food and drink", LocalDate.parse("2021-0" + i + "-" + (j + (int) Math.random() * 20 + 2)));
                 // add transaction to accounts
-                accountAssetMain.addTransaction(expenseMcdonalds);
-                accountMcdonalds.addTransaction(expenseMcdonalds);
                 user.addTransaction(expenseMcdonalds);
 
                 // instantiate new transactions
                 Transaction expenseContinente = new Transaction((df.format(Math.random() * 30 + 10)), TransactionType.WITHDRAWAL, accountAssetMain, accountContinente, "Continente", "Groceries", LocalDate.parse("2021-0" + i + "-" + (j + (int) Math.random() * 20 + 2)));
                 // add transaction to accounts
-                accountAssetMain.addTransaction(expenseContinente);
-                accountContinente.addTransaction(expenseContinente);
                 user.addTransaction(expenseContinente);
 
             }

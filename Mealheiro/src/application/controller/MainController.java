@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.command.CommandHistory;
 import application.view.MainView;
 import application.view.RegisterView;
 import application.view.DashboardView;
@@ -14,6 +15,8 @@ import javax.swing.*;
 
 
 public class MainController extends AbstractController {
+    
+    private CommandHistory ch;
 
     private UserList db;
     private User user;
@@ -35,6 +38,8 @@ public class MainController extends AbstractController {
     private JFrame mainWindow;
 
     public MainController() {
+        
+        ch = new CommandHistory();
 
         // create Window
         mainWindow = new JFrame("Mealheiro");
@@ -69,6 +74,7 @@ public class MainController extends AbstractController {
         // transactions controller
         tc = new TransactionsController();
         tc.setView(tv);
+        tc.setCommandHistory(ch);
         
         mainWindow.validate();
         mainWindow.setVisible(true);

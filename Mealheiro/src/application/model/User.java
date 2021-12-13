@@ -3,6 +3,7 @@ package application.model;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,17 +37,16 @@ public class User extends Observable {
 //        setChanged();
 //        notifyObservers();
 //    }
-    
     /**
-     * 
+     *
      * @return String id
      */
     public String getId() {
         return id.toString();
     }
-    
+
     /**
-     * 
+     *
      * @return String username
      */
     public String getUsername() {
@@ -54,7 +54,7 @@ public class User extends Observable {
     }
 
     /**
-     * 
+     *
      * @return String email
      */
     public String getEmail() {
@@ -62,7 +62,7 @@ public class User extends Observable {
     }
 
     /**
-     * 
+     *
      * @return String password
      */
     public String getPassword() {
@@ -70,17 +70,30 @@ public class User extends Observable {
     }
 
     /**
-     * 
+     *
+     * @param transaction Transaction - Transaction to remove from user
+     * transactions
+     */
+    public void removeTransaction(Transaction transaction) {
+        transaction.execute();
+//        transactions.add(transaction);
+        setChanged();
+        notifyObservers();
+    }
+
+    /**
+     *
      * @param transaction Transaction - Transaction to add to user transactions
      */
     public void addTransaction(Transaction transaction) {
+        transaction.execute();
         transactions.add(transaction);
         setChanged();
         notifyObservers();
     }
 
     /**
-     * 
+     *
      * @param account Account - Account to add to user accounts
      */
     public void addAccount(Account account) {
@@ -88,39 +101,103 @@ public class User extends Observable {
         setChanged();
         notifyObservers();
     }
-    
+
     /**
-     * 
-     * @return String[] accountsNames - Array of String holding all user account names
+     *
+     * @return String[] accountsNames - Array of String holding all user account
+     * names
      */
     public String[] getAccountsNames() {
         String[] accountsNames = new String[accounts.size()];
-        for (int i = 0; i < accounts.size(); i++) {
-            accountsNames[i] = accounts.get(i).getName();
+        for (String s : accountsNames) {
+            for (int i = 0; i < accounts.size(); i++) {
+                accountsNames[i] = accounts.get(i).getName();
+            }
         }
         return accountsNames;
     }
-    
+
     /**
-     * 
+     *
+     * @return String[] accountsNames - Array of String holding all user asset
+     * account names
+     */
+    public String[] getAssetAccountsNames() {
+        ArrayList<String> accountsNames = new ArrayList<>();
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accounts.get(i).getAccountType().equals(AccountType.ASSET)) {
+                accountsNames.add(accounts.get(i).getName());
+            }
+        }
+        return accountsNames.toArray(new String[0]);
+    }
+
+    /**
+     *
+     * @return String[] accountsNames - Array of String holding all user expense
+     * account names
+     */
+    public String[] getExpenseAccountsNames() {
+        ArrayList<String> accountsNames = new ArrayList<>();
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accounts.get(i).getAccountType().equals(AccountType.EXPENSE)) {
+                accountsNames.add(accounts.get(i).getName());
+            }
+        }
+        return accountsNames.toArray(new String[0]);
+    }
+
+    /**
+     *
+     * @return String[] accountsNames - Array of String holding all user revenue
+     * account names
+     */
+    public String[] getRevenueAccountsNames() {
+        ArrayList<String> accountsNames = new ArrayList<>();
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accounts.get(i).getAccountType().equals(AccountType.REVENUE)) {
+                accountsNames.add(accounts.get(i).getName());
+            }
+        }
+        return accountsNames.toArray(new String[0]);
+    }
+
+    /**
+     *
+     * @return String[] accountsNames - Array of String holding all user revenue
+     * account names
+     */
+    public String[] getLiabilityAccountsNames() {
+        ArrayList<String> accountsNames = new ArrayList<>();
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accounts.get(i).getAccountType().equals(AccountType.LIABILITY)) {
+                accountsNames.add(accounts.get(i).getName());
+            }
+        }
+        return accountsNames.toArray(new String[0]);
+    }
+
+    /**
+     *
      * @return ArrayList accounts - ArrayList with all user accounts
      */
     public ArrayList<Account> getAccounts() {
         return accounts;
     }
-    
+
     /**
-     * 
+     *
      * @return ArrayList transactions - ArrayList with all user transactions
      */
     public ArrayList<Transaction> getTransactions() {
         return transactions;
     }
-    
+
     /**
-     * 
+     *
      * @param id String
-     * @return Account acc - Return Account acc if Account found with id equals to String id
+     * @return Account acc - Return Account acc if Account found with id equals
+     * to String id
      */
     public Account getAccountById(String id) {
         for (Account acc : accounts) {
@@ -132,9 +209,10 @@ public class User extends Observable {
     }
 
     /**
-     * 
+     *
      * @param accountName String
-     * @return Account acc - Return Account acc if Account found with account name equals to String accountName
+     * @return Account acc - Return Account acc if Account found with account
+     * name equals to String accountName
      */
     public Account getAccountByName(String accountName) {
         for (Account acc : accounts) {
@@ -144,10 +222,11 @@ public class User extends Observable {
         }
         return null;
     }
-    
+
     /**
-     * 
-     * @return String totalNetWorth - String with the sum of the balances from all user asset accounts
+     *
+     * @return String totalNetWorth - String with the sum of the balances from
+     * all user asset accounts
      */
     public String getNetWorth() {
         Double totalNetWorth = 0.00;
@@ -164,28 +243,30 @@ public class User extends Observable {
         }
         return df.format(totalNetWorth);
     }
-    
+
     /**
-     * 
-     * @return ArrayList - Returns ArrayList of Strings with only one instance from each category found in user transactions
+     *
+     * @return ArrayList - Returns ArrayList of Strings with only one instance
+     * from each category found in user transactions
      */
-    public ArrayList getAllCategories(){
+    public ArrayList getAllCategories() {
         ArrayList al = new ArrayList<>();
         transactions.stream().filter(t -> (!al.contains(t.getCategory()))).forEachOrdered(t -> {
             al.add(t.getCategory());
         });
         return al;
     }
-    
+
     /**
-     * 
+     *
      * @param category String
-     * @return String totalCategory - String with the sum from all the transactions found with category equals to String category
+     * @return String totalCategory - String with the sum from all the
+     * transactions found with category equals to String category
      */
     public String getCategoryTotalByCategory(String category) {
         Double totalCategory = 0.00;
         for (Transaction t : transactions) {
-            if(t.getCategory().equals(category)) {
+            if (t.getCategory().equals(category)) {
                 try {
                     Number n = NumberFormat.getNumberInstance().parse(t.getAmount());
                     totalCategory += n.doubleValue();
@@ -198,8 +279,8 @@ public class User extends Observable {
     }
 
     /**
-     * 
-     * @return String 
+     *
+     * @return String
      */
     @Override
     public String toString() {
