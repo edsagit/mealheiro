@@ -1,0 +1,13 @@
+@startuml
+!theme plain
+skinparam classAttributeIconSize 0
+Enum AccountType {
+ASSET
+EXPENSE
+REVENUE
+LIABILITY
+OPENING
+__
++ String[] getAccountTypes()
+}
+@enduml

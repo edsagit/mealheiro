@@ -1,0 +1,47 @@
+@startuml
+!theme plain
+skinparam classAttributeIconSize 0
+Class Transaction {
+- id : UUID
+- amount : String
+- type : TransactionType
+- sourceAccount : Account
+- destinationAccount : Account
+- description : String
+- category : String
+- date : LocalDate
+__
++ void opearationTransaction(Account sourceAccount, Account destinationAccount, String amount)
+..
++ String getAmount()
++ void setAmount(String amount)
+..
++ TransactionType getType()
++ void setType(TransactionType type)
+..
++ Account getSourceAccount()
++ void setSourceAccount(Account sourceAccount)
++ Account getDestinationAccount()
++ void setDestinationAccount(Account destinationAccount)
+..
++ String getDescription()
++ void setDescription(String description)
+..
++ LocalDate getDate()
++ void setDate(LocalDate date)
+..
++ String getCategory()
++ void setCategory(String category)
+}
+
+Enum TransactionType {
+WITHDRAWAL
+DEPOSIT
+TRANSFER
+OPENING_BALANCE
+__
++ String[] getTransactionTypes()
+}
+
+Transaction "*"--"1" TransactionType
+@enduml

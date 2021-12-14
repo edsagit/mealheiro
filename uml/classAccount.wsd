@@ -1,0 +1,49 @@
+@startuml
+!theme plain
+skinparam classAttributeIconSize 0
+Class Account {
+- id : UUID
+- name : String
+- iban : String
+- bic : String
+- accountNumber : String
+- balance : String
+- openingDate : Date 
+- accountType : AccountType
+- active : Boolean
+- transactions : ArrayList<Transaction>
+- balanceHistory : Map
+__
++ String getId()
+..
++ String getName()
++ void setName(String name)
+..
++ String getIban()
++ void setIban(String iban)
+..
++ String getBic()
++ void setBic(String bic)
+..
++ String getAccountNumber()
++ void setAccountNumber(String accountNumber)
+..
++ String getBalance()
++ void setBalance(String balance)
+..
++ Date getOpeningDate()
++ void setOpeningDate(Date openingDate)
+..
++ AccountType getAccountType()
++ void setAccountType(AccountType accountType)
+..
++ Boolean getActive()
++ void setActive(Boolean active)
+..
++ ArrayList<Transaction> getTransactions()
++ void addTransaction(Transaction transaction)
+..
++ Map getBalanceHistory()
++ void addBalanceHistory(LocalDate date, String balance)
+}
+@enduml

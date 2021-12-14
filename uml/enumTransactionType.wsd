@@ -1,0 +1,12 @@
+@startuml
+!theme plain
+skinparam classAttributeIconSize 0
+Enum TransactionType {
+WITHDRAWAL
+DEPOSIT
+TRANSFER
+OPENING_BALANCE
+__
++ String[] getTransactionTypes()
+}
+@enduml
