@@ -1,0 +1,87 @@
+@startuml
+!theme plain
+participant Client
+Client -> UserList : registerUser
+activate UserList
+UserList -> UserList : usernameExists
+activate UserList
+UserList --> UserList
+deactivate UserList
+UserList -> User : new
+activate User
+User --> UserList
+deactivate User
+UserList -> Account : new
+activate Account
+Account --> UserList
+deactivate Account
+UserList -> Account : new
+activate Account
+Account --> UserList
+deactivate Account
+UserList -> User : addAccount
+activate User
+User --> UserList
+deactivate User
+UserList -> Transaction : new
+activate Transaction
+Transaction -> Transaction : operationTransaction
+activate Transaction
+Transaction -> Account : addBalanceHistory
+activate Account
+Account --> Transaction
+deactivate Account
+Transaction -> Account : addBalanceHistory
+activate Account
+Account --> Transaction
+deactivate Account
+Transaction --> Transaction
+deactivate Transaction
+Transaction --> UserList
+deactivate Transaction
+UserList -> Account : addTransaction
+activate Account
+Account --> UserList
+deactivate Account
+UserList -> User : addTransaction
+activate User
+User --> UserList
+deactivate User
+UserList -> Account : new
+activate Account
+Account --> UserList
+deactivate Account
+UserList -> Account : new
+activate Account
+Account --> UserList
+deactivate Account
+UserList -> User : addAccount
+activate User
+User --> UserList
+deactivate User
+UserList -> Transaction : new
+activate Transaction
+Transaction -> Transaction : operationTransaction
+activate Transaction
+Transaction -> Account : addBalanceHistory
+activate Account
+Account --> Transaction
+deactivate Account
+Transaction -> Account : addBalanceHistory
+activate Account
+Account --> Transaction
+deactivate Account
+Transaction --> Transaction
+deactivate Transaction
+Transaction --> UserList
+deactivate Transaction
+UserList -> Account : addTransaction
+activate Account
+Account --> UserList
+deactivate Account
+UserList -> User : addTransaction
+activate User
+User --> UserList
+deactivate User
+return
+@enduml

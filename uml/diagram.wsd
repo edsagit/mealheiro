@@ -1,0 +1,103 @@
+@startuml
+' Split into 4 pages
+!theme plain
+
+skinparam groupInheritance 2
+skinparam pageMargin 10
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
+
+interface ActionListener
+interface EventListener
+interface Observer
+class Observable
+
+package apllication #DDDDDD {
+    class Main  
+    Main -> model.UserList
+}
+
+package command #FFF2CC {
+    interface Command
+    class CommandHistory
+    class addTransactionCommand
+
+    CommandHistory -> Command
+    Command <|- addTransactionCommand
+}
+
+package model #DAE8FC {
+    class UserList
+    class User
+    class Account
+    class Transaction
+    enum AccountType
+    enum TransactionType
+    
+    UserList --> User
+    User ->  Account
+    Account - Transaction
+    Account - AccountType
+    Transaction - TransactionType
+
+
+}
+
+package view #D5E8D4 {
+    class AccountsView
+    class DashboardView
+    class LoginView
+    class MainView
+    class RegisterView
+    class TransactionsView
+    
+    MainView . LoginView 
+    MainView . AccountsView
+    MainView . DashboardView
+    MainView . RegisterView
+    MainView . TransactionsView
+}
+
+
+package controller #FFE6CC {
+    abstract class AbstractController
+    class AccountsController
+    class DashboardController
+    class LoginController
+    class RegisterController
+    class MainController
+    class TransactionsController
+
+    AbstractController <|--- AccountsController
+    AbstractController <|--- DashboardController
+    AbstractController <|--- LoginController
+    AbstractController <|--- RegisterController
+    AbstractController <|--- MainController
+    AbstractController <|--- TransactionsController
+    
+    MainController .> AccountsController
+    MainController .> DashboardController
+    MainController .> LoginController
+    MainController .> RegisterController
+    MainController .> TransactionsController
+
+    TransactionsController -> CommandHistory
+
+    Main --> MainController
+}
+
+view -[hidden]-> controller
+
+' view -> controller
+' controller -> view
+controller .|> Observer
+controller .|> ActionListener
+view "notifies".|> ActionListener
+ActionListener -|> EventListener
+view .|> Observer
+model -|> Observable
+Observable "notifies"..> Observer
+
+
+
+@enduml

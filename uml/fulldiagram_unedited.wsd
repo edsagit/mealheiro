@@ -1,0 +1,226 @@
+@startuml
+!theme plain
+skinparam linestyle ortho
+
+left to right direction
+
+abstract class application.controller.AbstractController
+annotation java.lang.Override
+annotation java.lang.SuppressWarnings
+class application.Main
+class application.command.CommandHistory
+class application.command.addTransactionCommand
+class application.controller.AccountsController
+class application.controller.DashboardController
+class application.controller.LoginController
+class application.controller.MainController
+class application.controller.RegisterController
+class application.controller.TransactionsController
+class application.model.Account
+class application.model.Observable
+class application.model.Transaction
+class application.model.User
+class application.model.UserList
+class application.view.AccountsView
+class application.view.DashboardView
+class application.view.JPanel
+class application.view.LoginView
+class application.view.MainView
+class application.view.RegisterView
+class application.view.TransactionsView
+class java.awt.BasicStroke
+class java.awt.BorderLayout
+class java.awt.event.ActionEvent
+class java.awt.event.ActionListener
+class java.text.DecimalFormat
+class java.text.NumberFormat
+class java.text.ParseException
+class java.text.SimpleDateFormat
+class java.time.Instant
+class java.time.LocalDate
+class java.time.ZoneOffset
+class java.util.ArrayList
+class java.util.Date
+class java.util.EventListener
+class java.util.Iterator
+class java.util.List
+class java.util.Observable
+class java.util.Set
+class java.util.Stack
+class java.util.logging.Level
+class java.util.logging.Logger
+class javax.swing.ComboBoxModel
+class javax.swing.DefaultComboBoxModel
+class javax.swing.JPanel
+class javax.swing.RowSorter
+class javax.swing.SortOrder
+class javax.swing.event.DocumentEvent
+class javax.swing.event.DocumentListener
+class javax.swing.table.DefaultTableModel
+class javax.swing.table.TableModel
+class javax.swing.table.TableRowSorter
+class org.jfree.chart.ChartFactory
+class org.jfree.chart.ChartPanel
+class org.jfree.chart.JFreeChart
+class org.jfree.chart.plot.Plot
+class org.jfree.chart.renderer.AbstractRenderer
+class org.jfree.data.category.DefaultCategoryDataset
+class org.jfree.data.general.DefaultPieDataset
+class org.jfree.data.time.Day
+class org.jfree.data.time.RegularTimePeriod
+class org.jfree.data.time.TimeSeries
+class org.jfree.data.time.TimeSeriesCollection
+enum application.model.AccountType
+enum application.model.TransactionType
+interface application.command.Command
+interface application.controller.ActionListener
+interface application.controller.ChangeListener
+interface application.model.Observer
+interface application.view.Observer
+interface java.util.Observer
+application.controller.AbstractController ..> java.lang.Override
+application.controller.AbstractController --|> application.controller.ActionListener
+application.controller.AbstractController --|> application.controller.ChangeListener
+application.Main ..> application.controller.MainController
+application.Main ..> application.model.UserList
+application.command.CommandHistory ..> java.util.Stack
+application.command.addTransactionCommand ..> application.model.Transaction
+application.command.addTransactionCommand ..> application.model.User
+application.command.addTransactionCommand --|> application.command.Command
+application.controller.AccountsController --|> application.controller.AbstractController
+application.controller.AccountsController ..> java.lang.Override
+application.controller.AccountsController ..> application.model.Account
+application.controller.AccountsController ..> application.model.UserList
+application.controller.AccountsController ..> application.view.AccountsView
+application.controller.AccountsController ..> java.awt.event.ActionEvent
+application.controller.DashboardController --|> application.controller.AbstractController
+application.controller.DashboardController ..> java.lang.Override
+application.controller.DashboardController ..> application.model.UserList
+application.controller.DashboardController ..> application.view.DashboardView
+application.controller.DashboardController ..> java.awt.event.ActionEvent
+application.controller.LoginController --|> application.controller.AbstractController
+application.controller.LoginController ..> java.lang.Override
+application.controller.LoginController ..> application.model.UserList
+application.controller.LoginController ..> application.view.LoginView
+application.controller.LoginController ..> java.awt.event.ActionEvent
+application.controller.MainController --|> application.controller.AbstractController
+application.controller.MainController ..> java.lang.Override
+application.controller.MainController ..> application.command.CommandHistory
+application.controller.MainController ..> application.model.User
+application.controller.MainController ..> application.model.UserList
+application.controller.MainController ..> application.view.AccountsView
+application.controller.MainController ..> application.view.DashboardView
+application.controller.MainController ..> application.view.LoginView
+application.controller.MainController ..> application.view.MainView
+application.controller.MainController ..> application.view.RegisterView
+application.controller.MainController ..> application.view.TransactionsView
+application.controller.RegisterController --|> application.controller.AbstractController
+application.controller.RegisterController ..> java.lang.Override
+application.controller.RegisterController ..> application.model.UserList
+application.controller.RegisterController ..> application.view.RegisterView
+application.controller.RegisterController ..> java.awt.event.ActionEvent
+application.controller.TransactionsController --|> application.controller.AbstractController
+application.controller.TransactionsController ..> java.lang.Override
+application.controller.TransactionsController ..> application.command.CommandHistory
+application.controller.TransactionsController ..> application.command.addTransactionCommand
+application.controller.TransactionsController ..> application.model.Transaction
+application.controller.TransactionsController ..> application.model.UserList
+application.controller.TransactionsController ..> application.view.TransactionsView
+application.controller.TransactionsController ..> java.awt.event.ActionEvent
+application.model.Account --|> application.model.Observable
+application.model.Account ..> java.text.DecimalFormat
+application.model.Account ..> java.time.Instant
+application.model.Account ..> java.time.LocalDate
+application.model.Transaction --|> application.model.Observable
+application.model.Transaction ..> java.text.DecimalFormat
+application.model.Transaction ..> java.text.NumberFormat
+application.model.Transaction ..> java.text.ParseException
+application.model.Transaction ..> java.time.LocalDate
+application.model.Transaction ..> java.util.logging.Level
+application.model.Transaction ..> java.util.logging.Logger
+application.model.User ..> java.lang.Override
+application.model.User --|> application.model.Observable
+application.model.User ..> java.text.DecimalFormat
+application.model.User ..> java.text.NumberFormat
+application.model.User ..> java.text.ParseException
+application.model.User ..> java.time.LocalDate
+application.model.User ..> java.util.logging.Level
+application.model.User ..> java.util.logging.Logger
+application.model.UserList ..> java.lang.Override
+application.model.UserList --|> application.model.Observable
+application.model.UserList ..> java.text.DecimalFormat
+application.model.UserList ..> java.time.LocalDate
+application.model.UserList --|> application.model.Observer
+application.view.AccountsView ..> java.lang.SuppressWarnings
+application.view.AccountsView ..> application.model.UserList
+application.view.AccountsView ..> java.awt.event.ActionListener
+application.view.AccountsView ..> java.util.EventListener
+application.view.AccountsView ..> java.util.Observable
+application.view.AccountsView --|> javax.swing.JPanel
+application.view.AccountsView ..> javax.swing.table.DefaultTableModel
+application.view.AccountsView ..> application.model.AccountType
+application.view.AccountsView --|> java.util.Observer
+application.view.DashboardView ..> java.lang.SuppressWarnings
+application.view.DashboardView ..> application.model.UserList
+application.view.DashboardView ..> java.awt.BasicStroke
+application.view.DashboardView ..> java.awt.BorderLayout
+application.view.DashboardView ..> java.awt.event.ActionListener
+application.view.DashboardView ..> java.time.LocalDate
+application.view.DashboardView ..> java.time.ZoneOffset
+application.view.DashboardView ..> java.util.Date
+application.view.DashboardView ..> java.util.EventListener
+application.view.DashboardView ..> java.util.Iterator
+application.view.DashboardView ..> java.util.Observable
+application.view.DashboardView ..> java.util.Set
+application.view.DashboardView --|> javax.swing.JPanel
+application.view.DashboardView ..> org.jfree.chart.ChartFactory
+application.view.DashboardView ..> org.jfree.chart.ChartPanel
+application.view.DashboardView ..> org.jfree.chart.JFreeChart
+application.view.DashboardView ..> org.jfree.chart.plot.Plot
+application.view.DashboardView ..> org.jfree.chart.renderer.AbstractRenderer
+application.view.DashboardView ..> org.jfree.data.category.DefaultCategoryDataset
+application.view.DashboardView ..> org.jfree.data.general.DefaultPieDataset
+application.view.DashboardView ..> org.jfree.data.time.Day
+application.view.DashboardView ..> org.jfree.data.time.RegularTimePeriod
+application.view.DashboardView ..> org.jfree.data.time.TimeSeries
+application.view.DashboardView ..> org.jfree.data.time.TimeSeriesCollection
+application.view.DashboardView ..> application.model.AccountType
+application.view.DashboardView --|> java.util.Observer
+application.view.LoginView ..> java.lang.Override
+application.view.LoginView ..> java.lang.SuppressWarnings
+application.view.LoginView ..> application.model.UserList
+application.view.LoginView --|> application.view.JPanel
+application.view.LoginView --|> application.view.Observer
+application.view.MainView ..> java.lang.Override
+application.view.MainView ..> application.model.UserList
+application.view.MainView --|> application.view.JPanel
+application.view.MainView --|> application.view.Observer
+application.view.RegisterView ..> java.lang.Override
+application.view.RegisterView ..> java.lang.SuppressWarnings
+application.view.RegisterView ..> application.model.UserList
+application.view.RegisterView --|> application.view.JPanel
+application.view.RegisterView ..> javax.swing.event.DocumentEvent
+application.view.RegisterView ..> javax.swing.event.DocumentListener
+application.view.RegisterView --|> application.view.Observer
+application.view.TransactionsView ..> java.lang.SuppressWarnings
+application.view.TransactionsView ..> application.model.Account
+application.view.TransactionsView ..> application.model.UserList
+application.view.TransactionsView ..> java.awt.event.ActionListener
+application.view.TransactionsView ..> java.text.SimpleDateFormat
+application.view.TransactionsView ..> java.time.LocalDate
+application.view.TransactionsView ..> java.util.ArrayList
+application.view.TransactionsView ..> java.util.Date
+application.view.TransactionsView ..> java.util.EventListener
+application.view.TransactionsView ..> java.util.List
+application.view.TransactionsView ..> java.util.Observable
+application.view.TransactionsView ..> javax.swing.ComboBoxModel
+application.view.TransactionsView ..> javax.swing.DefaultComboBoxModel
+application.view.TransactionsView --|> javax.swing.JPanel
+application.view.TransactionsView ..> javax.swing.RowSorter
+application.view.TransactionsView ..> javax.swing.SortOrder
+application.view.TransactionsView ..> javax.swing.table.DefaultTableModel
+application.view.TransactionsView ..> javax.swing.table.TableModel
+application.view.TransactionsView ..> javax.swing.table.TableRowSorter
+application.view.TransactionsView ..> application.model.TransactionType
+application.view.TransactionsView --|> java.util.Observer
+@enduml

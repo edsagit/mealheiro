@@ -1,0 +1,186 @@
+@startuml diagram
+!theme plain
+
+' skinparam groupInheritance 2
+skinparam linetype ortho 
+
+left to right direction
+
+package application #DDDDDD {
+    class Main
+}
+
+package command #FFF2CC {
+    interface Command
+    class CommandHistory
+    class addTransactionCommand
+}
+
+package controller #FFE6CC {
+    abstract class AbstractController
+    class AccountsController
+    class DashboardController
+    class LoginController
+    class MainController
+    class RegisterController
+    class TransactionsController
+
+    
+AbstractController <|-[#D79B00]- AccountsController
+AbstractController <|-[#D79B00]- DashboardController
+AbstractController <|-[#D79B00]- LoginController
+AbstractController <|-[#D79B00]- MainController
+AbstractController <|-[#D79B00]- RegisterController
+AbstractController <|-[#D79B00]- TransactionsController
+}
+
+package model #DAE8FC {
+    class Account
+    ' class Observable
+    class Transaction
+    class User
+    class UserList
+    enum AccountType
+    enum TransactionType
+}
+
+package view #D5E8D4 {
+
+    class AccountsView
+    class DashboardView
+    class LoginView
+    class MainView
+    class RegisterView
+    class TransactionsView
+
+}
+
+' class java.awt.event.ActionEvent
+' class java.awt.event.ActionListener
+' class java.util.EventListener
+' class java.util.List
+class java.util.Observable
+
+
+' interface ActionListener
+' interface ChangeListener
+' interface Observer
+interface java.util.Observer
+
+' Main ..> MainController
+' Main ..> UserList
+
+MainController <.. Main
+UserList <.. Main
+
+addTransactionCommand ..> Transaction
+addTransactionCommand ..> User
+addTransactionCommand --|> Command
+
+' AbstractController --|> ActionListener
+' AbstractController --|> ChangeListener
+
+' AccountsController -[#D79B00]-|> AbstractController
+' DashboardController -[#D79B00]-|> AbstractController
+' LoginController -[#D79B00]-|> AbstractController
+' MainController -[#D79B00]-|> AbstractController
+' RegisterController -[#D79B00]-|> AbstractController
+' TransactionsController -[#D79B00]-|> AbstractController
+
+
+
+AccountsController .[#D79B00].> Account
+AccountsController .[#D79B00].> UserList
+AccountsController .[#D79B00].> AccountsView
+
+
+DashboardController .[#D79B00].> UserList
+DashboardController .[#D79B00].> DashboardView
+
+
+LoginController .[#D79B00].> UserList
+LoginController .[#D79B00].> LoginView
+
+
+MainController ..[#D79B00].> CommandHistory
+MainController ..[#D79B00].> User
+MainController ..[#D79B00].> UserList
+MainController ..[#D79B00].> AccountsView
+MainController ..[#D79B00].> DashboardView
+MainController ..[#D79B00].> LoginView
+MainController ..[#D79B00].> MainView
+MainController ..[#D79B00].> RegisterView
+MainController ..[#D79B00].> TransactionsView
+
+RegisterController .[#D79B00].> UserList
+RegisterController .[#D79B00].> RegisterView
+
+
+TransactionsController ..[#D79B00].> CommandHistory
+TransactionsController ..[#D79B00].> addTransactionCommand
+TransactionsController .[#D79B00].> Transaction
+TransactionsController .[#D79B00].> UserList
+TransactionsController .[#D79B00].> TransactionsView
+
+
+
+
+AccountsView ..[#82B366].> UserList
+AccountsView ..[#82B366].> AccountType
+DashboardView ..[#82B366].> UserList
+DashboardView ..[#82B366].> AccountType
+LoginView ..[#82B366].> UserList
+MainView ..[#82B366].> UserList
+RegisterView ..[#82B366].> UserList
+TransactionsView ..[#82B366].> Account
+TransactionsView ..[#82B366].> UserList
+TransactionsView ..[#82B366].> TransactionType
+
+' UserList -[#6C8EBF]-|> java.util.Observer
+' AccountsView -[#82B366]-|> java.util.Observer
+' DashboardView -[#82B366]-|> java.util.Observer
+' LoginView -[#82B366]-|> java.util.Observer
+' MainView -[#82B366]-|> java.util.Observer
+' RegisterView -[#82B366]-|> java.util.Observer
+' TransactionsView -[#82B366]-|> java.util.Observer
+
+java.util.Observer <|-[#82B366]-- UserList
+java.util.Observer <|-[#82B366]-- AccountsView
+java.util.Observer <|-[#82B366]-- DashboardView
+java.util.Observer <|-[#82B366]-- LoginView
+java.util.Observer <|-[#82B366]-- MainView
+java.util.Observer <|-[#82B366]-- RegisterView
+java.util.Observer <|-[#82B366]-- TransactionsView
+
+' Account -[#6C8EBF]-|> java.util.Observable
+' Transaction -[#6C8EBF]-|> java.util.Observable
+' User -[#6C8EBF]-|> java.util.Observable
+' UserList -[#6C8EBF]-|> java.util.Observable
+' AccountsView .[#82B366].> java.util.Observable
+' DashboardView .[#82B366].> java.util.Observable
+' TransactionsView .[#82B366].> java.util.Observable
+
+java.util.Observable <|-[#6C8EBF]-- Account
+java.util.Observable <|-[#6C8EBF]-- Transaction
+java.util.Observable <|-[#6C8EBF]-- User
+java.util.Observable <|-[#6C8EBF]-- UserList
+java.util.Observable <|-[#6C8EBF]-- AccountsView
+java.util.Observable <|-[#6C8EBF]-- DashboardView
+java.util.Observable <|-[#6C8EBF]-- TransactionsView
+
+' AccountsView .[#82B366].> java.awt.event.ActionListener
+' DashboardView .[#82B366].> java.awt.event.ActionListener
+' TransactionsView .[#82B366].> java.awt.event.ActionListener
+
+' AccountsController .[#D79B00].> java.awt.event.ActionEvent
+' DashboardController .[#D79B00].> java.awt.event.ActionEvent
+' LoginController .[#D79B00].> java.awt.event.ActionEvent
+' RegisterController .[#D79B00].> java.awt.event.ActionEvent
+' TransactionsController ..> java.awt.event.ActionEvent
+
+' AccountsView .[#82B366].> java.util.EventListener
+' DashboardView .[#82B366].> java.util.EventListener
+' TransactionsView .[#82B366].> java.util.EventListener
+
+
+@enduml

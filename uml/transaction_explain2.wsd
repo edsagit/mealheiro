@@ -1,0 +1,11 @@
+@startuml name
+!theme plain
+agent accountA
+agent accountB
+
+' accountA -> accountB : €10
+accountA --> (- €10)
+accountB <-- (+ €10)
+
+@enduml
+
