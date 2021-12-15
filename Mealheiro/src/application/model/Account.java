@@ -3,6 +3,8 @@ package application.model;
 import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import static java.time.temporal.TemporalQueries.zone;
 import java.util.*;
 
 /**
@@ -19,7 +21,7 @@ public class Account extends Observable {
     private String bic;
     private String accountNumber;
     private String balance;
-    private Date openingDate;
+    private LocalDate openingDate;
     private AccountType accountType;
     private Boolean active;
     private ArrayList<Transaction> transactions;
@@ -32,7 +34,7 @@ public class Account extends Observable {
         this.bic = "";
         this.accountNumber = "";
         this.balance = "";
-        this.openingDate = new Date();
+        this.openingDate = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
         this.accountType = type;
         this.transactions = new ArrayList<>();
         this.balanceHistory = new TreeMap<LocalDate, String>();
@@ -45,7 +47,7 @@ public class Account extends Observable {
         this.bic = "";
         this.accountNumber = "";
         this.balance = balance;
-        this.openingDate = new Date();
+        this.openingDate = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
         this.accountType = type;
         this.transactions = new ArrayList<>();
         this.balanceHistory = new TreeMap<LocalDate, String>();
@@ -58,7 +60,7 @@ public class Account extends Observable {
         this.bic = bic;
         this.accountNumber = number;
         this.balance = balance;
-        this.openingDate = new Date();
+        this.openingDate = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
         this.accountType = type;
         this.transactions = new ArrayList<>();
         this.balanceHistory = new TreeMap<LocalDate, String>();
@@ -118,11 +120,11 @@ public class Account extends Observable {
         notifyObservers();
     }
 
-    public Date getOpeningDate() {
+    public LocalDate getOpeningDate() {
         return openingDate;
     }
 
-    public void setOpeningDate(Date openingDate) {
+    public void setOpeningDate(LocalDate openingDate) {
         this.openingDate = openingDate;
         setChanged();
         notifyObservers();

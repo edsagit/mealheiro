@@ -130,7 +130,13 @@ public class UserList extends Observable implements Observer {
     public void setLoggedInUser(User user) {
         this.loggedInUser = user;
         setChanged();
-        notifyObservers();
+        notifyObservers("session_setted");
+    }
+    
+    public void logoutUser() {
+        this.loggedInUser = null;
+        setChanged();
+        notifyObservers("session_unsetted");
     }
 
     /**

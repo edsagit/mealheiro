@@ -2,6 +2,7 @@ package application;
 
 import application.controller.MainController;
 import application.model.UserList;
+import application.view.MainView;
 
 /**
  *
@@ -16,20 +17,22 @@ public class Main {
         Main main = new Main();
     }
 
-    private UserList db;
+    private UserList model;
     
     /**
      * Main constructor
      */
     public Main() {
 
-        db = new UserList();
-
-        db.instantiateDummyData();
-
-        MainController mc = new MainController();
-        mc.setModel(db);
-        mc.displayView();
+        model = new UserList();
+        
+        // populate UserList with some dummy data
+        model.instantiateDummyData();
+        
+        MainView mv = new MainView(model);
+//        MainController mc = new MainController();
+//        mc.setModel(model);
+//        mc.displayView();
     }
 
 }

@@ -13,18 +13,19 @@ public class RegisterController extends AbstractController {
     private UserList db;
     private RegisterView rv;
 
-    public RegisterController() {
-
-    }
-
-    public void setModel(UserList db) {
-        this.db = db;
-    }
-
-    public void setView(RegisterView rv) {
+    public RegisterController(UserList model, RegisterView rv) {
+        this.db = model;
         this.rv = rv;
-        rv.setController(this);
     }
+
+//    public void setModel(UserList db) {
+//        this.db = db;
+//    }
+
+//    public void setView(RegisterView rv) {
+//        this.rv = rv;
+//        rv.setController(this);
+//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -34,12 +35,15 @@ public class RegisterController extends AbstractController {
 
             // register new user
             if (db.usernameExists(rv.getRegisterUsername())) {
+//                System.out.println("ASD1");
                 rv.setInformationLabelText("Username already exists.");
+                rv.update(db, 0);
             } else {
+//                System.out.println("ASD2");
                 db.registerUser(rv.getRegisterUsername(), rv.getRegisterEmail(), rv.getRegisterPassword(),
                         rv.getTfRegisterBankName(), rv.getFtfRegisterBalance(), rv.getFtfRegisterSavingsBalance());
-                rv.setInformationLabelText("User created successfully.");
-                rv.update(db, null);
+                ;
+                rv.update(db, 1);
             }
         }
 

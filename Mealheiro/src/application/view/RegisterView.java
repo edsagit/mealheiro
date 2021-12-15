@@ -1,5 +1,6 @@
 package application.view;
 
+import application.controller.RegisterController;
 import application.model.UserList;
 import java.awt.event.*;
 import java.util.*;
@@ -14,7 +15,7 @@ import javax.swing.text.*;
  */
 public class RegisterView extends JPanel implements Observer {
 
-    private UserList db;
+//    private UserList db;
     private Boolean userValid = false;
     private Boolean emailValid = false;
     private Boolean passwordValid = false;
@@ -25,9 +26,13 @@ public class RegisterView extends JPanel implements Observer {
     /**
      * Creates new form RegisterView
      */
-    public RegisterView() {
+    public RegisterView(UserList model) {
+        // instantiate register controller
+        RegisterController rc = new RegisterController(model, this);
         initComponents();
         registerValidation();
+        // add register button action listener to register controller
+        bRegister.addActionListener(rc);
     }
 
     /**
@@ -125,15 +130,15 @@ public class RegisterView extends JPanel implements Observer {
     public void setSavingsValid(Boolean savingsValid) {
         this.savingsValid = savingsValid;
     }
-
-    /**
-     *
-     * @param db UserList
-     */
-    public void setModel(UserList db) {
-        this.db = db;
-        db.addObserver(this);
-    }
+//
+//    /**
+//     *
+//     * @param db UserList
+//     */
+//    public void setModel(UserList db) {
+//        this.db = db;
+//        db.addObserver(this);
+//    }
 
     /**
      *
@@ -141,67 +146,6 @@ public class RegisterView extends JPanel implements Observer {
      */
     public void setInformationLabelText(String text) {
         lblRegisterInformation.setText(text);
-    }
-
-    /**
-     *
-     * @param el EventListener
-     */
-    public void setController(EventListener el) {
-        bRegister.addActionListener((ActionListener) el);
-    }
-
-    /**
-     *
-     * @param ftfRegisterBalance String - Set balance to String
-     * ftfRegisterBalance
-     */
-    public void setFtfRegisterBalance(String ftfRegisterBalance) {
-        this.ftfRegisterBalance.setText(ftfRegisterBalance);
-    }
-
-    /**
-     *
-     * @param ftfRegisterSavingsBalance String - Set savings balance to String
-     * ftfRegisterSavingsBalance
-     */
-    public void setFtfRegisterSavingsBalance(String ftfRegisterSavingsBalance) {
-        this.ftfRegisterSavingsBalance.setText(ftfRegisterSavingsBalance);
-    }
-
-    /**
-     *
-     * @param pfRegisterPassword String - Set password to String
-     * pfRegisterPassword
-     */
-    public void setPfRegisterPassword(String pfRegisterPassword) {
-        this.pfRegisterPassword.setText(pfRegisterPassword);
-    }
-
-    /**
-     *
-     * @param tfRegisterBankName String - Set bank name to String
-     * tfRegisterBankName
-     */
-    public void setTfRegisterBankName(String tfRegisterBankName) {
-        this.tfRegisterBankName.setText(tfRegisterBankName);
-    }
-
-    /**
-     *
-     * @param tfRegisterEmail String - Set email to String tfRegisterEmail
-     */
-    public void setTfRegisterEmail(String tfRegisterEmail) {
-        this.tfRegisterEmail.setText(tfRegisterEmail);
-    }
-
-    /**
-     *
-     * @param tfRegisterUsername String - Set username to String
-     * tfRegisterUsername
-     */
-    public void setTfRegisterUsername(String tfRegisterUsername) {
-        this.tfRegisterUsername.setText(tfRegisterUsername);
     }
 
     /**
@@ -235,8 +179,14 @@ public class RegisterView extends JPanel implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        if (userValid && emailValid && passwordValid && bankNameValid && balanceValid && savingsValid) {
+        if (getIfFieldsValid()) {
             System.out.println("Register view: updated");
+            if (arg.equals(0)) {
+                lblRegisterInformation.setText("Username already exists.");
+            } else if (arg.equals(1)) {
+                lblRegisterInformation.setText("User registered successfully!");
+            }
+
             clearTextFields();
         }
     }
@@ -275,8 +225,12 @@ public class RegisterView extends JPanel implements Observer {
         tfRegisterBankName.setText("");
         ftfRegisterBalance.setValue(null);
         ftfRegisterSavingsBalance.setValue(null);
-        lblRegisterInformation.setText("");
+//        lblRegisterInformation.setText("");
         validate();
+    }
+    
+    public boolean getIfFieldsValid() {
+        return userValid && emailValid && passwordValid && bankNameValid && balanceValid && savingsValid;
     }
 
     /**

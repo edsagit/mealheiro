@@ -1,5 +1,6 @@
 package application.view;
 
+import application.controller.TransactionsController;
 import application.model.Account;
 import application.model.TransactionType;
 import application.model.UserList;
@@ -35,8 +36,12 @@ public class TransactionsView extends JPanel implements Observer {
     /**
      * Creates new form TransactionsView
      */
-    public TransactionsView() {
-
+    public TransactionsView(UserList model) {
+        TransactionsController tc = new TransactionsController(model, this);
+        // set view model
+        this.db = model;
+        // set as observer
+        this.db.addObserver(this);
         // tables data placeholder
         Object[][] data = {};
 
@@ -53,7 +58,12 @@ public class TransactionsView extends JPanel implements Observer {
         transferModel = new DefaultTableModel(data, tableColumnNames);
 
         initComponents();
-
+        
+        // add submit transaction buttons action listener to transactions controller
+        bTransactionSubmit.addActionListener(tc);
+        bTransactionUndo.addActionListener(tc);
+        bTransactionRedo.addActionListener(tc);
+        
         // set text field to current date
         ftfTransactionDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 
@@ -91,24 +101,24 @@ public class TransactionsView extends JPanel implements Observer {
         sorterIncome.setSortKeys(sortKeysTransfer);
     }
 
-    /**
-     *
-     * @param db UserList
-     */
-    public void setModel(UserList db) {
-        this.db = db;
-        db.addObserver(this);
-    }
+//    /**
+//     *
+//     * @param db UserList
+//     */
+//    public void setModel(UserList db) {
+//        this.db = db;
+//        db.addObserver(this);
+//    }
 
-    /**
-     *
-     * @param el EventListener
-     */
-    public void setController(EventListener el) {
-        bTransactionSubmit.addActionListener((ActionListener) el);
-        bTransactionUndo.addActionListener((ActionListener) el);
-        bTransactionRedo.addActionListener((ActionListener) el);
-    }
+//    /**
+//     *
+//     * @param el EventListener
+//     */
+//    public void setController(EventListener el) {
+//        bTransactionSubmit.addActionListener((ActionListener) el);
+//        bTransactionUndo.addActionListener((ActionListener) el);
+//        bTransactionRedo.addActionListener((ActionListener) el);
+//    }
 
     /**
      *
@@ -116,18 +126,18 @@ public class TransactionsView extends JPanel implements Observer {
      * @param arg Object
      */
     public void update(Observable o, Object arg) {
-        System.out.println("Transaction view: updated");
-
-        cbTransactionSourceAccount.removeAllItems();
-        cbTransactionDestinationAccount.removeAllItems();
-
-        // clear the tables
-        expenseModel.setRowCount(0);
-        incomeModel.setRowCount(0);
-        transferModel.setRowCount(0);
-
-        // if loggedIn populate the table with user data
+        // if loggedIn populate the table with user transactions data
         if (db.getLoggedInUser() != null) {
+             System.out.println("Transaction view: updated");
+            // clear combo boxes
+            cbTransactionSourceAccount.removeAllItems();
+            cbTransactionDestinationAccount.removeAllItems();
+
+            // clear the tables
+            expenseModel.setRowCount(0);
+            incomeModel.setRowCount(0);
+            transferModel.setRowCount(0);
+            
             db.getLoggedInUser().getTransactions().forEach(tra -> {
                 // populate table
                 switch (tra.getType()) {
@@ -313,7 +323,6 @@ public class TransactionsView extends JPanel implements Observer {
         this.tfTransactionCategory.setText("");
         this.tfTransactionDescription.setText("");
         this.cbTransactionType.setSelectedIndex(0);
-        validate();
     }
 
     /**

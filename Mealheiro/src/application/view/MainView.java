@@ -1,15 +1,33 @@
 package application.view;
 
+import application.controller.MainController;
 import application.model.UserList;
 import java.util.*;
 import javax.swing.*;
 
 public class MainView extends JPanel implements Observer {
 
-    public JTabbedPane tp;
+    private JFrame mainWindow;
+    private JTabbedPane tp;
     private UserList db;
 
-    public MainView() {
+    private LoginView lv;
+    private RegisterView rv;
+    private DashboardView dv;
+    private AccountsView av;
+    private TransactionsView tv;
+
+    public MainView(UserList model) {
+//        System.out.println("MAIN VIEW IS HEREEEE");
+        // set the model
+        this.db = model;
+        // start controller
+        MainController mc = new MainController(model, this);
+        // create Window
+        mainWindow = new JFrame("Mealheiro");
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainWindow.setSize(800, 600);
+        mainWindow.setLocationRelativeTo(null);
 
         tp = new JTabbedPane();
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -28,24 +46,38 @@ public class MainView extends JPanel implements Observer {
                                 .addComponent(tp, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
                                 .addContainerGap())
         );
-    }
 
-    /**
-     *
-     * @param db UserList
-     */
-    public void setModel(UserList db) {
-        this.db = db;
-        db.addObserver(this);
-    }
+        mainWindow.add(this);
+        this.db.addObserver(this);
 
-    /**
-     *
-     * @param el EventListener
-     */
-    public void setController(EventListener el) {
-    }
+        lv = new LoginView(model); // LoginView
+        rv = new RegisterView(model); // RegisterView
+        dv = new DashboardView(model); // DashboardView
+        av = new AccountsView(model); // AccountsView
+        tv = new TransactionsView(model); // TransactionsView
 
+        tp.add(lv); // add LoginView panel to JTabbedPane
+        tp.add(rv); // add RegisterView panel to JTabbedPane
+
+        mainWindow.validate();
+        mainWindow.setVisible(true);
+    }
+//
+//    /**
+//     *
+//     * @param db UserList
+//     */
+//    public void setModel(UserList db) {
+//        this.db = db;
+//        db.addObserver(this);
+//    }
+
+//    /**
+//     *
+//     * @param el EventListener
+//     */
+//    public void setController(EventListener el) {
+//    }
     /**
      *
      * @param o Observable
@@ -53,7 +85,27 @@ public class MainView extends JPanel implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("Main view: updated");
+        
+        if (arg != null) {
+            System.out.println("Main view: updated");
+            if (db.getLoggedInUser() != null && arg.equals("session_setted")) {
+                tp.removeAll();
+                tp.add(dv);
+                tp.add(av);
+                tp.add(tv);
+                tp.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+                mainWindow.revalidate();
+                mainWindow.repaint();
+            } else if (arg.equals("session_unsetted")) {
+                tp.removeAll();
+                lv.setLoginInformation("");
+                tp.add(lv);
+                tp.add(rv);
+                tp.setTabPlacement(javax.swing.JTabbedPane.TOP);
+                mainWindow.revalidate();
+                mainWindow.repaint();
+            }
+        }
     }
 
 }

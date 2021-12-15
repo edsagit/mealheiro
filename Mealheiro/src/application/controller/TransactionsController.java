@@ -19,21 +19,25 @@ public class TransactionsController extends AbstractController {
     private Transaction originalTransaction;
     private Transaction inverseOriginal;
 
-    public TransactionsController() {
-    }
-
-    public void setModel(UserList db) {
-        this.db = db;
-    }
-
-    public void setView(TransactionsView tv) {
+    public TransactionsController(UserList model, TransactionsView tv) {
+        this.db = model;
         this.tv = tv;
-        tv.setController(this);
+        this.ch = new CommandHistory();
+        
     }
+//
+//    public void setModel(UserList db) {
+//        this.db = db;
+//    }
+//
+//    public void setView(TransactionsView tv) {
+//        this.tv = tv;
+//        tv.setController(this);
+//    }
 
-    public void setCommandHistory(CommandHistory ch) {
-        this.ch = ch;
-    }
+//    public void setCommandHistory(CommandHistory ch) {
+//        this.ch = ch;
+//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -54,7 +58,7 @@ public class TransactionsController extends AbstractController {
                     // set transaction information label
                     tv.setLblTransactionInformation("Transaction completed!");
                 } else {
-                    tv.setLblTransactionInformation("Amount can't be empty or accounts can't be the same.");
+                    tv.setLblTransactionInformation("Amount can't be empty and accounts can't be the same.");
                 }
             }
         }

@@ -13,29 +13,31 @@ public class LoginController extends AbstractController {
     private UserList db;
     private LoginView lv;
 
-    public LoginController() {
-
-    }
-
-    public void setModel(UserList db) {
-        this.db = db;
-    }
-
-    public void setView(LoginView lv) {
+    public LoginController(UserList model, LoginView lv) {
+        this.db = model;
         this.lv = lv;
-        lv.setController(this);
     }
+
+//    public void setModel(UserList db) {
+//        this.db = db;
+//    }
+//
+//    public void setView(LoginView lv) {
+//        this.lv = lv;
+//        lv.setController(this);
+//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if (e.getActionCommand().equals("Login")) {
-//            System.out.println("Login controller: login button clicked");
-//            if (db.loginUser(lv.getLoginUsername(), lv.getPfLoginPassword())) {
-//                db.setLoggedInUser(db.getUserByUsername(lv.getLoginUsername()));
-//            } else {
-//                db.setLoggedInUser(null);
-//            }
-//        }
+        if (e.getActionCommand().equals("Login")) {
+            System.out.println("Login controller: login button clicked");
+            if (db.loginUser(lv.getLoginUsername(), lv.getPfLoginPassword())) {
+                db.setLoggedInUser(db.getUserByUsername(lv.getLoginUsername()));
+//                lv.update(null, 1);
+            } else {
+                lv.update(null, 0);
+            }
+        }
         super.actionPerformed(e);
     }
 }

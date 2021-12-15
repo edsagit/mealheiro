@@ -1,5 +1,6 @@
 package application.view;
 
+import application.controller.DashboardController;
 import application.model.AccountType;
 import application.model.UserList;
 import java.awt.BasicStroke;
@@ -38,9 +39,18 @@ public class DashboardView extends JPanel implements Observer {
     DefaultCategoryDataset revenueAccountsDataset;
     TimeSeriesCollection assetAccountsDataset;
 
-    public DashboardView() {
+    public DashboardView(UserList model) {
+        DashboardController dc = new DashboardController(model, this);
+        // set view model
+        this.db = model;
+        // set as observer
+        this.db.addObserver(this);
+        // initiate gui components
         initComponents();
+        // instantiate the dashboard
         instantiateDashboard();
+        // add button action listener dashboard controller
+        bLogout.addActionListener(dc);
     }
 
     /**
@@ -66,10 +76,10 @@ public class DashboardView extends JPanel implements Observer {
      * @param arg Object
      */
     public void update(Observable o, Object arg) {
-        System.out.println("Dashboard view: updated");
+        
 
         if (db.getLoggedInUser() != null) {
-
+            System.out.println("Dashboard view: updated");
             // set welcome label
             this.lblWelcomeUser.setText("<html> Welcome, <b>" + db.getLoggedInUser().getUsername() + "</b></html>");
             // set networth value
