@@ -2,7 +2,6 @@ package application.view;
 
 import application.controller.RegisterController;
 import application.model.UserList;
-import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -33,6 +32,25 @@ public class RegisterView extends JPanel implements Observer {
         registerValidation();
         // add register button action listener to register controller
         bRegister.addActionListener(rc);
+    }
+
+    /**
+     *
+     * @param o Observable
+     * @param arg Object
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        if (getIfFieldsValid()) {
+            System.out.println("Register view: updated");
+            if (arg.equals(0)) {
+                lblRegisterInformation.setText("Username already exists.");
+            } else if (arg.equals(1)) {
+                lblRegisterInformation.setText("User registered successfully!");
+            }
+
+            clearTextFields();
+        }
     }
 
     /**
@@ -130,15 +148,6 @@ public class RegisterView extends JPanel implements Observer {
     public void setSavingsValid(Boolean savingsValid) {
         this.savingsValid = savingsValid;
     }
-//
-//    /**
-//     *
-//     * @param db UserList
-//     */
-//    public void setModel(UserList db) {
-//        this.db = db;
-//        db.addObserver(this);
-//    }
 
     /**
      *
@@ -170,25 +179,6 @@ public class RegisterView extends JPanel implements Observer {
      */
     public String getTfRegisterBankName() {
         return tfRegisterBankName.getText();
-    }
-
-    /**
-     *
-     * @param o Observable
-     * @param arg Object
-     */
-    @Override
-    public void update(Observable o, Object arg) {
-        if (getIfFieldsValid()) {
-            System.out.println("Register view: updated");
-            if (arg.equals(0)) {
-                lblRegisterInformation.setText("Username already exists.");
-            } else if (arg.equals(1)) {
-                lblRegisterInformation.setText("User registered successfully!");
-            }
-
-            clearTextFields();
-        }
     }
 
     /**
@@ -228,7 +218,7 @@ public class RegisterView extends JPanel implements Observer {
 //        lblRegisterInformation.setText("");
         validate();
     }
-    
+
     public boolean getIfFieldsValid() {
         return userValid && emailValid && passwordValid && bankNameValid && balanceValid && savingsValid;
     }

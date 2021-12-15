@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import static java.time.temporal.TemporalQueries.zone;
 import java.util.*;
 
 /**
@@ -150,19 +149,15 @@ public class Account extends Observable {
         notifyObservers();
     }
 
-//    public void removeTransaction(Transaction transaction) {
-//        if (transactions.contains(transaction)) {
-//            transactions.remove(transaction);
-//            setChanged();
-//            notifyObservers();
-//        }
-//    }
-//
-//    public void addTransaction(Transaction transaction) {
-//        this.transactions.add(transaction);
-//        setChanged();
-//        notifyObservers();
-//    }
+    public void removeTransaction(Transaction transaction) {
+        if (transactions.contains(transaction)) {
+            transactions.remove(transaction);
+        }
+    }
+
+    public void addTransaction(Transaction transaction) {
+        this.transactions.add(transaction);
+    }
     public ArrayList<Transaction> getTransactions() {
         return transactions;
     }

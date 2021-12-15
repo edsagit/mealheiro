@@ -3,11 +3,8 @@ package application.view;
 import application.controller.AccountsController;
 import application.model.AccountType;
 import application.model.UserList;
-import java.awt.event.ActionListener;
-import java.util.EventListener;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -56,24 +53,6 @@ public class AccountsView extends JPanel implements Observer {
         bTransactionSubmit.addActionListener(ac);
 
     }
-
-//    /**
-//     *
-//     * @param db UserList
-//     */
-//    public void setModel(UserList db) {
-//        this.db = db;
-//        db.addObserver(this);
-//        this.update(db, null);
-//    }
-
-//    /**
-//     *
-//     * @param el EventListener
-//     */
-//    public void setController(EventListener el) {
-//        bTransactionSubmit.addActionListener((ActionListener) el);
-//    }
 
     /**
      *

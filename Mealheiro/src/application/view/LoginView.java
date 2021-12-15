@@ -2,7 +2,6 @@ package application.view;
 
 import application.controller.LoginController;
 import application.model.UserList;
-import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
@@ -30,21 +29,6 @@ public class LoginView extends JPanel implements Observer {
         bLogin.addActionListener(lc);
     }
 
-//    /**
-//     *
-//     * @param db UserList
-//     */
-//    public void setModel(UserList db) {
-//        this.db = db;
-//        db.addObserver(this);
-//    }
-//    /**
-//     *
-//     * @param el EventListener
-//     */
-//    public void setController(EventListener el) {
-//        bLogin.addActionListener((ActionListener) el);
-//    }
     /**
      *
      * @param o Observable
@@ -105,7 +89,6 @@ public class LoginView extends JPanel implements Observer {
     public void clearFields() {
         tfLoginUsername.setText("");
         pfLoginPassword.setText("");
-//        lblLoginInformation.setText("");
     }
 
     /**

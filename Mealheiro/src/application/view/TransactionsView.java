@@ -4,12 +4,10 @@ import application.controller.TransactionsController;
 import application.model.Account;
 import application.model.TransactionType;
 import application.model.UserList;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.EventListener;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -100,25 +98,6 @@ public class TransactionsView extends JPanel implements Observer {
         // set sortKeys
         sorterIncome.setSortKeys(sortKeysTransfer);
     }
-
-//    /**
-//     *
-//     * @param db UserList
-//     */
-//    public void setModel(UserList db) {
-//        this.db = db;
-//        db.addObserver(this);
-//    }
-
-//    /**
-//     *
-//     * @param el EventListener
-//     */
-//    public void setController(EventListener el) {
-//        bTransactionSubmit.addActionListener((ActionListener) el);
-//        bTransactionUndo.addActionListener((ActionListener) el);
-//        bTransactionRedo.addActionListener((ActionListener) el);
-//    }
 
     /**
      *

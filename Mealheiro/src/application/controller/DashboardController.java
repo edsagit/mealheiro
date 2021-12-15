@@ -18,15 +18,6 @@ public class DashboardController extends AbstractController {
         this.dv = dv;
     }
 
-//    public void setModel(UserList db) {
-//        this.db = db;
-//    }
-//
-//    public void setView(DashboardView dv) {
-//        this.dv = dv;
-//        dv.setController(this);
-//    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Logout")) {

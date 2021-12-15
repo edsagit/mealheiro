@@ -25,19 +25,6 @@ public class TransactionsController extends AbstractController {
         this.ch = new CommandHistory();
         
     }
-//
-//    public void setModel(UserList db) {
-//        this.db = db;
-//    }
-//
-//    public void setView(TransactionsView tv) {
-//        this.tv = tv;
-//        tv.setController(this);
-//    }
-
-//    public void setCommandHistory(CommandHistory ch) {
-//        this.ch = ch;
-//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

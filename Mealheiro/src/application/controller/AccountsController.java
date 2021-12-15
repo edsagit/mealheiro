@@ -19,15 +19,6 @@ public class AccountsController extends AbstractController {
         this.av = av;
     }
 
-//    public void setModel(UserList db) {
-//        this.db = db;
-//    }
-
-//    public void setView(AccountsView av) {
-//        this.av = av;
-//        av.setController(this);
-//    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Submit")) {

@@ -18,15 +18,6 @@ public class RegisterController extends AbstractController {
         this.rv = rv;
     }
 
-//    public void setModel(UserList db) {
-//        this.db = db;
-//    }
-
-//    public void setView(RegisterView rv) {
-//        this.rv = rv;
-//        rv.setController(this);
-//    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 

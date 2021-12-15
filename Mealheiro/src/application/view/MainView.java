@@ -18,7 +18,6 @@ public class MainView extends JPanel implements Observer {
     private TransactionsView tv;
 
     public MainView(UserList model) {
-//        System.out.println("MAIN VIEW IS HEREEEE");
         // set the model
         this.db = model;
         // start controller

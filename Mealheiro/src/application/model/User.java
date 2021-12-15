@@ -3,7 +3,6 @@ package application.model;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,10 +32,6 @@ public class User extends Observable {
         this.transactions = new ArrayList<>();
     }
 
-//    public void update(Observable o, Object arg) {
-//        setChanged();
-//        notifyObservers();
-//    }
     /**
      *
      * @return String id
@@ -76,7 +71,6 @@ public class User extends Observable {
      */
     public void removeTransaction(Transaction transaction) {
         transaction.execute();
-//        transactions.add(transaction);
         setChanged();
         notifyObservers();
     }
@@ -88,6 +82,8 @@ public class User extends Observable {
     public void addTransaction(Transaction transaction) {
         transaction.execute();
         transactions.add(transaction);
+        transaction.getSourceAccount().addTransaction(transaction);
+        transaction.getDestinationAccount().addTransaction(transaction);
         setChanged();
         notifyObservers();
     }

@@ -18,15 +18,6 @@ public class LoginController extends AbstractController {
         this.lv = lv;
     }
 
-//    public void setModel(UserList db) {
-//        this.db = db;
-//    }
-//
-//    public void setView(LoginView lv) {
-//        this.lv = lv;
-//        lv.setController(this);
-//    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Login")) {
