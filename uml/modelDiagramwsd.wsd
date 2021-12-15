@@ -1,0 +1,22 @@
+@startuml diagram
+!theme plain
+
+' skinparam groupInheritance 2
+skinparam linetype ortho 
+
+package model {
+    class UserList
+    class User
+    class Account
+    class Transaction
+    enum AccountType
+    enum TransactionType
+
+    UserList "1 "-d->" *" User
+    User "1 " -d->" *" Account
+    Account "*"<->"1..2" Transaction
+    Account "  *"-d->"1  " AccountType
+    Transaction "  *"-d->"1 " TransactionType
+}
+
+@enduml

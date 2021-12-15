@@ -1,0 +1,57 @@
+@startuml
+
+!theme plain
+skinparam classAttributeIconSize 0
+Class UserList {
+- users : ArrayList<User>
+- loggedInUser : User 
+__
++ ArrayList<User> getUsers()
++ User getUserByUsername(String username)
++ Boolean usernameExists(String username)
+..
++ void registerUser(String username, String email, String password, String bankName, String defaultBalance, String savingsBalance)
++ Boolean loginUser(String username, String password)
+..
++ User getLoggedInUser()
++ void setLoggedInUser(User user)
+..
++ void update(Observable o, Object arg)
+..
++ void instantiateDummyData()
+}
+
+Class User {
+- id : UUID
+- username : String
+- email : String
+- password : String
+- networth : String
+- accounts : ArrayList<Account> 
+- transactions : ArrayList<Transaction> 
+__
++ String getId()
++ String getUsername()
++ String getEmail()
++ String getPassword()
++ String getNetWorth()
+..
++ void addTransaction(Transaction transaction)
++ ArrayList<Transaction> getTransactions()
+..
++ void addAccount(Account account)
++ ArrayList<Account> getAccounts()
+..
++ Sring[] getAccountsNames()
++ Account getAccountById(String id)
++ Account getAccountByName(String name)
+..
++ ArrayList getAllCategories()
++ String getCategoryTotalByCategory(String category)
+..
++ String toString()
+}
+
+UserList "1  "-d->" *  " User
+
+@enduml

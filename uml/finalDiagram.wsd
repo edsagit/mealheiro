@@ -14,7 +14,7 @@ class application.controller.MainController
 class application.controller.RegisterController
 class application.controller.TransactionsController
 class application.model.Account
-class application.model.Observable
+' class application.model.Observable
 class application.model.Transaction
 class application.model.User
 class application.model.UserList
@@ -73,7 +73,7 @@ enum application.model.TransactionType
 interface application.command.Command
 interface application.controller.ActionListener
 interface application.controller.ChangeListener
-interface application.model.Observer
+' interface application.model.Observer
 interface application.view.Observer
 interface java.util.Observer
 ' application.controller.AbstractController ..> java.lang.Override
@@ -118,12 +118,13 @@ application.controller.TransactionsController ..> application.model.Transaction
 application.controller.TransactionsController ..> application.model.UserList
 application.controller.TransactionsController ..> application.view.TransactionsView
 application.controller.TransactionsController ..> java.awt.event.ActionEvent
-application.model.Account --|> application.model.Observable
+
+application.model.Account -right-|> java.util.Observable
 ' application.model.Account ..> java.text.DecimalFormat
 ' application.model.Account ..> java.time.Instant
 ' application.model.Account ..> java.time.LocalDate
 ' application.model.Account ..> java.time.ZoneId
-application.model.Transaction --|> application.model.Observable
+application.model.Transaction --|> java.util.Observable
 ' application.model.Transaction ..> java.text.DecimalFormat
 ' application.model.Transaction ..> java.text.NumberFormat
 ' application.model.Transaction ..> java.text.ParseException
@@ -131,24 +132,24 @@ application.model.Transaction --|> application.model.Observable
 ' application.model.Transaction ..> java.util.logging.Level
 ' application.model.Transaction ..> java.util.logging.Logger
 ' application.model.User ..> java.lang.Override
-application.model.User --|> application.model.Observable
+application.model.User --|> java.util.Observable
 ' application.model.User ..> java.text.DecimalFormat
 ' application.model.User ..> java.text.NumberFormat
 ' application.model.User ..> java.text.ParseException
 ' application.model.User ..> java.util.logging.Level
 ' application.model.User ..> java.util.logging.Logger
 ' application.model.UserList ..> java.lang.Override
-application.model.UserList --|> application.model.Observable
+application.model.UserList --|> java.util.Observable
 ' application.model.UserList ..> java.text.DecimalFormat
 ' application.model.UserList ..> java.time.LocalDate
-application.model.UserList --|> application.model.Observer
+application.model.UserList --|> java.util.Observer
 ' application.view.AccountsView ..> java.lang.SuppressWarnings
 application.view.AccountsView ..> application.controller.AccountsController
 application.view.AccountsView ..> application.model.UserList
 application.view.AccountsView ..> java.util.Observable
 ' application.view.AccountsView --|> javax.swing.JPanel
 ' application.view.AccountsView ..> javax.swing.table.DefaultTableModel
-application.view.AccountsView ..> application.model.AccountType
+application.view.AccountsView ..> application.model.AccountType 
 application.view.AccountsView --|> java.util.Observer
 ' application.view.DashboardView ..> java.lang.SuppressWarnings
 application.view.DashboardView ..> application.controller.DashboardController
@@ -182,12 +183,12 @@ application.view.DashboardView --|> java.util.Observer
 application.view.LoginView ..> application.controller.LoginController
 application.view.LoginView ..> application.model.UserList
 ' application.view.LoginView --|> application.view.JPanel
-application.view.LoginView --|> application.view.Observer
+application.view.LoginView --|> java.util.Observer
 ' application.view.MainView ..> java.lang.Override
 application.view.MainView ..> application.controller.MainController
 application.view.MainView ..> application.model.UserList
 ' application.view.MainView --|> application.view.JPanel
-application.view.MainView --|> application.view.Observer
+application.view.MainView --|> java.util.Observer
 ' application.view.RegisterView ..> java.lang.Override
 ' application.view.RegisterView ..> java.lang.SuppressWarnings
 application.view.RegisterView ..> application.controller.RegisterController
@@ -195,7 +196,7 @@ application.view.RegisterView ..> application.model.UserList
 ' application.view.RegisterView --|> application.view.JPanel
 ' application.view.RegisterView ..> javax.swing.event.DocumentEvent
 ' application.view.RegisterView ..> javax.swing.event.DocumentListener
-application.view.RegisterView --|> application.view.Observer
+application.view.RegisterView --|> java.util.Observer
 ' application.view.TransactionsView ..> java.lang.SuppressWarnings
 application.view.TransactionsView ..> application.controller.TransactionsController
 application.view.TransactionsView ..> application.model.Account
